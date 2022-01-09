@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             $user = new User;
             $user->name = 'Test Superadmin';
             $user->email = 'superadmin@test.com';
+            $user->contact_number = '123456789';
+            $user->department = 'sales';
             $user->superadmin = 1;
             $user->salesmanager = null;
             $user->salesexecutive = null;
@@ -34,6 +36,8 @@ class DatabaseSeeder extends Seeder
             $user = new User;
             $user->name = 'Test salesmanager';
             $user->email = 'salesmanager@test.com';
+            $user->contact_number = '123456789';
+            $user->department = 'sales';
             $user->superadmin = null;
             $user->salesmanager = 1;
             $user->salesexecutive = null;
@@ -48,6 +52,8 @@ class DatabaseSeeder extends Seeder
             $user = new User;
             $user->name = 'Test salesexecutive';
             $user->email = 'salesexecutive@test.com';
+            $user->contact_number = '123456789';
+            $user->department = 'sales';
             $user->superadmin = null;
             $user->salesmanager = null;
             $user->salesexecutive = 1;
@@ -62,6 +68,8 @@ class DatabaseSeeder extends Seeder
             $user = new User;
             $user->name = 'Test telecaller';
             $user->email = 'telecaller@test.com';
+            $user->contact_number = '123456789';
+            $user->department = 'telecaller';
             $user->superadmin = null;
             $user->salesmanager = null;
             $user->salesexecutive = null;

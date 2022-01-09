@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="{{asset('assets/css/demo_1/style.css')}}">
 	{{-- <link rel="stylesheet" href="../assets/css/demo_1/style.css"> --}}
   <!-- End layout styles -->
-  <link rel="stylesheet" href="{{asset('assets/images/favicon.png')}}">
+  <link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}">
   {{-- <link rel="shortcut icon" href="../assets/images/favicon.png" /> --}}
 
     <!-- Fonts -->

@@ -49,4 +49,39 @@ class SuperadminController extends Controller
         $user->save();
         return back()->with('success', 'Successfully added a employee');
     }
+
+    public function calender()
+    {
+        return view('superadmin.calender');
+    }
+
+    public function inbox()
+    {
+        return view('superadmin.inbox');
+    }
+
+    public function read()
+    {
+        return view('superadmin.read');
+    }
+
+    public function compose()
+    {
+        return view('superadmin.compose');
+    }
+
+    public function apex()
+    {
+        return view('superadmin.apex');
+    }
+
+    public function addlead()
+    {
+        return view('superadmin.addlead');
+    }
+
+    public function profile()
+    {
+        return view('superadmin.profile');
+    }
 }

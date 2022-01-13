@@ -1,4 +1,4 @@
-@extends('layouts.superadmin')
+@extends('layouts.salesexecutive')
 
 @section('content')
 
@@ -22,4 +22,5 @@
         </div>
     </div>
 </div>
+    
 @endsection

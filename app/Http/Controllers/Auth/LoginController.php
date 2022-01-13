@@ -45,7 +45,6 @@ class LoginController extends Controller
         }
         elseif (Auth::check() && Auth::user()->superadmin==1){
             return $this->redirectTo = route('admin.home');
-            // return redirect()->route('salesmanager.home');
         }
         elseif (Auth::check() && Auth::user()->salesexecutive==1){
             return $this->redirectTo = route('salesexecutive.home');

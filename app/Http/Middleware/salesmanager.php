@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class salesmanager
 {
@@ -16,7 +17,7 @@ class salesmanager
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->salesmanager == 1){
+        if(Auth::user()->salesmanager == true){
             return $next($request);
         }
         return redirect()->back()->with('error',"You are not a salesmanager.");

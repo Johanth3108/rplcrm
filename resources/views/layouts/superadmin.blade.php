@@ -95,7 +95,7 @@
 		<nav class="sidebar">
       <div class="sidebar-header">
         <a href="{{route('admin.home')}}" class="sidebar-brand">
-          RPL<span>CRM</span>
+          SAGI<span>CRM</span>
         </a>
         <div class="sidebar-toggler not-active">
           <span></span>
@@ -113,26 +113,7 @@
             </a>
           </li>
           <li class="nav-item nav-category">Broadcast</li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
-              <i class="link-icon" data-feather="mail"></i>
-              <span class="link-title">Email</span>
-              <i class="link-arrow" data-feather="chevron-down"></i>
-            </a>
-            <div class="collapse" id="emails">
-              <ul class="nav sub-menu">
-                <li class="nav-item">
-                  <a href="{{route('admin.inbox')}}" class="nav-link">Inbox</a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('admin.read')}}" class="nav-link">Read</a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('admin.compose')}}" class="nav-link">Compose</a>
-                </li>
-              </ul>
-            </div>
-          </li>
+          
 		  <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#sms" role="button" aria-expanded="false" aria-controls="sms">
               <i class="link-icon" data-feather="file-text"></i>
@@ -199,7 +180,7 @@
             <div class="collapse" id="tables">
               <ul class="nav sub-menu">
                 <li class="nav-item">
-                  <a href="#" class="nav-link">Generated leads</a>
+                  <a href="{{route('admin.leads')}}" class="nav-link">Generated leads</a>
                 </li>
                 <li class="nav-item">
                   <a href="{{route('admin.addlead')}}" class="nav-link">Add Lead</a>

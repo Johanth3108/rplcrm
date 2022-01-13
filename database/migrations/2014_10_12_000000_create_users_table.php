@@ -24,7 +24,8 @@ class CreateUsersTable extends Migration
             $table->boolean('salesmanager')->nullable();
             $table->boolean('salesexecutive')->nullable();
             $table->boolean('telecaller')->nullable();
-
+            $table->string('state');
+            $table->string('district');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

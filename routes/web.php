@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\SuperadminController;
+use App\Http\Controllers\SalesmanagerController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -39,11 +40,24 @@ Route::get('superadmin/addlead', [SuperadminController::class, 'addlead'])->name
 
 
 // salesmanager
-Route::get('salesmanager/home', [App\Http\Controllers\SalesmanagerController::class, 'index'])->name('salesmanager.home')->middleware('salesexecutive');
+Route::get('salesmanager/home', [SalesmanagerController::class, 'index'])->name('salesmanager.home')->middleware('salesmanager');
+Route::get('salesmanager/calender', [SalesmanagerController::class, 'calender'])->name('salesmanager.calender')->middleware('salesmanager');
+Route::get('salesmanager/message', [SalesmanagerController::class, 'message'])->name('salesmanager.message')->middleware('salesmanager');
+Route::post('salesmanager/message/send', [SalesmanagerController::class, 'send'])->name('salesmanager.message.send')->middleware('salesmanager');
+Route::get('salesmanager/whatsapp', [SalesmanagerController::class, 'whatsapp'])->name('salesmanager.whatsapp')->middleware('salesmanager');
+Route::post('salesmanager/whatsapp/send', [SalesmanagerController::class, 'whatsappsend'])->name('salesmanager.whatsapp.send')->middleware('salesmanager');
+Route::get('salesmanager/leads', [SalesmanagerController::class, 'leads'])->name('salesmanager.leads')->middleware('salesmanager');
+Route::get('salesmanager/addleads', [SalesmanagerController::class, 'addleads'])->name('salesmanager.addleads')->middleware('salesmanager');
+Route::post('salesmanager/addleads/save', [SalesmanagerController::class, 'addleadsave'])->name('salesmanager.addleads.save')->middleware('salesmanager');
+Route::get('salesmanager/apex', [SalesmanagerController::class, 'apex'])->name('salesmanager.apex')->middleware('salesmanager');
+Route::get('salesmanager/employer', [SalesmanagerController::class, 'employer'])->name('salesmanager.employer')->middleware('salesmanager');
+
+
 
 
 // salesexecutive
-Route::get('salesexecutive/home', [App\Http\Controllers\SalesexecutiveController::class, 'index'])->name('salesexecutive.home')->middleware('salesmanager');
+Route::get('salesexecutive/home', [App\Http\Controllers\SalesexecutiveController::class, 'index'])->name('salesexecutive.home')->middleware('salesexecutive');
+// Route::get('salesexecutive/home', [App\Http\Controllers\SalesexecutiveController::class, 'index'])->name('salesexecutive.home')->middleware('salesexecutive');
 
 
 // telecaller

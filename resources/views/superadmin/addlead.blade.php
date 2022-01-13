@@ -24,6 +24,11 @@
                         <label for="exampleInputUsername1">Location</label>
                         <input type="text" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Property Location">
                     </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputUsername1">State</label>
+                        <input type="text" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Property Location">
+                    </div>
                 
                     <div class="form-group">
                         <label for="exampleFormControlSelect1"> Property Type</label>
@@ -49,17 +54,6 @@
                         </select>
                         
 
-                    </div>
-                    <div class="form-group">
-                    
-                        <h6 class="card-title">Upload Image</h6>
-                        <input type="file" id="myDropify" class="border"/>
-                    </div> 
-                
-                <div class="form-group">
-                    
-                        <h6 class="card-title">Upload Broucher</h6>
-                        <input type="file" id="myDropify" class="border"/>
                     </div>
                 
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>

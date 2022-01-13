@@ -4,7 +4,7 @@
 @section('content')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{{route('admin.home')}}">RPL CRM</a></li>
+      <li class="breadcrumb-item"><a href="{{route('admin.home')}}">SAGI CRM</a></li>
       <li class="breadcrumb-item"><a href="#">Staff</a></li>
       <li class="breadcrumb-item"><a href="#">Report</a></li>
       <li class="breadcrumb-item active" aria-current="page">Apex</li>

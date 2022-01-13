@@ -30,18 +30,51 @@
         <span class="input-group-addon bg-transparent"><i data-feather="calendar" class=" text-primary"></i></span>
         <input type="text" class="form-control">
       </div>
-      <button type="button" class="btn btn-outline-info btn-icon-text mr-2 d-none d-md-block">
-        <i class="btn-icon-prepend" data-feather="download"></i>
-        Import
-      </button>
-      <button type="button" class="btn btn-outline-primary btn-icon-text mr-2 mb-2 mb-md-0">
-        <i class="btn-icon-prepend" data-feather="printer"></i>
-        Print
-      </button>
-      <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
-        <i class="btn-icon-prepend" data-feather="download-cloud"></i>
-        Download Report
-      </button>
     </div>
 </div>
+
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+      <div class="card">
+          <div class="card-body">
+              <h6 class="card-title">Employee details</h6>
+              <div class="table-responsive">
+                  <table id="dataTableExample" class="table">
+                      <thead>
+                          <tr>
+                            <th>#id</th>
+                            <th>Property name</th>
+                            <th>State</th>
+                            <th>District</th>
+                            <th>Property type</th>
+                            <th>Lead from</th>
+                            <th>Assigned to</th>
+                            <th>Status</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          @foreach ($leads as $lead)
+                          <tr>
+                              <td>{{$lead->id}}</td>
+                              <td>{{$lead->property_name}}</td>
+                              <td>{{$lead->state}}</td>
+                              <td>{{$lead->district}}</td>
+                              <td>{{$lead->prop_type}}</td>
+                              <td>{{$lead->lead_from}}</td>
+                              <td>Sales executive</td>
+                              <td class="text-success">Active</td>
+                          </tr>
+                          @endforeach
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('dataTableExample').DataTable();
+  } );
+</script>
 @endsection

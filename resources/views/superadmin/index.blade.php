@@ -67,10 +67,10 @@
               <div class="col-6 col-md-12 col-xl-5">
                 <h3 class="mb-2">35,084</h3>
                 <div class="d-flex align-items-baseline">
-                  <p class="text-success">
+                  <a href="{{route('admin.addlead')}}" class="text-success">
                     <span>Click to add a new lead.</span>
                     <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                  </p>
+                  </a>
                 </div>
               </div>
               <div class="col-6 col-md-12 col-xl-7">

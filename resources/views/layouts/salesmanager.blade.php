@@ -11,156 +11,122 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <!-- core:css -->
 	<link rel="stylesheet" href="{{asset('assets/vendors/core/core.css')}}">
-	<!-- endinject -->
-  <!-- plugin css for this page -->
-  <link rel="stylesheet" href="{{asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
-	{{-- <link rel="stylesheet" href="../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css"> --}}
-	<!-- end plugin css for this page -->
-	<!-- inject:css -->
-  <link rel="stylesheet" href="{{asset('assets/fonts/feather-font/css/iconfont.css')}}">
-  <link rel="stylesheet" href="{{asset('assets/vendors/flag-icon-css/css/flag-icon.min.css')}}">
-
-	{{-- <link rel="stylesheet" href="../assets/fonts/feather-font/css/iconfont.css">
-	<link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css"> --}}
-	<!-- endinject -->
-  <!-- Layout styles -->  
-  <link rel="stylesheet" href="{{asset('assets/css/demo_1/style.css')}}">
-	{{-- <link rel="stylesheet" href="../assets/css/demo_1/style.css"> --}}
-  <!-- End layout styles -->
-  <link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}">
-  {{-- <link rel="shortcut icon" href="../assets/images/favicon.png" /> --}}
-
-    <!-- Fonts -->
+	<link rel="stylesheet" href="{{asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/fonts/feather-font/css/iconfont.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/vendors/flag-icon-css/css/flag-icon.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/css/demo_1/style.css')}}">
+	<link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-{{-- <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
-</body> --}}
 <body class="sidebar-dark">
 	<div class="main-wrapper">
 
 		<!-- partial:partials/_sidebar.html -->
 		<nav class="sidebar">
-      <div class="sidebar-header">
-        <a href="#" class="sidebar-brand">
-          RPL<span>CRM</span>
-        </a>
-        <div class="sidebar-toggler not-active">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <div class="sidebar-body">
-        <ul class="nav">
-          <li class="nav-item nav-category">Main</li>
-          <li class="nav-item">
-            <a href="dashboard-one.html" class="nav-link">
-              <i class="link-icon" data-feather="box"></i>
-              <span class="link-title">Dashboard</span>
-            </a>
-          </li>
-          <li class="nav-item nav-category">Broadcast</li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
-              <i class="link-icon" data-feather="mail"></i>
-              <span class="link-title">Email</span>
-              <i class="link-arrow" data-feather="chevron-down"></i>
-            </a>
-            <div class="collapse" id="emails">
-              <ul class="nav sub-menu">
-                <li class="nav-item">
-                  <a href="pages/email/inbox.html" class="nav-link">Inbox</a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/email/read.html" class="nav-link">Read</a>
-                </li>
-                <li class="nav-item">
-                  <a href="pages/email/compose.html" class="nav-link">Compose</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          {{-- <li class="nav-item">
-            <a href="pages/apps/chat.html" class="nav-link">
-              <i class="link-icon" data-feather="message-square"></i>
-              <span class="link-title">Chat</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="pages/apps/calendar.html" class="nav-link">
-              <i class="link-icon" data-feather="calendar"></i>
-              <span class="link-title">Calendar</span>
-            </a>
-          </li> --}}
-          
-        </ul>
-      </div>
-    </nav>
+			<div class="sidebar-header">
+			  <a href="{{route('salesmanager.home')}}" class="sidebar-brand">
+				SAGI<span>CRM</span>
+			  </a>
+			  <div class="sidebar-toggler not-active">
+				<span></span>
+				<span></span>
+				<span></span>
+			  </div>
+			</div>
+			<div class="sidebar-body">
+			  <ul class="nav">
+				<li class="nav-item nav-category">Main</li>
+				<li class="nav-item">
+				  <a href="{{route('salesmanager.home')}}" class="nav-link">
+					<i class="link-icon" data-feather="box"></i>
+					<span class="link-title">Dashboard</span>
+				  </a>
+				</li>
+				<li class="nav-item nav-category">Broadcast</li>
+				
+				<li class="nav-item">
+				  <a class="nav-link" data-toggle="collapse" href="#sms" role="button" aria-expanded="false" aria-controls="sms">
+					<i class="link-icon" data-feather="file-text"></i>
+					<span class="link-title">SMS</span>
+					<i class="link-arrow" data-feather="chevron-down"></i>
+				  </a>
+				  <div class="collapse" id="sms">
+					<ul class="nav sub-menu">
+					  <li class="nav-item">
+						<a href="{{ route('salesmanager.message') }}" class="nav-link">Message</a>
+					  </li>
+					  <li class="nav-item">
+						<a href="{{ route('salesmanager.whatsapp') }}" class="nav-link">Whatsapp</a>
+					  </li>
+					</ul>
+				  </div>
+				</li>
+				<li class="nav-item">
+				  <a href="{{route('salesmanager.calender')}}" class="nav-link">
+					<i class="link-icon" data-feather="calendar"></i>
+					<span class="link-title">Calendar</span>
+				  </a>
+				</li>
+	  
+				<li class="nav-item nav-category">Staffs </li>
+				<li class="nav-item">
+				  <a class="nav-link" data-toggle="collapse" href="#forms" role="button" aria-expanded="false" aria-controls="forms">
+					<i class="link-icon" data-feather="user"></i>
+					<span class="link-title">User</span>
+					<i class="link-arrow" data-feather="chevron-down"></i>
+				  </a>
+				  <div class="collapse" id="forms">
+					<ul class="nav sub-menu">
+					  
+					  <li class="nav-item">
+						  <a href="{{route('salesmanager.employer')}}" class="nav-link">Employees</a>
+						</li>
+					</ul>
+				  </div>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link"  data-toggle="collapse" href="#charts" role="button" aria-expanded="false" aria-controls="charts">
+					<i class="link-icon" data-feather="pie-chart"></i>
+					<span class="link-title">Report</span>
+					<i class="link-arrow" data-feather="chevron-down"></i>
+				  </a>
+				  <div class="collapse" id="charts">
+					<ul class="nav sub-menu">
+					  <li class="nav-item">
+						<a href="{{route('salesmanager.apex')}}" class="nav-link">Apex</a>
+					  </li>
+					</ul>
+				  </div>
+				</li>
+				<li class="nav-item">
+				  <a class="nav-link" data-toggle="collapse" href="#tables" role="button" aria-expanded="false" aria-controls="tables">
+					<i class="link-icon" data-feather="layout"></i>
+					<span class="link-title">Leads</span>
+					<i class="link-arrow" data-feather="chevron-down"></i>
+				  </a>
+				  <div class="collapse" id="tables">
+					<ul class="nav sub-menu">
+					  <li class="nav-item">
+						<a href="{{ route('salesmanager.leads') }}" class="nav-link">Generated leads</a>
+					  </li>
+					  <li class="nav-item">
+						<a href="{{route('salesmanager.addleads')}}" class="nav-link">Add Lead</a>
+					  </li>
+					</ul>
+				  </div>
+				</li>
+				
+			  </ul>
+	  
+			  
+			</div>
+		  </nav>
 		<!-- partial -->
 	
 		<div class="page-wrapper">
@@ -418,24 +384,24 @@
 		</div>
 	</div>
 
-	<!-- core:js -->
-	<script src="../assets/vendors/core/core.js"></script>
-	<!-- endinject -->
-  <!-- plugin js for this page -->
-  <script src="../assets/vendors/chartjs/Chart.min.js"></script>
-  <script src="../assets/vendors/jquery.flot/jquery.flot.js"></script>
-  <script src="../assets/vendors/jquery.flot/jquery.flot.resize.js"></script>
-  <script src="../assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-  <script src="../assets/vendors/apexcharts/apexcharts.min.js"></script>
-  <script src="../assets/vendors/progressbar.js/progressbar.min.js"></script>
-	<!-- end plugin js for this page -->
-	<!-- inject:js -->
-	<script src="../assets/vendors/feather-icons/feather.min.js"></script>
-	<script src="../assets/js/template.js"></script>
-	<!-- endinject -->
-  <!-- custom js for this page -->
-  <script src="../assets/js/dashboard.js"></script>
-  <script src="../assets/js/datepicker.js"></script>
-	<!-- end custom js for this page -->
+	<script src="{{asset('assets/vendors/core/core.js')}}"></script>
+	<script src="{{asset('assets/vendors/feather-icons/feather.min.js')}}"></script>
+	<script src="{{asset('assets/js/template.js')}}"></script>
+	<script src="{{asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js')}}"></script>
+	<script src="{{asset('assets/js/datepicker.js')}}"></script>
+	<script src="{{asset('assets/js/dashboard.js')}}"></script>
+
+	<script src="{{asset('assets/vendors/datatables.net/jquery.dataTables.js')}}"></script>
+	<script src="{{asset('assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js')}}"></script>
+	<script src="{{asset('assets/js/data-table.js')}}"></script>
+
+	<script src="{{asset('assets/vendors/chartjs/Chart.min.js')}}"></script>
+	<script src="{{asset('assets/vendors/jquery.flot/jquery.flot.js')}}"></script>
+	<script src="{{asset('assets/vendors/jquery.flot/jquery.flot.resize.js')}}"></script>
+	<script src="{{asset('assets/vendors/apexcharts/apexcharts.min.js')}}"></script>
+	<script src="{{asset('assets/js/apexcharts.js')}}"></script>
+
+	<script src="{{asset('assets/vendors/progressbar.js/progressbar.min.js')}}"></script>
+
 </body>
 </html>

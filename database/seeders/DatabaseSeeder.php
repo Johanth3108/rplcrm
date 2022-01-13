@@ -64,7 +64,7 @@ class DatabaseSeeder extends Seeder
             $user->salesexecutive = 1;
             $user->telecaller = null;
             $user->state = 'Rajasthan';
-            $user->district = 'Bharatpur';
+            $user->district = 'Bhavnagar';
             $user->email_verified_at = now();
             $user->password = bcrypt('12345'); // RUN ```PHP ARTISAN TINKER``` IN YOUR TERMINAL, AND RUN ```HASH:MAKE('$YOUR PASSWORD')```
             $user->save();
@@ -75,6 +75,44 @@ class DatabaseSeeder extends Seeder
             $user = new User;
             $user->name = 'Test telecaller';
             $user->email = 'telecaller@test.com';
+            $user->contact_number = '123456789';
+            $user->department = 'telecaller';
+            $user->superadmin = null;
+            $user->salesmanager = null;
+            $user->salesexecutive = null;
+            $user->telecaller = 1;
+            $user->state = 'WestBengal';
+            $user->district = 'Darjeeling';
+            $user->email_verified_at = now();
+            $user->password = bcrypt('12345'); // RUN ```PHP ARTISAN TINKER``` IN YOUR TERMINAL, AND RUN ```HASH:MAKE('$YOUR PASSWORD')```
+            $user->save();
+            $this->command->info("User: telecaller created.");
+        }
+
+        $user = User::where('name', 'Test telecaller 1')->first();
+        if (!$user) {
+            $user = new User;
+            $user->name = 'Test telecaller 1';
+            $user->email = 'telecaller1@test.com';
+            $user->contact_number = '123456789';
+            $user->department = 'telecaller';
+            $user->superadmin = null;
+            $user->salesmanager = null;
+            $user->salesexecutive = null;
+            $user->telecaller = 1;
+            $user->state = 'WestBengal';
+            $user->district = 'Darjeeling';
+            $user->email_verified_at = now();
+            $user->password = bcrypt('12345'); // RUN ```PHP ARTISAN TINKER``` IN YOUR TERMINAL, AND RUN ```HASH:MAKE('$YOUR PASSWORD')```
+            $user->save();
+            $this->command->info("User: telecaller created.");
+        }
+
+        $user = User::where('name', 'Test telecaller 2')->first();
+        if (!$user) {
+            $user = new User;
+            $user->name = 'Test telecaller 2';
+            $user->email = 'telecaller2@test.com';
             $user->contact_number = '123456789';
             $user->department = 'telecaller';
             $user->superadmin = null;

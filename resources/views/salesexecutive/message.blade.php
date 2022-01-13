@@ -1,10 +1,10 @@
-@extends('layouts.salesmanager')
+@extends('layouts.salesexecutive')
 
 
 @section('content')
 @if ($message = Session::get('success'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
-	<strong>New Employee </strong>portal created!
+	<strong>{{$message}}</strong>
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 	</button>
@@ -22,9 +22,9 @@
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{{route('salesmanager.home')}}">SAGI CRM</a></li>
+      <li class="breadcrumb-item"><a href="{{route('admin.home')}}">SAGI CRM</a></li>
       <li class="breadcrumb-item"><a href="#">SMS</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Whatsapp</li>
+      <li class="breadcrumb-item active" aria-current="page">Message</li>
     </ol>
 </nav>
 <div class="row">
@@ -32,7 +32,7 @@
         <div class="card">
             <div class="card-body">
                 <h6 class="card-title">SMS</h6>
-                <form class="forms-sample" action="{{route('salesmanager.whatsapp.send')}}" method="POST" >
+                <form class="forms-sample" action="{{route('salesmanager.message.send')}}" method="POST" >
                     @csrf
                     <div class="form-group">
                         <label for="number">Message to:</label>

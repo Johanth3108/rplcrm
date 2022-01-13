@@ -3,6 +3,7 @@
 use App\Http\Controllers\SalesexecutiveController;
 use App\Http\Controllers\SuperadminController;
 use App\Http\Controllers\SalesmanagerController;
+use App\Http\Controllers\TelecallerController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -67,4 +68,6 @@ Route::get('salesexecutive/assign', [SalesexecutiveController::class, 'assign'])
 
 // telecaller
 Route::get('telecaller/home', [App\Http\Controllers\TelecallerController::class, 'index'])->name('telecaller.home')->middleware('telecaller');
+Route::get('telecaller/calender', [TelecallerController::class, 'calender'])->name('telecaller.calender')->middleware('telecaller');
+Route::get('telecaller/assigned', [TelecallerController::class, 'assigned'])->name('telecaller.assigned')->middleware('telecaller');
 

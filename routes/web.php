@@ -39,6 +39,7 @@ Route::get('superadmin/read', [SuperadminController::class, 'read'])->name('admi
 Route::get('superadmin/compose', [SuperadminController::class, 'compose'])->name('admin.compose')->middleware('superadmin');
 Route::get('superadmin/apex', [SuperadminController::class, 'apex'])->name('admin.apex')->middleware('superadmin');
 Route::get('superadmin/addlead', [SuperadminController::class, 'addlead'])->name('admin.addlead')->middleware('superadmin');
+Route::get('superadmin/leads', [SuperadminController::class, 'leads'])->name('admin.leads')->middleware('superadmin');
 
 
 // salesmanager

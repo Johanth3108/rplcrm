@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\lead;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -83,5 +84,11 @@ class SuperadminController extends Controller
     public function profile()
     {
         return view('superadmin.profile');
+    }
+
+    public function leads()
+    {
+        $leads = lead::all();
+        return view('superadmin.lead', compact('leads'));
     }
 }

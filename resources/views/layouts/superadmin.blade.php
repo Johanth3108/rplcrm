@@ -180,7 +180,7 @@
             <div class="collapse" id="tables">
               <ul class="nav sub-menu">
                 <li class="nav-item">
-                  <a href="#" class="nav-link">Generated leads</a>
+                  <a href="{{route('admin.leads')}}" class="nav-link">Generated leads</a>
                 </li>
                 <li class="nav-item">
                   <a href="{{route('admin.addlead')}}" class="nav-link">Add Lead</a>

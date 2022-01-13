@@ -91,4 +91,47 @@ class SuperadminController extends Controller
         $leads = lead::all();
         return view('superadmin.lead', compact('leads'));
     }
+
+    public function employeeedit($id)
+    {
+        $emp = User::where('id', $id)->get()->first();
+        return view('superadmin.empupdate', compact('emp'));
+    }
+
+    public function save(Request $request, $id)
+    {
+        if ($request->position==0) {
+            $superadmin = true;
+            $salesmanager = false;
+            $salesexecutive = false;
+            $truecaller = false;
+        }
+        elseif ($request->position == 1) {
+            $superadmin = false;
+            $salesmanager = true;
+            $salesexecutive = false;
+            $telecaller = false;
+        }
+        elseif ($request->position == 2) {
+            $superadmin = false;
+            $salesmanager = false;
+            $salesexecutive = true;
+            $telecaller = false;
+        }
+        elseif ($request->position == 3) {
+            $superadmin = false;
+            $salesmanager = false;
+            $salesexecutive = false;
+            $telecaller = true;
+        }
+        User::where('id', $id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'superadmin' => $superadmin,
+            'salesmanager' => $salesmanager,
+            'salesexecutive' => $salesexecutive,
+            'telecaller' => $telecaller
+        ]);
+        return redirect()->route('admin.employees');
+    }
 }

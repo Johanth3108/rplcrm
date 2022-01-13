@@ -7,7 +7,7 @@
 @section('content')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{{route('admin.home')}}">RPL CRM</a></li>
+      <li class="breadcrumb-item"><a href="{{route('admin.home')}}">SAGI CRM</a></li>
       <li class="breadcrumb-item"><a href="#">Staff</a></li>
       <li class="breadcrumb-item active" aria-current="page">Employee detail</li>
     </ol>
@@ -28,6 +28,7 @@
                             <th>Department</th>
                             <th>Position</th>
                             <th>Current working lead</th>
+                            <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -38,6 +39,7 @@
                                 <td>{{$emp->email}}</td>
                                 <td>{{$emp->contact_number}}</td>
                                 <td>{{$emp->department}}</td>
+
                                 
                                 @if ($emp->superadmin==true)
                                 <td>Super Admin</td>
@@ -49,6 +51,7 @@
                                 <td>Telecaller</td>
                                 @endif
                                 <td>Housing.com</td>
+                                <td><a href="{{route('admin.employeeedit', $emp->id)}}" class="btn btn-primary">Manage</a></td>
                             </tr>
                             @endforeach
                         </tbody>

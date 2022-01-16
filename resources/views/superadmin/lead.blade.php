@@ -42,7 +42,13 @@
                                 <td>{{$lead->lead_from}}</td>
                                 <td>Test salesexecutive <span class="badge badge-primary">Johanth p s</span></td>
                                 
+                                @if ($lead->status==1)
                                 <td class="text-success">Active</td>
+                                @elseif ($lead->status==2)
+                                <td class="text-warning">On-hold</td>
+                                @else
+                                <td class="text-danger">Rejected</td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>

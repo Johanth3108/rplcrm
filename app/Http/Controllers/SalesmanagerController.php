@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\assign;
 use App\Models\lead;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PhpOption\None;
 
 class SalesmanagerController extends Controller
 {
@@ -13,6 +15,11 @@ class SalesmanagerController extends Controller
     {
         $leads = lead::where('state', Auth::user()->state)->get();
         return view('salesmanager.index', compact('leads'));
+    }
+
+    public function profile()
+    {
+        return view('salesmanager.profile');
     }
 
     public function calender()
@@ -89,7 +96,8 @@ class SalesmanagerController extends Controller
     }
     public function leads()
     {
-        return view('salesmanager.leads');
+        $leads = lead::where('state', Auth::user()->state)->get();
+        return view('salesmanager.leads', compact('leads'));
     }
 
     public function addleads()
@@ -108,6 +116,7 @@ class SalesmanagerController extends Controller
         $lead->district = $request->district;
         $lead->prop_type = $request->prop_type;
         $lead->lead_from = $request->lead_from;
+        $lead->status = 1;
         $lead->save();
         return redirect()->route('salesmanager.addleads')->with('success', 'Added a new lead.');
 
@@ -120,6 +129,21 @@ class SalesmanagerController extends Controller
     public function employer()
     {
         $emps = User::where('state', Auth::user()->state)->get();
+        
         return view('salesmanager.emplist', compact('emps'));
+    }
+
+    public function leadsview($id)
+    {
+        $lead= lead::where('id', $id)->get()->first();
+        return view('salesmanager.leadview', compact('lead'));
+    }
+
+    public function leadssave($id, Request $request)
+    {
+        lead::where('id', $id)->update([
+            'status' => $request->upstat
+        ]);
+        return redirect()->route('salesmanager.leads')->with('message', 'Lead status updated successfully.');
     }
 }

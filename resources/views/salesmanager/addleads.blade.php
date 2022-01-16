@@ -67,7 +67,7 @@
                           <option value="Tamil Nadu">Tamil Nadu</option>
                           <option value="Telangana">Telangana</option>
                           <option value="Tripura">Tripura</option>
-                          <option value="Uttaranchal">Uttaranchal</option>
+                          <option value="Uttarakhand">Uttarakhand</option>
                           <option value="Uttar Pradesh">Uttar Pradesh</option>
                           <option value="West Bengal">West Bengal</option>
                           <option disabled style="background-color:#aaa; color:#fff">UNION Territories</option>
@@ -252,8 +252,8 @@ $("#inputState").change(function(){
     case "Tripura":
         optionsList = Tripura ;
         break;
-    case  "Uttaranchal":
-        optionsList = Uttaranchal;
+    case  "Uttarakhand":
+        optionsList = Uttarakhand;
         break;
     case  "Uttar Pradesh":
         optionsList = UttarPradesh;

@@ -188,6 +188,24 @@
               </ul>
             </div>
           </li>
+
+		  <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#properties" role="button" aria-expanded="false" aria-controls="properties">
+              <i class="link-icon" data-feather="layout"></i>
+              <span class="link-title">Properties</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+            </a>
+            <div class="collapse" id="properties">
+              <ul class="nav sub-menu">
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Generated properties</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Add properties</a>
+                </li>
+              </ul>
+            </div>
+          </li>
           
         </ul>
 

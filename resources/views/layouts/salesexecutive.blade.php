@@ -328,7 +328,7 @@
 							</div>
 						</li>
 						<li class="nav-item dropdown nav-profile">
-							<a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<a class="nav-link dropdown-toggle" href="{{route('salesexecutive.profile')}}" id="profileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<img src="https://via.placeholder.com/30x30" alt="userr">
 							</a>
 							<div class="dropdown-menu" aria-labelledby="profileDropdown">
@@ -344,7 +344,7 @@
 								<div class="dropdown-body">
 									<ul class="profile-nav p-0 pt-3">
 										<li class="nav-item">
-											<a href="#" class="nav-link">
+											<a href="{{route('salesexecutive.profile')}}" class="nav-link">
 												<i data-feather="user"></i>
 												<span>Profile</span>
 											</a>

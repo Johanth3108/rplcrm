@@ -22,6 +22,7 @@ class CreateLeadsTable extends Migration
             $table->string('district');
             $table->string('prop_type');
             $table->string('lead_from');
+            $table->integer('status');
             $table->timestamps();
         });
     }

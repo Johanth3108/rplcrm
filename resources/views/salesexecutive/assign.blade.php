@@ -31,24 +31,24 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h6 class="card-title">SMS</h6>
-                <form class="forms-sample" action="#" method="POST" >
+                <h6 class="card-title">Assign telecallers</h6>
+                <h6 class="card-subtitle mb-0 text-danger">Only leads which are active and on hold will be shown.</h6>
+                <form class="forms-sample" action="{{route('salesexecutive.assignsend')}}" method="POST" >
                     @csrf
                     <div class="form-group">
                         <label for="number">Assigning lead:</label>
                         <div class="form-group">
-                            <select name="lead" class="form-control" id="inputState">
+                            <select name="lead" class="form-control" id="lead">
                                 @foreach ($leads as $lead)
                                     <option value="{{$lead->id}}">{{$lead->property_name}}, {{$lead->district}}, {{$lead->address}} <span class="badge badge-success">active</span></option>
                                 @endforeach
-
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Assign to:</label>
                         <div class="form-group">
-                            <select name="name" class="form-control" id="inputState">
+                            <select name="telecaller" class="form-control" id="lead">
                                 @foreach ($telecallers as $telecaller)
                                     <option value="{{$telecaller->id}}">{{$telecaller->name}}</option>
                                 @endforeach
@@ -56,7 +56,7 @@
                         </div>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button type="submit" class="btn btn-primary mr-2">Assign</button>
                 </form>
             </div>
         </div>

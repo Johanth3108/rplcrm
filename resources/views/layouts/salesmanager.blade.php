@@ -213,18 +213,6 @@
 										</div>
 										<div class="content">
 											<div class="d-flex justify-content-between align-items-center">
-												<p>Amiah Burton</p>
-												<p class="sub-text text-muted">2 hrs ago</p>
-											</div>
-											<p class="sub-text text-muted">Project deadline</p>
-										</div>
-									</a>
-									<a href="javascript:;" class="dropdown-item">
-										<div class="figure">
-											<img src="https://via.placeholder.com/30x30" alt="userr">
-										</div>
-										<div class="content">
-											<div class="d-flex justify-content-between align-items-center">
 												<p>Yaretzi Mayo</p>
 												<p class="sub-text text-muted">5 hr ago</p>
 											</div>
@@ -311,22 +299,16 @@
 										<img src="https://via.placeholder.com/80x80" alt="">
 									</div>
 									<div class="info text-center">
-										<p class="name font-weight-bold mb-0">Amiah Burton</p>
-										<p class="email text-muted mb-3">amiahburton@gmail.com</p>
+										<p class="name font-weight-bold mb-0">{{Auth::user()->name}}</p>
+										<p class="email text-muted mb-3">{{Auth::user()->email}}</p>
 									</div>
 								</div>
 								<div class="dropdown-body">
 									<ul class="profile-nav p-0 pt-3">
 										<li class="nav-item">
-											<a href="#" class="nav-link">
+											<a href="{{route('salesmanager.profile')}}" class="nav-link">
 												<i data-feather="user"></i>
 												<span>Profile</span>
-											</a>
-										</li>
-										<li class="nav-item">
-											<a href="javascript:;" class="nav-link">
-												<i data-feather="edit"></i>
-												<span>Edit Profile</span>
 											</a>
 										</li>
 										{{-- <li class="nav-item">

@@ -1,42 +1,40 @@
-@extends('layouts.salesmanager')
+@extends('layouts.superadmin')
+
+@section('head')
+@endsection
 
 @section('content')
-
-
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{{route('salesmanager.home')}}">SAGI CRM</a></li>
-      <li class="breadcrumb-item"><a href="#">Leads</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Add leads</li>
-    </ol>
-</nav>
-
 @if ($message = Session::get('success'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
-	<strong>{{$message}} </strong>
+	<strong>{{$message}}</strong>
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 	</button>
 </div>
 @endif
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{route('admin.home')}}">RPL CRM</a></li>
+      <li class="breadcrumb-item"><a href="#">Properties</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Add properties</li>
+    </ol>
+</nav>
 <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <form action="{{route('salesmanager.addleads.save')}}" method="post">
-                @csrf
-                <h3 class="card-title">ADD Property</h3>
+                <h6 class="card-title">Add a property.</h6>
+                <form class="forms-sample" action="{{route('admin.saveprop')}}" method="POST">
+                    @csrf
                     <div class="form-group">
                         <label for="exampleInputUsername1">Property Name</label>
-                        <input type="text" name="property_name" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Property Name">
+                        <input required type="text" name="propname" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Property name" required>
                     </div>
-                    
                     <div class="form-group">
-                        <label for="exampleInputUsername1">Address</label>
-                        <input type="text" name="address" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Property Address">
+                        <label for="exampleInputEmail1">Address</label>
+                        <input required type="text" name="address" class="form-control" id="exampleInputEmail1" placeholder="Address" required>
                     </div>
-
                     <div class="form-group">
                         <label for="inputState">State</label>
                         <select name="state" class="form-control" id="inputState">
@@ -87,39 +85,36 @@
                             <option value="">-- select one -- </option>
                         </select>
                     </div>
-                
+                    <div class="form-group">
+                        <label for="exampleInputUsername1">Name of Owner</label>
+                        <input required type="text" name="owner" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Owner name"  required>
+                    </div>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1"> Property Type</label>
-                        <select name="prop_type" class="form-control" id="exampleFormControlSelect1">
+                        <select required name="prop_type" class="form-control" id="exampleFormControlSelect1">
                             <option selected disabled>Select Property Type</option>
                             <option>2 BHK </option>
                             <option>3 BHK</option>
                             <option>4 BHK </option>
                             <option>Villa</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">From</label>
-                        <select name="lead_from" class="form-control" id="exampleFormControlSelect1">
-                            <option selected disabled>Select user type</option>
-                            <option>99 acer </option>
-                            <option>Magic Brick </option>
-                            <option>Manual </option>
-                            <option>Housing.com</option>
                             
                         </select>
-                        
-
                     </div>
-                
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1"> Status</label>
+                        <select required name="status" class="form-control" id="exampleFormControlSelect1">
+                            <option selected disabled value=null>Set current status of the property.</option>
+                            <option value="active">Active  </option>
+                            <option value="sold">Sold</option>
+                            
+                        </select>
+                    </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -292,4 +287,5 @@ $("#inputState").change(function(){
 
 });
 </script>
+    
 @endsection

@@ -29,6 +29,7 @@
                             <th>Lead from</th>
                             <th>Assigned to</th>
                             <th>Status</th>
+                            <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,7 +41,7 @@
                                 <td>{{$lead->district}}</td>
                                 <td>{{$lead->prop_type}}</td>
                                 <td>{{$lead->lead_from}}</td>
-                                <td>Test salesexecutive <span class="badge badge-primary">Johanth p s</span></td>
+                                <td>Salesexecutive <span class="badge badge-primary">Johanth p s</span></td>
                                 
                                 @if ($lead->status==1)
                                 <td class="text-success">Active</td>
@@ -49,6 +50,8 @@
                                 @else
                                 <td class="text-danger">Rejected</td>
                                 @endif
+
+                                <td><a href="{{route('admin.managelead', $lead->id)}}" class="btn btn-info">Manage</a></td>
                             </tr>
                             @endforeach
                         </tbody>

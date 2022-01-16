@@ -29,19 +29,19 @@
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputUsername1">Employee Name</label>
-                        <input required type="text" name="empname" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Username">
+                        <input required type="text" name="empname" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Username" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email address</label>
-                        <input required type="email" name="empemail" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                        <input required type="email" name="empemail" class="form-control" id="exampleInputEmail1" placeholder="Email" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input required type="password" name="emppass" class="form-control" id="exampleInputPassword1" autocomplete="off" placeholder="Password">
+                        <input required type="password" name="emppass" class="form-control" id="exampleInputPassword1" autocomplete="off" placeholder="Password" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputUsername1">Phone no</label>
-                        <input required type="text" name="empph" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Username">
+                        <input required type="text" name="empph" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Username"  required>
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1"> Department</label>
@@ -65,7 +65,6 @@
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
                 </form>
             </div>
         </div>

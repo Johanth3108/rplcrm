@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\lead;
+use App\Models\properties;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -92,6 +93,36 @@ class SuperadminController extends Controller
         return view('superadmin.lead', compact('leads'));
     }
 
+    public function savelead(Request $request)
+    {
+        $lead = new lead();
+        $lead->property_name = $request->property_name;
+        $lead->address = $request->address;
+        $lead->state = $request->state;
+        $lead->district = $request->district;
+        $lead->prop_type = $request->prop_type;
+        $lead->lead_from = $request->lead_from;
+        $lead->status = $request->status;
+        $lead->save();
+        return redirect()->route('admin.leads')->with('message', 'Added a lead successfully.');
+    }
+
+    public function managelead($id)
+    {
+        $lead = lead::where('id', $id)->get()->first();
+        return view('superadmin.managelead', compact('lead'));
+    }
+
+    public function updatelead(Request $request, $id)
+    {
+        lead::where('id', $id)->update([
+            'property_name' => $request->property_name,
+            'address' => $request->address,
+            'status' => $request->status
+        ]);
+        return redirect()->route('admin.leads')->with('message', 'Lead updated successfully.');
+    }
+
     public function employeeedit($id)
     {
         $emp = User::where('id', $id)->get()->first();
@@ -133,5 +164,50 @@ class SuperadminController extends Controller
             'telecaller' => $telecaller
         ]);
         return redirect()->route('admin.employees');
+    }
+
+    public function properties()
+    {
+        $props = properties::all();
+        return view('superadmin.properties', compact('props'));
+    }
+
+    public function addprop()
+    {
+        return view('superadmin.addprop');
+    }
+
+    public function saveprop(Request $request)
+    {
+        $prop = new properties();
+        $prop->propname = $request->propname;
+        $prop->address = $request->address;
+        $prop->district = $request->district;
+        $prop->state = $request->state;
+        $prop->prop_type = $request->prop_type;
+        $prop->owner = $request->owner;
+        $prop->status = $request->status;
+        $prop->save();
+        return redirect()->route('admin.properties')->with('message', 'Added a property successfully.');
+    }
+
+    public function manageprop($id)
+    {
+        $prop = properties::where('id', $id)->get()->first();
+        return view('superadmin.manageprop', compact('prop'));
+    }
+
+    public function updateprop(Request $request, $id)
+    {
+        properties::where('id', $id)->update([
+            'propname' => $request->propname,
+            'address' => $request->address,
+            'district' => $request->district,
+            'state' => $request->state,
+            'prop_type' => $request->prop_type,
+            'owner' => $request->owner,
+            'status' => $request->status,
+        ]);
+        return redirect()->route('admin.properties')->with('message', 'Property updated successfully.');
     }
 }

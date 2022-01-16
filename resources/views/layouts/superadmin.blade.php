@@ -198,10 +198,10 @@
             <div class="collapse" id="properties">
               <ul class="nav sub-menu">
                 <li class="nav-item">
-                  <a href="#" class="nav-link">Generated properties</a>
+                  <a href="{{route('admin.properties')}}" class="nav-link">Generated properties</a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link">Add properties</a>
+                  <a href="{{route('admin.addprop')}}" class="nav-link">Add properties</a>
                 </li>
               </ul>
             </div>

@@ -81,10 +81,9 @@
                         <label for="exampleFormControlSelect1"> Property Type</label>
                         <select required name="prop_type" class="form-control" id="exampleFormControlSelect1">
                             <option selected disabled>Select Property Type</option>
-                            <option>2 BHK </option>
-                            <option>3 BHK</option>
-                            <option>4 BHK </option>
-                            <option>Villa</option>
+                            @foreach ($prop_types as $prop_type)
+                            <option value="{{$prop_type->prop_type}}">{{$prop_type->prop_type}}</option>
+                            @endforeach
                             
                         </select>
                     </div>
@@ -112,7 +111,7 @@
                     </div>
                 
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                    <button class="btn btn-light">Cancel</button>
+                    {{-- <button class="btn btn-light">Cancel</button> --}}
                 </form>
             </div>
         </div>

@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->boolean('telecaller')->nullable();
             $table->string('state');
             $table->string('district');
+            $table->integer('notification')->default(0);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

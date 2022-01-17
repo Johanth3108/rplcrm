@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\assign;
 use App\Models\lead;
+use App\Models\message;
+use App\Models\properties;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use PhpOption\None;
 
 class SalesmanagerController extends Controller
@@ -145,5 +148,37 @@ class SalesmanagerController extends Controller
             'status' => $request->upstat
         ]);
         return redirect()->route('salesmanager.leads')->with('message', 'Lead status updated successfully.');
+    }
+
+    public function pmessage()
+    {
+        $users = User::all();
+        return view('salesmanager.pmessage', compact('users'));
+    }
+
+    public function pmessagesend(Request $request)
+    {
+        $message= new message();
+        $message->sender_id = Auth::user()->id;
+        $message->sender_name = Auth::user()->name;
+        $message->reciever_id = $request->reciever;
+        $message->message = $request->message;
+        $message->save();
+        User::where('id', $request->reciever)->update([
+            'notification' => DB::raw('notification+1')
+        ]);
+        return redirect()->route('salesmanager.pmessage')->with('message', 'Message sent successfully');
+    }
+
+    public function inbox()
+    {
+        $messages = message::where('reciever_id', Auth::user()->id)->get();
+        return view('salesmanager.inbox', compact('messages'));
+    }
+
+    public function properties()
+    {
+        $props = properties::all();
+        return view('salesmanager.properties', compact('props'));
     }
 }

@@ -11,6 +11,16 @@
 </div>
 @endif
 
+
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{route('salesexecutive.home')}}">SAGI CRM</a></li>
+      <li class="breadcrumb-item"><a href="#">Staffs</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Assign telecallers</li>
+    </ol>
+</nav>
+
 @if ($message = Session::get('message'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
 	<strong>{{$message}} </strong>
@@ -20,13 +30,6 @@
 </div>
 @endif
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{{route('salesexecutive.home')}}">SAGI CRM</a></li>
-      <li class="breadcrumb-item"><a href="#">Staffs</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Assign telecallers</li>
-    </ol>
-</nav>
 <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">

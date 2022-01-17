@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\lead;
+use App\Models\message;
 use App\Models\properties;
+use App\Models\proptype;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SuperadminController extends Controller
 {
@@ -16,6 +20,15 @@ class SuperadminController extends Controller
         return view('superadmin.index', compact('emps', 'empcn'));
     }
 
+    public function profileupdate(Request $request, $id)
+    {
+        User::where('id', $id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'contact_number' => $request->contact,
+        ]);
+        return redirect()->route('admin.profile')->with('message', 'Profile updated successfully.');
+    }
     public function employees()
     {
         $emps = User::all();
@@ -59,18 +72,10 @@ class SuperadminController extends Controller
 
     public function inbox()
     {
-        return view('superadmin.inbox');
+        $messages = message::where('reciever_id', Auth::user()->id)->get();
+        return view('superadmin.inbox', compact('messages'));
     }
 
-    public function read()
-    {
-        return view('superadmin.read');
-    }
-
-    public function compose()
-    {
-        return view('superadmin.compose');
-    }
 
     public function apex()
     {
@@ -79,7 +84,8 @@ class SuperadminController extends Controller
 
     public function addlead()
     {
-        return view('superadmin.addlead');
+        $prop_types = proptype::all();
+        return view('superadmin.addlead', compact('prop_types'));
     }
 
     public function profile()
@@ -174,7 +180,8 @@ class SuperadminController extends Controller
 
     public function addprop()
     {
-        return view('superadmin.addprop');
+        $prop_types = proptype::all();
+        return view('superadmin.addprop', compact('prop_types'));
     }
 
     public function saveprop(Request $request)
@@ -209,5 +216,39 @@ class SuperadminController extends Controller
             'status' => $request->status,
         ]);
         return redirect()->route('admin.properties')->with('message', 'Property updated successfully.');
+    }
+    public function proptype()
+    {
+        $prop_types = proptype::all();
+        return view('superadmin.proptype', compact('prop_types'));
+    }
+
+    public function proptypeadd(Request $request)
+    {
+        $prop_add = new proptype();
+        $prop_add->prop_type = strtoupper($request->prop_type);
+        $prop_add->save();
+        return redirect()->route('admin.proptype')->with('message', 'Added a Property successfully.');
+    }
+
+    public function message()
+    {
+        $users = User::all();
+        return view('superadmin.message', compact('users'));
+    }
+
+    public function messagesend(Request $request)
+    {
+        // $reciever = User::where('id', $request->reciever)->get()->first();
+        $message= new message();
+        $message->sender_id = Auth::user()->id;
+        $message->sender_name = Auth::user()->name;
+        $message->reciever_id = $request->reciever;
+        $message->message = $request->message;
+        $message->save();
+        User::where('id', $request->reciever)->update([
+            'notification' => DB::raw('notification+1')
+        ]);
+        return redirect()->route('admin.message')->with('message', 'Message sent successfully');
     }
 }

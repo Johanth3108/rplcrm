@@ -149,8 +149,8 @@
               <ul class="nav sub-menu">
                 
                 <li class="nav-item">
-					<a href="{{route('admin.employees')}}" class="nav-link">Employees</a>
-				  </li>
+                  <a href="{{route('admin.employees')}}" class="nav-link">Employees</a>
+                </li>
                 <li class="nav-item">
                   <a href="{{route('admin.adduser')}}" class="nav-link">Add User</a>
                 </li>
@@ -210,7 +210,7 @@
             </div>
           </li>
 
-		  <li class="nav-item">
+		      <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#message" role="button" aria-expanded="false" aria-controls="message">
               <i class="link-icon" data-feather="server"></i>
               <span class="link-title">Message</span>
@@ -227,6 +227,28 @@
               </ul>
             </div>
           </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#permissions" role="button" aria-expanded="false" aria-controls="permissions">
+              <i class="link-icon" data-feather="activity"></i>
+              <span class="link-title">Permissions</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+            </a>
+            <div class="collapse" id="permissions">
+              <ul class="nav sub-menu">
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Sales manager</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Sales executive</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Telecaller</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          
           
         </ul>
 

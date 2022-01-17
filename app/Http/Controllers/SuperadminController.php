@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\LeadsExport;
+use App\Exports\PropertiesExport;
 use App\Models\lead;
 use App\Models\message;
 use App\Models\properties;
@@ -10,6 +12,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\UsersImport;
+use App\Exports\UsersExport;
 
 class SuperadminController extends Controller
 {
@@ -46,6 +51,8 @@ class SuperadminController extends Controller
         $user->email = $request->empemail;
         $user->contact_number = $request->empph;
         $user->department = $request->dept;
+        $user->district = $request->district;
+        $user->state = $request->state;
 
         if ($request->usrtype==0) {
             $user->superadmin = true;
@@ -250,5 +257,20 @@ class SuperadminController extends Controller
             'notification' => DB::raw('notification+1')
         ]);
         return redirect()->route('admin.message')->with('message', 'Message sent successfully');
+    }
+
+    public function repdown()
+    {
+        return Excel::download(new UsersExport, 'users-collection.csv');
+    }
+
+    public function leadsdown()
+    {
+        return Excel::download(new LeadsExport, 'leads-collection.csv');
+    }
+
+    public function propertydown()
+    {
+        return Excel::download(new PropertiesExport, 'properties-collection.csv');
     }
 }

@@ -26,6 +26,12 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+// reports
+Route::get('report/download', [SuperadminController::class, 'repdown'])->name('admin.report.download');
+Route::get('leads/download', [SuperadminController::class, 'leadsdown'])->name('admin.leads.download');
+Route::get('properties/download', [SuperadminController::class, 'propertydown'])->name('admin.property.download');
+
+
 
 // superadmin
 Route::get('superadmin/home', [App\Http\Controllers\SuperadminController::class, 'index'])->name('admin.home')->middleware('superadmin');

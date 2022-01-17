@@ -106,7 +106,7 @@
 				</li>
 				<li class="nav-item">
 				  <a class="nav-link" data-toggle="collapse" href="#tables" role="button" aria-expanded="false" aria-controls="tables">
-					<i class="link-icon" data-feather="layout"></i>
+					<i class="link-icon" data-feather="briefcase"></i>
 					<span class="link-title">Leads</span>
 					<i class="link-arrow" data-feather="chevron-down"></i>
 				  </a>
@@ -116,10 +116,42 @@
 						<a href="{{ route('salesmanager.leads') }}" class="nav-link">Generated leads</a>
 					  </li>
 					  <li class="nav-item">
-						<a href="{{route('salesmanager.addleads')}}" class="nav-link">Add Lead</a>
+						<a href="{{route('salesmanager.addleads')}}" class="nav-link test">Add Lead</a>
 					  </li>
 					</ul>
 				  </div>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="collapse" href="#properties" role="button" aria-expanded="false" aria-controls="properties">
+					  <i class="link-icon" data-feather="layout"></i>
+					  <span class="link-title">Properties</span>
+					  <i class="link-arrow" data-feather="chevron-down"></i>
+					</a>
+					<div class="collapse" id="properties">
+					  <ul class="nav sub-menu">
+						<li class="nav-item">
+						  <a href="{{route('salesmanager.properties')}}" class="nav-link">Properties</a>
+						</li>
+					  </ul>
+					</div>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="collapse" href="#message" role="button" aria-expanded="false" aria-controls="message">
+					  <i class="link-icon" data-feather="server"></i>
+					  <span class="link-title">Message</span>
+					  <i class="link-arrow" data-feather="chevron-down"></i>
+					</a>
+					<div class="collapse" id="message">
+					  <ul class="nav sub-menu">
+						<li class="nav-item">
+						  <a href="{{route('salesmanager.inbox')}}" class="nav-link">Inbox <span class="badge badge-pill badge-danger"> {{Auth::user()->notification}}</span></a>
+						</li>
+						<li class="nav-item">
+						  <a href="{{route('salesmanager.pmessage')}}" class="nav-link">Send message</a>
+						</li>
+					  </ul>
+					</div>
 				</li>
 				
 			  </ul>

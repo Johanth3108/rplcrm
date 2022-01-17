@@ -149,6 +149,24 @@
 					<span class="link-title">Assign telecallers</span>
 					</a>
 				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="collapse" href="#message" role="button" aria-expanded="false" aria-controls="message">
+					  <i class="link-icon" data-feather="server"></i>
+					  <span class="link-title">Message</span>
+					  <i class="link-arrow" data-feather="chevron-down"></i>
+					</a>
+					<div class="collapse" id="message">
+					  <ul class="nav sub-menu">
+						<li class="nav-item">
+						  <a href="{{route('salesexecutive.inbox')}}" class="nav-link">Inbox <span class="badge badge-pill badge-danger"> {{Auth::user()->notification}}</span></a>
+						</li>
+						<li class="nav-item">
+						  <a href="{{route('salesexecutive.pmessage')}}" class="nav-link">Send message</a>
+						</li>
+					  </ul>
+					</div>
+				</li>
           
         </ul>
       </div>

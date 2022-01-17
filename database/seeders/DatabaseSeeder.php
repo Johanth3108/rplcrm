@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\assign;
 use App\Models\lead;
+use App\Models\proptype;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -351,6 +352,38 @@ class DatabaseSeeder extends Seeder
             $assign->salesexecutive = true;
             $assign->save();
             $this->command->info("assign 1 created.");
+        }
+
+        $prop_type = proptype::where('prop_type', '2BHK')->first();
+        if (!$prop_type) {
+            $prop_type = new proptype();
+            $prop_type->prop_type = '2BHK';
+            $prop_type->save();
+            $this->command->info("2BHK property type created.");
+        }
+
+        $prop_type = proptype::where('prop_type', '3BHK')->first();
+        if (!$prop_type) {
+            $prop_type = new proptype();
+            $prop_type->prop_type = '3BHK';
+            $prop_type->save();
+            $this->command->info("3BHK property type created.");
+        }
+
+        $prop_type = proptype::where('prop_type', '4BHK')->first();
+        if (!$prop_type) {
+            $prop_type = new proptype();
+            $prop_type->prop_type = '4BHK';
+            $prop_type->save();
+            $this->command->info("4BHK property type created.");
+        }
+
+        $prop_type = proptype::where('prop_type', 'villa')->first();
+        if (!$prop_type) {
+            $prop_type = new proptype();
+            $prop_type->prop_type = 'VILLA';
+            $prop_type->save();
+            $this->command->info("villa property type created.");
         }
     }
 }

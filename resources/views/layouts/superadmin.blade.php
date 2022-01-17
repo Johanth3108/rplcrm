@@ -149,8 +149,8 @@
               <ul class="nav sub-menu">
                 
                 <li class="nav-item">
-					<a href="{{route('admin.employees')}}" class="nav-link">Employees</a>
-				  </li>
+                  <a href="{{route('admin.employees')}}" class="nav-link">Employees</a>
+                </li>
                 <li class="nav-item">
                   <a href="{{route('admin.adduser')}}" class="nav-link">Add User</a>
                 </li>
@@ -173,7 +173,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#tables" role="button" aria-expanded="false" aria-controls="tables">
-              <i class="link-icon" data-feather="layout"></i>
+              <i class="link-icon" data-feather="briefcase"></i>
               <span class="link-title">Leads</span>
               <i class="link-arrow" data-feather="chevron-down"></i>
             </a>
@@ -198,16 +198,60 @@
             <div class="collapse" id="properties">
               <ul class="nav sub-menu">
                 <li class="nav-item">
-                  <a href="#" class="nav-link">Generated properties</a>
+                  <a href="{{route('admin.properties')}}" class="nav-link">Generated properties</a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link">Add properties</a>
+					<a href="{{route('admin.addprop')}}" class="nav-link">Add properties</a>
+				</li>
+				<li class="nav-item">
+					<a href="{{route('admin.proptype')}}" class="nav-link">Add property type</a>
+				</li>
+              </ul>
+            </div>
+          </li>
+
+		      <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#message" role="button" aria-expanded="false" aria-controls="message">
+              <i class="link-icon" data-feather="server"></i>
+              <span class="link-title">Message</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+            </a>
+            <div class="collapse" id="message">
+              <ul class="nav sub-menu">
+                <li class="nav-item">
+                  <a href="{{route('admin.inbox')}}" class="nav-link">Inbox <span class="badge badge-pill badge-danger"> {{Auth::user()->notification}}</span></a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.message')}}" class="nav-link">Send message</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#permissions" role="button" aria-expanded="false" aria-controls="permissions">
+              <i class="link-icon" data-feather="activity"></i>
+              <span class="link-title">Permissions</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+            </a>
+            <div class="collapse" id="permissions">
+              <ul class="nav sub-menu">
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Sales manager</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Sales executive</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Telecaller</a>
                 </li>
               </ul>
             </div>
           </li>
           
+          
         </ul>
+
 
 		
       </div>

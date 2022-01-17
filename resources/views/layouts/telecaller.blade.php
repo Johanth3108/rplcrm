@@ -125,6 +125,23 @@
               <span class="link-title">Assigned leads</span>
             </a>
           </li>
+		  <li class="nav-item">
+			<a class="nav-link" data-toggle="collapse" href="#message" role="button" aria-expanded="false" aria-controls="message">
+			  <i class="link-icon" data-feather="server"></i>
+			  <span class="link-title">Message</span>
+			  <i class="link-arrow" data-feather="chevron-down"></i>
+			</a>
+			<div class="collapse" id="message">
+			  <ul class="nav sub-menu">
+				<li class="nav-item">
+				  <a href="{{route('telecaller.inbox')}}" class="nav-link">Inbox <span class="badge badge-pill badge-danger"> {{Auth::user()->notification}}</span></a>
+				</li>
+				<li class="nav-item">
+				  <a href="{{route('telecaller.message')}}" class="nav-link">Send message</a>
+				</li>
+			  </ul>
+			</div>
+			</li>
           {{-- <li class="nav-item nav-category">Broadcast</li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">

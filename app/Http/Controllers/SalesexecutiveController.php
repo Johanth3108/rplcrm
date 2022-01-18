@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\assign;
+use App\Models\exepage;
 use App\Models\lead;
 use App\Models\message;
 use App\Models\User;
@@ -12,6 +13,21 @@ use Illuminate\Support\Facades\DB;
 
 class SalesexecutiveController extends Controller
 {
+    public function __construct()
+    {        
+        $this->middleware(function ($request, $next) {      
+            $noti = User::where('id', Auth::user()->id)->get()->first()->notification;
+            $exepage = exepage::where('id', 1)->get()->first();
+            $messages = message::where('reciever_id', Auth::user()->id)->get();
+            view()->share('exepage', $exepage);
+            view()->share('messsages', $messages);
+            view()->share('noti', $noti);
+            return $next($request);
+        });
+        
+    }
+
+
     public function index()
     {
         return view('salesexecutive.index');
@@ -79,6 +95,12 @@ class SalesexecutiveController extends Controller
     {
         $users = User::all();
         return view('salesexecutive.pmessage', compact('users'));
+    }
+
+    public function pmessagereply($id)
+    {
+        $reciever = User::where('id', $id)->get()->first();
+        return view('salesexecutive.reply', compact('reciever'));
     }
 
     public function pmessagesend(Request $request)

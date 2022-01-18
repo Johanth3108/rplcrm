@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\assign;
 use App\Models\lead;
+use App\Models\manpage;
 use App\Models\message;
 use App\Models\properties;
 use App\Models\User;
@@ -14,6 +15,20 @@ use PhpOption\None;
 
 class SalesmanagerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {      
+            $noti = User::where('id', Auth::user()->id)->get()->first()->notification;
+            $manpage = manpage::where('id', 1)->get()->first();
+            $messages = message::where('reciever_id', Auth::user()->id)->get();
+            view()->share('manpage', $manpage);
+            view()->share('messsages', $messages);
+            view()->share('noti', $noti);
+            return $next($request);
+        });
+        
+        
+    }
     public function index()
     {
         $leads = lead::where('state', Auth::user()->state)->get();
@@ -154,6 +169,12 @@ class SalesmanagerController extends Controller
     {
         $users = User::all();
         return view('salesmanager.pmessage', compact('users'));
+    }
+
+    public function pmessagereply($id)
+    {
+        $reciever = User::where('id', $id)->get()->first();
+        return view('salesmanager.reply', compact('reciever'));
     }
 
     public function pmessagesend(Request $request)

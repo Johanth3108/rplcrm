@@ -15,9 +15,26 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UsersImport;
 use App\Exports\UsersExport;
+use App\Models\exepage;
+use App\Models\manpage;
+use App\Models\telepage;
+use Illuminate\Support\Facades\View;
 
 class SuperadminController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {      
+            $noti = User::where('id', Auth::user()->id)->get()->first()->notification;
+            $messages = message::where('reciever_id', Auth::user()->id)->get();
+            view()->share('messsages', $messages);
+            view()->share('noti', $noti);
+            return $next($request);
+        });
+        
+        
+    }
     public function index()
     {
         $emps = User::all();
@@ -244,6 +261,12 @@ class SuperadminController extends Controller
         return view('superadmin.message', compact('users'));
     }
 
+    public function reply($id)
+    {
+        $reciever = User::where('id', $id)->get()->first();
+        return view('superadmin.reply', compact('reciever'));
+    }
+
     public function messagesend(Request $request)
     {
         // $reciever = User::where('id', $request->reciever)->get()->first();
@@ -272,5 +295,74 @@ class SuperadminController extends Controller
     public function propertydown()
     {
         return Excel::download(new PropertiesExport, 'properties-collection.csv');
+    }
+
+    public function manpage()
+    {
+        // dd($this->user);
+        return view('superadmin.manpage');
+    }
+
+    public function manpagesave(Request $request)
+    {
+        manpage::where('id', 1)->update([
+            'message' => $request->message,
+            'whatsapp' => $request->whatsapp,
+            'calendar' => $request->calendar,
+            'employees' => $request->employees,
+            'add_user' => $request->add_user,
+            'apex' => $request->apex,
+            'gen_leads' => $request->gen_leads,
+            'add_lead' => $request->add_lead,
+            'gen_prop' => $request->gen_prop,
+            'add_prop' => $request->add_prop
+        ]);
+        return redirect()->back()->with('message', 'Salesmanager portal updated successfully.');
+    }
+
+    public function exepage()
+    {
+        return view('superadmin.exepage');
+    }
+
+    public function exepagesave(Request $request)
+    {
+        exepage::where('id', 1)->update([
+            'message' => $request->message,
+            'whatsapp' => $request->whatsapp,
+            'calendar' => $request->calendar,
+            'employees' => $request->employees,
+            'add_user' => $request->add_user,
+            'apex' => $request->apex,
+            'gen_leads' => $request->gen_leads,
+            'add_lead' => $request->add_lead,
+            'gen_prop' => $request->gen_prop,
+            'add_prop' => $request->add_prop,
+            'assign' => $request->assign
+        ]);
+        return redirect()->back()->with('message', 'Salesexecutive portal updated successfully.');
+    }
+
+    public function telepage()
+    {
+        return view('superadmin.telepage');
+    }
+
+    public function telepagesave(Request $request)
+    {
+        telepage::where('id', 1)->update([
+            'message' => $request->message,
+            'whatsapp' => $request->whatsapp,
+            'calendar' => $request->calendar,
+            'employees' => $request->employees,
+            'add_user' => $request->add_user,
+            'apex' => $request->apex,
+            'gen_leads' => $request->gen_leads,
+            'add_lead' => $request->add_lead,
+            'gen_prop' => $request->gen_prop,
+            'add_prop' => $request->add_prop,
+            'assigned_leads' => $request->assigned_leads
+        ]);
+        return redirect()->back()->with('message', 'Telecaller portal updated successfully.');
     }
 }

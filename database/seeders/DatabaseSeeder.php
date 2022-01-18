@@ -3,8 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\assign;
+use App\Models\exepage;
 use App\Models\lead;
+use App\Models\manpage;
 use App\Models\proptype;
+use App\Models\telepage;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -384,6 +387,58 @@ class DatabaseSeeder extends Seeder
             $prop_type->prop_type = 'VILLA';
             $prop_type->save();
             $this->command->info("villa property type created.");
+        }
+
+        $manpage = manpage::where('id', 1)->first();
+        if (!$manpage) {
+            $manpage = new manpage();
+            $manpage->message = true;
+            $manpage->whatsapp = true;
+            $manpage->calendar = true;
+            $manpage->employees = true;
+            $manpage->add_user = true;
+            $manpage->apex = true;
+            $manpage->gen_leads = true;
+            $manpage->add_lead = true;
+            $manpage->gen_prop = true;
+            $manpage->add_prop = true;
+            $manpage->save();
+            $this->command->info("permissions for manager page created.");
+        }
+
+        $exepage = exepage::where('id', 1)->first();
+        if (!$exepage) {
+            $exepage = new exepage();
+            $exepage->message = true;
+            $exepage->whatsapp = true;
+            $exepage->calendar = true;
+            $exepage->employees = true;
+            $exepage->add_user = true;
+            $exepage->apex = true;
+            $exepage->gen_leads = true;
+            $exepage->add_lead = true;
+            $exepage->gen_prop = true;
+            $exepage->add_prop = true;
+            $exepage->assign = true;
+            $exepage->save();
+            $this->command->info("permissions for executive page created.");
+        }
+
+        $telepage = telepage::where('id', 1)->first();
+        if (!$telepage) {
+            $telepage = new telepage();
+            $telepage->message = true;
+            $telepage->whatsapp = true;
+            $telepage->calendar = true;
+            $telepage->employees = true;
+            $telepage->add_user = true;
+            $telepage->apex = true;
+            $telepage->gen_leads = true;
+            $telepage->add_lead = true;
+            $telepage->gen_prop = true;
+            $telepage->add_prop = true;
+            $telepage->save();
+            $this->command->info("permissions for telecaller page created.");
         }
     }
 }

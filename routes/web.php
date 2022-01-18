@@ -59,8 +59,15 @@ Route::post('superadmin/addprop/update/{id}', [SuperadminController::class, 'upd
 Route::get('superadmin/prop-type', [SuperadminController::class, 'proptype'])->name('admin.proptype')->middleware('superadmin');
 Route::post('superadmin/prop-type/add', [SuperadminController::class, 'proptypeadd'])->name('admin.proptype.add')->middleware('superadmin');
 Route::get('superadmin/message', [SuperadminController::class, 'message'])->name('admin.message')->middleware('superadmin');
+Route::get('superadmin/message/reply/{id}', [SuperadminController::class, 'reply'])->name('admin.reply')->middleware('superadmin');
 Route::post('superadmin/message/send', [SuperadminController::class, 'messagesend'])->name('admin.message.send')->middleware('superadmin');
 Route::get('superadmin/inbox', [SuperadminController::class, 'inbox'])->name('admin.inbox')->middleware('superadmin');
+Route::get('superadmin/manpage', [SuperadminController::class, 'manpage'])->name('admin.manpage')->middleware('superadmin');
+Route::post('superadmin/manpage/save', [SuperadminController::class, 'manpagesave'])->name('admin.manpage.save')->middleware('superadmin');
+Route::get('superadmin/exepage', [SuperadminController::class, 'exepage'])->name('admin.exepage')->middleware('superadmin');
+Route::post('superadmin/exepage/save', [SuperadminController::class, 'exepagesave'])->name('admin.exepage.save')->middleware('superadmin');
+Route::get('superadmin/telepage', [SuperadminController::class, 'telepage'])->name('admin.telepage')->middleware('superadmin');
+Route::post('superadmin/telepage/save', [SuperadminController::class, 'telepagesave'])->name('admin.telepage.save')->middleware('superadmin');
 
 
 
@@ -82,6 +89,7 @@ Route::post('salesmanager/addleads/save', [SalesmanagerController::class, 'addle
 Route::get('salesmanager/apex', [SalesmanagerController::class, 'apex'])->name('salesmanager.apex')->middleware('salesmanager');
 Route::get('salesmanager/employer', [SalesmanagerController::class, 'employer'])->name('salesmanager.employer')->middleware('salesmanager');
 Route::get('salesmanager/pmessage', [SalesmanagerController::class, 'pmessage'])->name('salesmanager.pmessage')->middleware('salesmanager');
+Route::get('salesmanager/pmessage/reply/{id}', [SalesmanagerController::class, 'pmessagereply'])->name('salesmanager.pmessage.reply')->middleware('salesmanager');
 Route::post('salesmanager/pmessagesend', [SalesmanagerController::class, 'pmessagesend'])->name('salesmanager.pmessagesend')->middleware('salesmanager');
 Route::get('salesmanager/inbox', [SalesmanagerController::class, 'inbox'])->name('salesmanager.inbox')->middleware('salesmanager');
 Route::get('salesmanager/properties', [SalesmanagerController::class, 'properties'])->name('salesmanager.properties')->middleware('salesmanager');
@@ -102,6 +110,7 @@ Route::post('salesexecutive/leads/view/save/{id}', [SalesexecutiveController::cl
 Route::get('salesexecutive/assign', [SalesexecutiveController::class, 'assign'])->name('salesexecutive.assign')->middleware('salesexecutive');
 Route::post('salesexecutive/assign/send', [SalesexecutiveController::class, 'assignsend'])->name('salesexecutive.assignsend')->middleware('salesexecutive');
 Route::get('salesexecutive/pmessage', [SalesexecutiveController::class, 'pmessage'])->name('salesexecutive.pmessage')->middleware('salesexecutive');
+Route::get('salesexecutive/pmessage/reply/{id}', [SalesexecutiveController::class, 'pmessagereply'])->name('salesexecutive.pmessage.reply')->middleware('salesexecutive');
 Route::post('salesexecutive/pmessage/send', [SalesexecutiveController::class, 'pmessagesend'])->name('salesexecutive.pmessage.send')->middleware('salesexecutive');
 Route::get('salesexecutive/inbox', [SalesexecutiveController::class, 'inbox'])->name('salesexecutive.inbox')->middleware('salesexecutive');
 
@@ -112,6 +121,7 @@ Route::get('telecaller/profile', [TelecallerController::class, 'profile'])->name
 Route::get('telecaller/calender', [TelecallerController::class, 'calender'])->name('telecaller.calender')->middleware('telecaller');
 Route::get('telecaller/assigned', [TelecallerController::class, 'assigned'])->name('telecaller.assigned')->middleware('telecaller');
 Route::get('telecaller/message', [TelecallerController::class, 'message'])->name('telecaller.message')->middleware('telecaller');
+Route::get('telecaller/message/reply/{id}', [TelecallerController::class, 'reply'])->name('telecaller.message.reply')->middleware('telecaller');
 Route::post('telecaller/message/send', [TelecallerController::class, 'messagesend'])->name('telecaller.message.send')->middleware('telecaller');
 Route::get('telecaller/inbox', [TelecallerController::class, 'inbox'])->name('telecaller.inbox')->middleware('telecaller');
 

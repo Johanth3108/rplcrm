@@ -110,7 +110,8 @@
             </a>
           </li>
           <li class="nav-item nav-category">Broadcast</li>
-          
+
+          @if ($exepage->message==true || $exepage->whatsapp==true)
 			<li class="nav-item">
 				<a class="nav-link" data-toggle="collapse" href="#sms" role="button" aria-expanded="false" aria-controls="sms">
 				<i class="link-icon" data-feather="file-text"></i>
@@ -119,36 +120,52 @@
 				</a>
 				<div class="collapse" id="sms">
 				<ul class="nav sub-menu">
+					@if ($exepage->message==true)
 					<li class="nav-item">
 					<a href="{{ route('salesexecutive.message') }}" class="nav-link">Message</a>
 					</li>
+					@endif
+					
+					@if ($exepage->whatsapp==true)
 					<li class="nav-item">
 					<a href="{{ route('salesexecutive.whatsapp') }}" class="nav-link">Whatsapp</a>
 					</li>
+					@endif
+					
 				</ul>
 				</div>
 			</li>
+		  @endif
+			
+		  @if ($exepage->calendar)
 			<li class="nav-item">
 				<a href="{{route('salesexecutive.calender')}}" class="nav-link">
 				<i class="link-icon" data-feather="calendar"></i>
 				<span class="link-title">Calendar</span>
 				</a>
 			</li>
+		  @endif
+			
 
 			<li class="nav-item nav-category">Staffs </li>
-				<li class="nav-item">
-					<a href="{{route('salesexecutive.leads')}}" class="nav-link">
-					<i class="link-icon" data-feather="pie-chart"></i>
-					<span class="link-title">Generated leads</span>
-					</a>
-				</li>
-
+				@if ($exepage->gen_leads==true)
+					<li class="nav-item">
+						<a href="{{route('salesexecutive.leads')}}" class="nav-link">
+						<i class="link-icon" data-feather="pie-chart"></i>
+						<span class="link-title">Generated leads</span>
+						</a>
+					</li>
+				@endif
+				
+				@if ($exepage->assign==true)
 				<li class="nav-item">
 					<a href="{{route('salesexecutive.assign')}}" class="nav-link">
 					<i class="link-icon" data-feather="phone"></i>
 					<span class="link-title">Assign telecallers</span>
 					</a>
 				</li>
+				@endif
+				
 
 				<li class="nav-item">
 					<a class="nav-link" data-toggle="collapse" href="#message" role="button" aria-expanded="false" aria-controls="message">
@@ -192,153 +209,34 @@
 						</div>
 					</form> --}}
 					<ul class="navbar-nav">
-						<li class="nav-item dropdown">
-							{{-- <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="flag-icon flag-icon-us mt-1" title="us"></i> <span class="font-weight-medium ml-1 mr-1">English</span>
-							</a> --}}
-							<div class="dropdown-menu" aria-labelledby="languageDropdown">
-                <a href="javascript:;" class="dropdown-item py-2"><i class="flag-icon flag-icon-us" title="us" id="us"></i> <span class="ml-1"> English </span></a>
-                <a href="javascript:;" class="dropdown-item py-2"><i class="flag-icon flag-icon-fr" title="fr" id="fr"></i> <span class="ml-1"> French </span></a>
-                <a href="javascript:;" class="dropdown-item py-2"><i class="flag-icon flag-icon-de" title="de" id="de"></i> <span class="ml-1"> German </span></a>
-                <a href="javascript:;" class="dropdown-item py-2"><i class="flag-icon flag-icon-pt" title="pt" id="pt"></i> <span class="ml-1"> Portuguese </span></a>
-                <a href="javascript:;" class="dropdown-item py-2"><i class="flag-icon flag-icon-es" title="es" id="es"></i> <span class="ml-1"> Spanish </span></a>
-							</div>
-            </li>
-						
-						<li class="nav-item dropdown nav-messages">
-							<a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i data-feather="mail"></i>
-							</a>
-							<div class="dropdown-menu" aria-labelledby="messageDropdown">
-								<div class="dropdown-header d-flex align-items-center justify-content-between">
-									<p class="mb-0 font-weight-medium">9 New Messages</p>
-									<a href="javascript:;" class="text-muted">Clear all</a>
-								</div>
-								<div class="dropdown-body">
-									<a href="javascript:;" class="dropdown-item">
-										<div class="figure">
-											<img src="https://via.placeholder.com/30x30" alt="userr">
-										</div>
-										<div class="content">
-											<div class="d-flex justify-content-between align-items-center">
-												<p>Leonardo Payne</p>
-												<p class="sub-text text-muted">2 min ago</p>
-											</div>	
-											<p class="sub-text text-muted">Project status</p>
-										</div>
-									</a>
-									<a href="javascript:;" class="dropdown-item">
-										<div class="figure">
-											<img src="https://via.placeholder.com/30x30" alt="userr">
-										</div>
-										<div class="content">
-											<div class="d-flex justify-content-between align-items-center">
-												<p>Carl Henson</p>
-												<p class="sub-text text-muted">30 min ago</p>
-											</div>	
-											<p class="sub-text text-muted">Client meeting</p>
-										</div>
-									</a>
-									<a href="javascript:;" class="dropdown-item">
-										<div class="figure">
-											<img src="https://via.placeholder.com/30x30" alt="userr">
-										</div>
-										<div class="content">
-											<div class="d-flex justify-content-between align-items-center">
-												<p>Jensen Combs</p>												
-												<p class="sub-text text-muted">1 hrs ago</p>
-											</div>	
-											<p class="sub-text text-muted">Project updates</p>
-										</div>
-									</a>
-									<a href="javascript:;" class="dropdown-item">
-										<div class="figure">
-											<img src="https://via.placeholder.com/30x30" alt="userr">
-										</div>
-										<div class="content">
-											<div class="d-flex justify-content-between align-items-center">
-												<p>Amiah Burton</p>
-												<p class="sub-text text-muted">2 hrs ago</p>
-											</div>
-											<p class="sub-text text-muted">Project deadline</p>
-										</div>
-									</a>
-									<a href="javascript:;" class="dropdown-item">
-										<div class="figure">
-											<img src="https://via.placeholder.com/30x30" alt="userr">
-										</div>
-										<div class="content">
-											<div class="d-flex justify-content-between align-items-center">
-												<p>Yaretzi Mayo</p>
-												<p class="sub-text text-muted">5 hr ago</p>
-											</div>
-											<p class="sub-text text-muted">New record</p>
-										</div>
-									</a>
-								</div>
-								<div class="dropdown-footer d-flex align-items-center justify-content-center">
-									<a href="javascript:;">View all</a>
-								</div>
-							</div>
-						</li>
 						<li class="nav-item dropdown nav-notifications">
 							<a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<i data-feather="bell"></i>
+								@if ($noti>0)
 								<div class="indicator">
 									<div class="circle"></div>
 								</div>
+								@endif
+								
 							</a>
 							<div class="dropdown-menu" aria-labelledby="notificationDropdown">
 								<div class="dropdown-header d-flex align-items-center justify-content-between">
-									<p class="mb-0 font-weight-medium">6 New Notifications</p>
+									<p class="mb-0 font-weight-medium">{{count($messsages)}} New Notifications</p>
 									<a href="javascript:;" class="text-muted">Clear all</a>
 								</div>
 								<div class="dropdown-body">
-									<a href="javascript:;" class="dropdown-item">
-										<div class="icon">
-											<i data-feather="user-plus"></i>
-										</div>
-										<div class="content">
-											<p>New customer registered</p>
-											<p class="sub-text text-muted">2 sec ago</p>
-										</div>
-									</a>
-									<a href="javascript:;" class="dropdown-item">
-										<div class="icon">
-											<i data-feather="gift"></i>
-										</div>
-										<div class="content">
-											<p>New Order Recieved</p>
-											<p class="sub-text text-muted">30 min ago</p>
-										</div>
-									</a>
-									<a href="javascript:;" class="dropdown-item">
-										<div class="icon">
-											<i data-feather="alert-circle"></i>
-										</div>
-										<div class="content">
-											<p>Server Limit Reached!</p>
-											<p class="sub-text text-muted">1 hrs ago</p>
-										</div>
-									</a>
+									@foreach ($messsages as $message)
 									<a href="javascript:;" class="dropdown-item">
 										<div class="icon">
 											<i data-feather="layers"></i>
 										</div>
 										<div class="content">
-											<p>Apps are ready for update</p>
-											<p class="sub-text text-muted">5 hrs ago</p>
+											<p>{{$message->message}}</p>
+											<p class="sub-text text-muted">{{$message->sender_name}}</p>
 										</div>
 									</a>
-									<a href="javascript:;" class="dropdown-item">
-										<div class="icon">
-											<i data-feather="download"></i>
-										</div>
-										<div class="content">
-											<p>Download completed</p>
-											<p class="sub-text text-muted">6 hrs ago</p>
-										</div>
-									</a>
+									@endforeach
+									
 								</div>
 								<div class="dropdown-footer d-flex align-items-center justify-content-center">
 									<a href="javascript:;">View all</a>

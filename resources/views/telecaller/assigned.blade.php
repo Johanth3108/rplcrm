@@ -32,10 +32,10 @@
                             <tr>
                                 <td>{{$lead->id}}</td>
                                 <td>{{$lead->property_name}}</td>
-                                <td>{{$lead->state}}</td>
-                                <td>{{$lead->district}}</td>
-                                <td>{{$lead->prop_type}}</td>
-                                <td>{{$lead->lead_from}}</td>
+                                <td>{{App\Models\properties::where('propname', $lead->property_name)->get()->first()->state}}</td>
+                                <td>{{App\Models\properties::where('propname', $lead->property_name)->get()->first()->district}}</td>
+                                <td>{{App\Models\properties::where('propname', $lead->property_name)->get()->first()->prop_type}}</td>
+                                <td>{{App\Models\lead::where('property_name', $lead->property_name)->get()->first()->lead_from}}</td>
                                 <td>123456789</td>
                             </tr>
                             @endforeach

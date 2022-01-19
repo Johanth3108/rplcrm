@@ -30,7 +30,8 @@ class SalesexecutiveController extends Controller
 
     public function index()
     {
-        return view('salesexecutive.index');
+        $leads = lead::where('state', Auth::user()->state)->get();
+        return view('salesexecutive.index', compact('leads'));
     }
     public function profile()
     {

@@ -40,42 +40,43 @@
                 <h6 class="card-title">Employee details</h6>
                 <div class="table-responsive">
                     <table id="dataTableExample" class="table">
-                        <thead>
-                            <tr>
-                            <th>#id</th>
-                            <th>Employee name</th>
-                            <th>Mail id</th>
-                            <th>Contact number</th>
-                            <th>State</th>
-                            <th>District</th>
-                            <th>Department</th>
-                            <th>Position</th>
-                            <th>Current working lead</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($emps as $emp)
-                            <tr>
-                                <td>{{$emp->id}}</td>
-                                <td>{{$emp->name}}</td>
-                                <td>{{$emp->email}}</td>
-                                <td>{{$emp->contact_number}}</td>
-                                <td>{{$emp->state}}</td>
-                                <td>{{$emp->district}}</td>
-                                <td>{{$emp->department}}</td>
-                                
-                                @if ($emp->superadmin==true)
-                                <td>Super Admin</td>
-                                @elseif ($emp->salesmanager==true)
-                                <td>Sales Manager</td>
-                                @elseif ($emp->salesexecutive==true)
-                                <td>Sales Executive</td>
-                                @elseif ($emp->telecaller==true)
-                                <td>Telecaller</td>
-                                @endif
-                                <td>Housing.com <span class="badge badge-success">Active</span></td>
-                            </tr>
-                            @endforeach
+                      <thead>
+                          <tr>
+                          <th>#id</th>
+                          <th>Employee name</th>
+                          <th>Mail id</th>
+                          <th>Contact number</th>
+                          <th>Department</th>
+                          <th>Position</th>
+                          <th>District</th>
+                          <th>State</th>
+                          <th>Current working lead</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          @foreach ($emps as $emp)
+                          <tr>
+                              <td>{{$emp->id}}</td>
+                              <td>{{$emp->name}}</td>
+                              <td>{{$emp->email}}</td>
+                              <td>{{$emp->contact_number}}</td>
+                              <td>{{$emp->department}}</td>
+
+                              @if ($emp->superadmin==true)
+                              <td>Super Admin</td>
+                              @elseif ($emp->salesmanager==true)
+                              <td>Sales Manager</td>
+                              @elseif ($emp->salesexecutive==true)
+                              <td>Sales Executive</td>
+                              @elseif ($emp->telecaller==true)
+                              <td>Telecaller</td>
+                              @endif
+
+                              <td>{{$emp->district}}</td>
+                              <td>{{$emp->state}}</td>
+                              <td>Housing.com <span class="badge badge-success">active</span></td>
+                          </tr>
+                          @endforeach
                         </tbody>
                     </table>
                 </div>

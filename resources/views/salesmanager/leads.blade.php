@@ -50,41 +50,49 @@
                 <div class="table-responsive">
                     <table id="dataTableExample" class="table">
                         <thead>
-                            <tr>
+                          <tr>
                             <th>#id</th>
+                            <th>Owner name</th>
+                            <th>Contact number</th>
                             <th>Property name</th>
-                            <th>Address</th>
                             <th>State</th>
                             <th>District</th>
                             <th>Property type</th>
                             <th>Lead from</th>
+                            <th>Assigned Salesmanager</th>
+                            <th>Assigned Salesexecutive</th>
                             <th>Status</th>
-                            <th>Manage</th>
+                            <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($leads as $lead)
                             <tr>
-                                <td>{{$lead->id}}</td>
-                                <td>{{$lead->property_name}}</td>
-                                @if ($lead->address)
-                                <td>{{$lead->address}}</td>
-                                @else
-                                <td>[Address not available] Contact SalesManager for address.</td>
-                                @endif
-                                <td>{{$lead->state}}</td>
-                                <td>{{$lead->district}}</td>
-                                <td>{{$lead->prop_type}}</td>
-                                <td>{{$lead->lead_from}}</td>
+                              <td>{{$lead->id}}</td>
+                              <td>test owner</td>
+                              <td>123456789</td>
+                              <td>{{$lead->property_name}}</td>
+                              <td>{{$lead->state}}</td>
+                              <td>{{$lead->district}}</td>
+                              <td>{{$lead->prop_type}}</td>
 
-                                @if ($lead->status==1)
-                                <td class="text-success">Active</td>
-                                @elseif ($lead->status==2)
-                                <td class="text-warning">On-hold</td>
-                                @else
-                                <td class="text-danger">Rejected</td>
-                                @endif
-                                <td class="text-success"><a href="{{route('salesmanager.leads.view', $lead->id)}}" class="btn btn-info">View</a></td>
+                              @if ($lead->lead_from)
+                              <td>{{$lead->lead_from}}</td>
+                              @else
+                              <td>Manual</td>
+                              @endif
+                              <td>{{App\Models\User::where('id', $lead->assigned_man)->get()->first()->name}}</span></td>
+                              <td>{{App\Models\User::where('id', $lead->assigned_exe)->get()->first()->name}}</td>
+                              
+                              @if ($lead->status==1)
+                              <td class="text-success">Active</td>
+                              @elseif ($lead->status==2)
+                              <td class="text-warning">On-hold</td>
+                              @else
+                              <td class="text-danger">Rejected</td>
+                              @endif
+
+                              <td class="text-success"><a href="{{route('salesmanager.leads.view', $lead->id)}}" class="btn btn-info">View</a></td>
                             </tr>
                             @endforeach
                         </tbody>

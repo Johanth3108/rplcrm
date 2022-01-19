@@ -108,8 +108,9 @@ class SuperadminController extends Controller
 
     public function addlead()
     {
-        $prop_types = proptype::all();
-        return view('superadmin.addlead', compact('prop_types'));
+        $props = properties::all();
+        $users = User::all();
+        return view('superadmin.addlead', compact('props', 'users'));
     }
 
     public function profile()
@@ -125,14 +126,16 @@ class SuperadminController extends Controller
 
     public function savelead(Request $request)
     {
+        $prop= properties::where('id', $request->propname)->get()->first();
         $lead = new lead();
-        $lead->property_name = $request->property_name;
-        $lead->address = $request->address;
-        $lead->state = $request->state;
-        $lead->district = $request->district;
-        $lead->prop_type = $request->prop_type;
-        $lead->lead_from = $request->lead_from;
-        $lead->status = $request->status;
+        $lead->property_name = $prop->propname;
+        $lead->address = $prop->address;
+        $lead->state = $prop->state;
+        $lead->district = $prop->district;
+        $lead->prop_type = $prop->prop_type;
+        $lead->assigned_man = $request->salesman;
+        $lead->assigned_exe = $request->salesexe;
+        $lead->status = 1;
         $lead->save();
         return redirect()->route('admin.leads')->with('message', 'Added a lead successfully.');
     }
@@ -140,15 +143,26 @@ class SuperadminController extends Controller
     public function managelead($id)
     {
         $lead = lead::where('id', $id)->get()->first();
-        return view('superadmin.managelead', compact('lead'));
+        $prop_types = proptype::all();
+        $users = User::all();
+        $property = properties::where('propname', $lead->property_name)->get()->first();
+        $props = properties::all();
+        return view('superadmin.managelead', compact('lead', 'prop_types', 'users', 'props', 'property'));
     }
 
     public function updatelead(Request $request, $id)
     {
+        $prop = properties::where('id', $request->property_id)->get()->first();
         lead::where('id', $id)->update([
-            'property_name' => $request->property_name,
+            'property_name' => $prop->propname,
             'address' => $request->address,
-            'status' => $request->status
+            'state' => $request->state,
+            'district' => $request->district,
+            'prop_type' => $request->prop_type,
+            'assigned_man' => $request->salesman,
+            'assigned_exe' => $request->salesexe,
+            'status' => $request->status,
+            'feedback' => $request->feedback
         ]);
         return redirect()->route('admin.leads')->with('message', 'Lead updated successfully.');
     }
@@ -165,7 +179,7 @@ class SuperadminController extends Controller
             $superadmin = true;
             $salesmanager = false;
             $salesexecutive = false;
-            $truecaller = false;
+            $telecaller = false;
         }
         elseif ($request->position == 1) {
             $superadmin = false;
@@ -225,7 +239,8 @@ class SuperadminController extends Controller
     public function manageprop($id)
     {
         $prop = properties::where('id', $id)->get()->first();
-        return view('superadmin.manageprop', compact('prop'));
+        $prop_types = proptype::all();
+        return view('superadmin.manageprop', compact('prop', 'prop_types'));
     }
 
     public function updateprop(Request $request, $id)

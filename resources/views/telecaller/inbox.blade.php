@@ -33,7 +33,7 @@
                                 <td>{{$message->id}}</td>
                                 <td>{{$message->sender_name}}</td>
                                 <td>{{$message->message}}</td>
-                                <td><a href="{{route('telecaller.message.reply', $message->reciever_id)}}" class="btn btn-info">Reply</a></td>
+                                <td><a href="{{route('telecaller.message.reply', $message->sender_id)}}" class="btn btn-info">Reply</a></td>
                             </tr>
                             @endforeach
                         </tbody>

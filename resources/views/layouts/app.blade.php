@@ -11,11 +11,15 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
+    <link rel="stylesheet" href="{{asset('assets/vendors/core/core.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/fonts/feather-font/css/iconfont.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/vendors/flag-icon-css/css/flag-icon.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/vendors/mdi/css/materialdesignicons.min.css')}}">
+	<link rel="stylesheet" href="{{asset('assets/css/demo_1/style.css')}}">
+	<link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -24,6 +28,11 @@
     <main class="py-4">
         @yield('content')
     </main>
+    <script src="{{asset('assets/vendors/core/core.js')}}"></script>
+	<script src="{{asset('assets/vendors/feather-icons/feather.min.js')}}"></script>
+	<script src="{{asset('assets/js/template.js')}}"></script>
+
+
 
 </body>
 </html>

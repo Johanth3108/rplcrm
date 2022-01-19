@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }} | Salesmanager</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -134,12 +134,12 @@
 
 				@if ($manpage->gen_leads==true || $manpage->add_lead==true)
 				<li class="nav-item">
-				  <a class="nav-link" data-toggle="collapse" href="#tables" role="button" aria-expanded="false" aria-controls="tables">
+				  <a class="nav-link" data-toggle="collapse" href="#leads" role="button" aria-expanded="false" aria-controls="leads">
 					<i class="link-icon" data-feather="briefcase"></i>
 					<span class="link-title">Leads</span>
 					<i class="link-arrow" data-feather="chevron-down"></i>
 				  </a>
-				  <div class="collapse" id="tables">
+				  <div class="collapse" id="leads">
 					<ul class="nav sub-menu">
 						@if ($manpage->gen_leads==true)
 						<li class="nav-item">
@@ -148,7 +148,7 @@
 						@endif
 						@if ($manpage->add_lead==true)
 						<li class="nav-item">
-							<a href="{{route('salesmanager.addleads')}}" class="nav-link test">Add Lead</a>
+							<a href="{{route('salesmanager.addleads')}}" class="nav-link">Add Lead</a>
 					  	</li>
 						@endif
 					  

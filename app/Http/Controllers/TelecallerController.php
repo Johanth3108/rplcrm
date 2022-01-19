@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\assign;
 use App\Models\message;
+use App\Models\properties;
 use App\Models\telepage;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -44,6 +45,7 @@ class TelecallerController extends Controller
     public function assigned()
     {
         $leads = assign::where('employee_id', Auth::user()->id)->get();
+        // $property = properties::where('property_name', )
         return view('telecaller.assigned', compact('leads'));
     }
 

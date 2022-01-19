@@ -59,8 +59,8 @@
                           <th>#id</th>
                           <th>Property name</th>
                           <th>Address</th>
-                          <th>District</th>
                           <th>State</th>
+                          <th>District</th>
                           <th>Property type</th>
                           <th>Status</th>
                           <th>Owner</th>
@@ -74,8 +74,8 @@
                             <td>{{$prop->id}}</td>
                             <td>{{$prop->propname}}</td>
                             <td>{{$prop->address}}</td>
-                            <td>{{$prop->district}}</td>
                             <td>{{$prop->state}}</td>
+                            <td>{{$prop->district}}</td>
                             <td>{{$prop->prop_type}}</td>
                             @if ($prop->status=='active')
                             <td class="text-success">Active</td>

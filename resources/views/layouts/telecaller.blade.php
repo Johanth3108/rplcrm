@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }} | Telecaller</title>
 	<!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 	<link rel="stylesheet" href="{{asset('assets/vendors/core/core.css')}}">

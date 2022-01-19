@@ -37,8 +37,8 @@
                     </div>
                     <div class="form-group">
                         <label for="inputState">State</label>
-                        <select name="state" class="form-control" id="inputState">
-                          <option value="SelectState">Select State</option>
+                        <select name="state" class="form-control" id="inputState" required>
+                          <option value="">Select State</option>
                           <option value="Andra Pradesh">Andra Pradesh</option>
                           <option value="Arunachal Pradesh">Arunachal Pradesh</option>
                           <option value="Assam">Assam</option>
@@ -81,7 +81,7 @@
 
                     <div class="form-group">
                         <label for="inputDistrict">District</label>
-                        <select name="district" class="form-control" id="inputDistrict">
+                        <select name="district" class="form-control" id="inputDistrict" required>
                             <option value="">-- select one -- </option>
                         </select>
                     </div>
@@ -92,7 +92,7 @@
                     <div class="form-group">
                         <label for="exampleFormControlSelect1"> Property Type</label>
                         <select required name="prop_type" class="form-control" id="exampleFormControlSelect1">
-                            <option selected disabled>Select Property Type</option>
+                            <option value="" selected disabled>Select Property Type</option>
                             @foreach ($prop_types as $prop_type)
                             <option value="{{$prop_type->prop_type}}">{{$prop_type->prop_type}}</option>
                             @endforeach
@@ -101,7 +101,7 @@
                     <div class="form-group">
                         <label for="exampleFormControlSelect1"> Status</label>
                         <select required name="status" class="form-control" id="exampleFormControlSelect1">
-                            <option selected disabled value=null>Set current status of the property.</option>
+                            <option selected disabled value="">Set current status of the property.</option>
                             <option value="active">Active</option>
                             <option value="sold">Sold</option>
                         </select>
@@ -115,11 +115,7 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 <script>
 var AndraPradesh = ["Anantapur","Chittoor","East Godavari","Guntur","Kadapa","Krishna","Kurnool","Prakasam","Nellore","Srikakulam","Visakhapatnam","Vizianagaram","West Godavari"];
 var ArunachalPradesh = ["Anjaw","Changlang","Dibang Valley","East Kameng","East Siang","Kra Daadi","Kurung Kumey","Lohit","Longding","Lower Dibang Valley","Lower Subansiri","Namsai","Papum Pare","Siang","Tawang","Tirap","Upper Siang","Upper Subansiri","West Kameng","West Siang","Itanagar"];

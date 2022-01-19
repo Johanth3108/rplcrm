@@ -17,8 +17,16 @@
                 <form class="forms-sample" action="{{route('admin.updatelead', $lead->id)}}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="exampleInputUsername1">Property Name</label>
-                        <input type="text" class="form-control" name="property_name" value="{{$lead->property_name}}" name="property_name" id="exampleInputUsername1" autocomplete="off" placeholder="Property Name" required>
+                        <label for="exampleFormControlSelect1"> Property name</label>
+                        <select name="property_id" class="form-control" id="exampleFormControlSelect1" required>
+                            <option value="" disabled>Select a property</option>
+                            @foreach ($props as $prop)
+                            <option value="{{$prop->id}}" @if ($prop->propname==$property->propname)
+                                selected
+                            @endif>{{$prop->propname}}</option>
+                            @endforeach
+                            
+                        </select>
                     </div>
                     
                     <div class="form-group">
@@ -27,86 +35,136 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputUsername1">State</label>
-                        <input type="text" class="form-control" value="{{$lead->state}}" id="exampleInputUsername1" autocomplete="off" placeholder="Property Location" required disabled>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputUsername1">District</label>
-                        <input type="text" class="form-control" value="{{$lead->district}}" id="exampleInputUsername1" autocomplete="off" placeholder="Property Location" required disabled>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputUsername1">Property type</label>
-                        <input type="text" class="form-control" name="prop_type" value="{{$lead->prop_type}}" id="exampleInputUsername1" autocomplete="off" placeholder="Property Location" required disabled>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputUsername1">Lead from</label>
-                        <input type="text" class="form-control" value="{{$lead->lead_from}}" name="lead_from" id="exampleInputUsername1" autocomplete="off" placeholder="Property Location" required disabled>
-                    </div>
-
-                    {{-- <div class="form-group">
                         <label for="inputState">State</label>
-                        <select name="state" class="form-control" id="inputState">
-                          <option value="SelectState">Select State</option>
-                          <option value="Andra Pradesh">Andra Pradesh</option>
-                          <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                          <option value="Assam">Assam</option>
-                          <option value="Bihar">Bihar</option>
-                          <option value="Chhattisgarh">Chhattisgarh</option>
-                          <option value="Goa">Goa</option>
-                          <option value="Gujarat">Gujarat</option>
-                          <option value="Haryana">Haryana</option>
-                          <option value="Himachal Pradesh">Himachal Pradesh</option>
-                          <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-                          <option value="Jharkhand">Jharkhand</option>
-                          <option value="Karnataka">Karnataka</option>
-                          <option value="Kerala">Kerala</option>
-                          <option value="Madya Pradesh">Madya Pradesh</option>
-                          <option value="Maharashtra">Maharashtra</option>
-                          <option value="Manipur">Manipur</option>
-                          <option value="Meghalaya">Meghalaya</option>
-                          <option value="Mizoram">Mizoram</option>
-                          <option value="Nagaland">Nagaland</option>
-                          <option value="Orissa">Orissa</option>
-                          <option value="Punjab">Punjab</option>
-                          <option value="Rajasthan">Rajasthan</option>
-                          <option value="Sikkim">Sikkim</option>
-                          <option value="Tamil Nadu">Tamil Nadu</option>
-                          <option value="Telangana">Telangana</option>
-                          <option value="Tripura">Tripura</option>
-                          <option value="Uttarakhand">Uttarakhand</option>
-                          <option value="Uttar Pradesh">Uttar Pradesh</option>
-                          <option value="West Bengal">West Bengal</option>
+                        <select name="state" class="form-control" id="inputState" required>
+                          <option value="">Select State</option>
+                          <option value="Andra Pradesh" id="Andra Pradesh">Andra Pradesh</option>
+                          <option value="Arunachal Pradesh" id="Arunachal Pradesh">Arunachal Pradesh</option>
+                          <option value="Assam" id="Assam">Assam</option>
+                          <option value="Bihar" id="Bihar">Bihar</option>
+                          <option value="Chhattisgarh" id="Chhattisgarh">Chhattisgarh</option>
+                          <option value="Goa" id="Goa">Goa</option>
+                          <option value="Gujarat" id="Gujarat">Gujarat</option>
+                          <option value="Haryana" id="Haryana">Haryana</option>
+                          <option value="Himachal Pradesh" id="Himachal Pradesh">Himachal Pradesh</option>
+                          <option value="Jammu and Kashmir" id="Jammu and Kashmir">Jammu and Kashmir</option>
+                          <option value="Jharkhand" id="Jharkhand">Jharkhand</option>
+                          <option value="Karnataka" id="Karnataka">Karnataka</option>
+                          <option value="Kerala" id="Kerala">Kerala</option>
+                          <option value="Madya Pradesh" id="Madya Pradesh">Madya Pradesh</option>
+                          <option value="Maharashtra" id="Maharashtra">Maharashtra</option>
+                          <option value="Manipur" id="Manipur">Manipur</option>
+                          <option value="Meghalaya" id="Meghalaya">Meghalaya</option>
+                          <option value="Mizoram" id="Mizoram">Mizoram</option>
+                          <option value="Nagaland" id="Nagaland">Nagaland</option>
+                          <option value="Orissa" id="Orissa">Orissa</option>
+                          <option value="Punjab" id="Punjab">Punjab</option>
+                          <option value="Rajasthan" id="Rajasthan">Rajasthan</option>
+                          <option value="Sikkim" id="Sikkim">Sikkim</option>
+                          <option value="Tamil Nadu" id="Tamil Nadu">Tamil Nadu</option>
+                          <option value="Telangana" id="Telangana">Telangana</option>
+                          <option value="Tripura" id="Tripura">Tripura</option>
+                          <option value="Uttarakhand" id="Uttarakhand">Uttarakhand</option>
+                          <option value="Uttar Pradesh" id="Uttar Pradesh">Uttar Pradesh</option>
+                          <option value="West Bengal" id="West Bengal">West Bengal</option>
                           <option disabled style="background-color:#aaa; color:#fff">UNION Territories</option>
-                          <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-                          <option value="Chandigarh">Chandigarh</option>
-                          <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
-                          <option value="Daman and Diu">Daman and Diu</option>
-                          <option value="Delhi">Delhi</option>
-                          <option value="Lakshadeep">Lakshadeep</option>
-                          <option value="Pondicherry">Pondicherry</option>
+                          <option value="Andaman and Nicobar Islands" id="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                          <option value="Chandigarh" id="Chandigarh">Chandigarh</option>
+                          <option value="Dadar and Nagar Haveli" id="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                          <option value="Daman and Diu" id="Daman and Diu">Daman and Diu</option>
+                          <option value="Delhi" id="Delhi">Delhi</option>
+                          <option value="Lakshadeep" id="Lakshadeep">Lakshadeep</option>
+                          <option value="Pondicherry" id="Pondicherry">Pondicherry</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label for="inputDistrict">District</label>
-                        <select name="district" class="form-control" id="inputDistrict">
-                            <option value="">-- select one -- </option>
+                        <select name="district" class="form-control" id="inputDistrict" required>
+                            <option value="{{$lead->district}}" selected>{{$lead->district}} </option>
                         </select>
                     </div>
-                 --}}
 
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1"> Property Type</label>
+                        <select name="prop_type" class="form-control" id="exampleFormControlSelect1" required>
+                            <option value="">Select a property type</option>
+                            @foreach ($prop_types as $prop_type)
+                            <option value="{{$prop_type->prop_type}}" @if ($prop_type->prop_type==$lead->prop_type)
+                                selected
+                            @endif>{{$prop_type->prop_type}}</option>
+                            @endforeach
+                            
+                        </select>
+                    </div>
+
+                    
+
+                    {{-- <div class="form-group">
+                        <label for="exampleFormControlSelect1">From</label>
+                        <select required name="lead_from" class="form-control" id="exampleFormControlSelect1">
+                            <option selected disabled>Select user type</option>
+                            <option>99 acer </option>
+                            <option>Magic Brick </option>
+                            <option>Manual </option>
+                            <option>Housing.com</option>
+                            
+                        </select>
+                    </div> --}}
+                    <div class="form-group">
+                        <label for="salesman">Assigned salesmanager</label>
+                        <select name="salesman" class="form-control" id="salesman" required>
+                            <option value="" selected disabled>Assigning salesmanager</option>
+                            @foreach ($users as $user)
+                            @if ($user->salesmanager==true)
+                            <option value="{{$user->id}}"@if ($user->id==$lead->assigned_man) selected @endif>
+                                {{$user->name}}</option>
+                            @endif
+                            @endforeach
+                            
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="salesexe">Assigning salesexecutive</label>
+                        <select name="salesexe" class="form-control" id="salesexe" required>
+                            <option value="" selected disabled>Assigning salesexecutive</option>
+                            @foreach ($users as $user)
+                            @if ($user->salesexecutive==true)
+                            <option value="{{$user->id}}"@if ($user->id==$lead->assigned_exe) selected @endif>
+                                {{$user->name}}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                    </div>
 
                     <div class="form-group">
                         <label for="exampleFormControlSelect1"> Status</label>
                         <select required name="status" class="form-control" id="exampleFormControlSelect1">
-                            <option selected disabled value=null>Set current status of the property.</option>
-                            <option value="1">Active</option>
+                            @if ($lead->status==1)
+                            <option disabled value=null>Set current status of the property.</option>
+                            <option selected value="1">Active</option>
                             <option value="2">On-hold</option>
                             <option value="3">Rejected</option>
+                            @elseif ($lead->status==2)
+                            <option disabled value=null>Set current status of the property.</option>
+                            <option value="1">Active</option>
+                            <option selected value="2">On-hold</option>
+                            <option value="3">Rejected</option>
+                            @else
+                            <option disabled value=null>Set current status of the property.</option>
+                            <option value="1">Active</option>
+                            <option value="2">On-hold</option>
+                            <option selected value="3">Rejected</option>
+                            @endif
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputUsername1">Lead from</label>
+                        <input type="text" class="form-control" value="{{$lead->lead_from}}" name="lead_from" id="exampleInputUsername1" autocomplete="off" placeholder="Property Location" required disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="feedback">Feedback</label>
+                        <textarea name="feedback" id="feedback" class="form-control" cols="30" rows="10" placeholder="Leave your comments for this lead here...">{{$lead->feedback}}</textarea>
                     </div>
                 
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
@@ -117,14 +175,9 @@
     </div>
 </div>
 
-{{-- 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
 <script>
 var AndraPradesh = ["Anantapur","Chittoor","East Godavari","Guntur","Kadapa","Krishna","Kurnool","Prakasam","Nellore","Srikakulam","Visakhapatnam","Vizianagaram","West Godavari"];
 var ArunachalPradesh = ["Anjaw","Changlang","Dibang Valley","East Kameng","East Siang","Kra Daadi","Kurung Kumey","Lohit","Longding","Lower Dibang Valley","Lower Subansiri","Namsai","Papum Pare","Siang","Tawang","Tirap","Upper Siang","Upper Subansiri","West Kameng","West Siang","Itanagar"];
@@ -288,6 +341,8 @@ $("#inputState").change(function(){
   $("#inputDistrict").html(htmlString);
 
 });
+document.getElementById('{{$lead->state}}').selected = true;
+// console.log(document.querySelectorAll("input[value={{$lead->district}}]"));
 </script>
-     --}}
+    
 @endsection

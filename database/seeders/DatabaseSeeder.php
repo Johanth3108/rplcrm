@@ -105,7 +105,7 @@ class DatabaseSeeder extends Seeder
             $user->salesexecutive = 1;
             $user->telecaller = null;
             $user->state = 'Uttarakhand';
-            $user->district = 'Haridwar';
+            $user->district = 'Pithoragarh';
             $user->email_verified_at = now();
             $user->password = bcrypt('12345'); // RUN ```PHP ARTISAN TINKER``` IN YOUR TERMINAL, AND RUN ```HASH:MAKE('$YOUR PASSWORD')```
             $user->save();
@@ -204,131 +204,131 @@ class DatabaseSeeder extends Seeder
             $this->command->info("User: telecaller created.");
         }
 
-        $lead = lead::where('property_name', 'abc')->first();
-        if(!$lead){
-            $lead = new lead();
-            $lead->property_name = 'abc';
-            $lead->location = 'India';
-            $lead->state = 'Tamil Nadu';
-            $lead->district = 'Chennai';
-            $lead->prop_type = '2BHK';
-            $lead->lead_from = 'housing.com';
-            $lead->status = 1;
-            $lead->save();
-            $this->command->info("lead 1 created");
-        }
+        // $lead = lead::where('property_name', 'abc')->first();
+        // if(!$lead){
+        //     $lead = new lead();
+        //     $lead->property_name = 'abc';
+        //     $lead->location = 'India';
+        //     $lead->state = 'Tamil Nadu';
+        //     $lead->district = 'Chennai';
+        //     $lead->prop_type = '2BHK';
+        //     $lead->lead_from = 'housing.com';
+        //     $lead->status = 1;
+        //     $lead->save();
+        //     $this->command->info("lead 1 created");
+        // }
 
-        $lead = lead::where('property_name', 'cde')->first();
-        if(!$lead){
-            $lead = new lead();
-            $lead->property_name = 'cde';
-            $lead->location = 'India';
-            $lead->state = 'Tamil Nadu';
-            $lead->district = 'Chennai';
-            $lead->prop_type = '2BHK';
-            $lead->lead_from = 'housing.com';
-            $lead->status = 2;
-            $lead->save();
-            $this->command->info("lead 2 created");
-        }
+        // $lead = lead::where('property_name', 'cde')->first();
+        // if(!$lead){
+        //     $lead = new lead();
+        //     $lead->property_name = 'cde';
+        //     $lead->location = 'India';
+        //     $lead->state = 'Tamil Nadu';
+        //     $lead->district = 'Chennai';
+        //     $lead->prop_type = '2BHK';
+        //     $lead->lead_from = 'housing.com';
+        //     $lead->status = 2;
+        //     $lead->save();
+        //     $this->command->info("lead 2 created");
+        // }
 
-        $lead = lead::where('property_name', 'efg')->first();
-        if(!$lead){
-            $lead = new lead();
-            $lead->property_name = 'efg';
-            $lead->location = 'India';
-            $lead->state = 'Tamil Nadu';
-            $lead->district = 'Coimbatore';
-            $lead->prop_type = '2BHK';
-            $lead->lead_from = '99acres.com';
-            $lead->status = 3;
-            $lead->save();
-            $this->command->info("lead 3 created");
-        }
+        // $lead = lead::where('property_name', 'efg')->first();
+        // if(!$lead){
+        //     $lead = new lead();
+        //     $lead->property_name = 'efg';
+        //     $lead->location = 'India';
+        //     $lead->state = 'Tamil Nadu';
+        //     $lead->district = 'Coimbatore';
+        //     $lead->prop_type = '2BHK';
+        //     $lead->lead_from = '99acres.com';
+        //     $lead->status = 3;
+        //     $lead->save();
+        //     $this->command->info("lead 3 created");
+        // }
 
-        $lead = lead::where('property_name', 'hij')->first();
-        if(!$lead){
-            $lead = new lead();
-            $lead->property_name = 'hij';
-            $lead->location = 'India';
-            $lead->state = 'Gujarat';
-            $lead->district = 'Amreli';
-            $lead->prop_type = '2BHK';
-            $lead->lead_from = 'housing.com';
-            $lead->status = 3;
-            $lead->save();
-            $this->command->info("lead 4 created Gujarat");
-        }
+        // $lead = lead::where('property_name', 'hij')->first();
+        // if(!$lead){
+        //     $lead = new lead();
+        //     $lead->property_name = 'hij';
+        //     $lead->location = 'India';
+        //     $lead->state = 'Gujarat';
+        //     $lead->district = 'Amreli';
+        //     $lead->prop_type = '2BHK';
+        //     $lead->lead_from = 'housing.com';
+        //     $lead->status = 3;
+        //     $lead->save();
+        //     $this->command->info("lead 4 created Gujarat");
+        // }
 
-        $lead = lead::where('property_name', 'klm')->first();
-        if(!$lead){
-            $lead = new lead();
-            $lead->property_name = 'klm';
-            $lead->location = 'India';
-            $lead->state = 'Gujarat';
-            $lead->district = 'Aravalli';
-            $lead->prop_type = '2BHK';
-            $lead->lead_from = 'housing.com';
-            $lead->status = 2;
-            $lead->save();
-            $this->command->info("lead 5 created Gujarat");
-        }
+        // $lead = lead::where('property_name', 'klm')->first();
+        // if(!$lead){
+        //     $lead = new lead();
+        //     $lead->property_name = 'klm';
+        //     $lead->location = 'India';
+        //     $lead->state = 'Gujarat';
+        //     $lead->district = 'Aravalli';
+        //     $lead->prop_type = '2BHK';
+        //     $lead->lead_from = 'housing.com';
+        //     $lead->status = 2;
+        //     $lead->save();
+        //     $this->command->info("lead 5 created Gujarat");
+        // }
 
-        $lead = lead::where('property_name', 'nop')->first();
-        if(!$lead){
-            $lead = new lead();
-            $lead->property_name = 'nop';
-            $lead->location = 'India';
-            $lead->state = 'Gujarat';
-            $lead->district = 'Bhavnagar';
-            $lead->prop_type = '2BHK';
-            $lead->lead_from = '99acres.com';
-            $lead->status = 1;
-            $lead->save();
-            $this->command->info("lead 6 created Gujarat");
-        }
+        // $lead = lead::where('property_name', 'nop')->first();
+        // if(!$lead){
+        //     $lead = new lead();
+        //     $lead->property_name = 'nop';
+        //     $lead->location = 'India';
+        //     $lead->state = 'Gujarat';
+        //     $lead->district = 'Bhavnagar';
+        //     $lead->prop_type = '2BHK';
+        //     $lead->lead_from = '99acres.com';
+        //     $lead->status = 1;
+        //     $lead->save();
+        //     $this->command->info("lead 6 created Gujarat");
+        // }
 
-        $lead = lead::where('property_name', 'qrs')->first();
-        if(!$lead){
-            $lead = new lead();
-            $lead->property_name = 'qrs';
-            $lead->location = 'India';
-            $lead->state = 'Uttarakhand';
-            $lead->district = 'Haridwar';
-            $lead->prop_type = '2BHK';
-            $lead->lead_from = '99acres.com';
-            $lead->status = 2;
-            $lead->save();
-            $this->command->info("lead 7 created Uttarakhand");
-        }
+        // $lead = lead::where('property_name', 'qrs')->first();
+        // if(!$lead){
+        //     $lead = new lead();
+        //     $lead->property_name = 'qrs';
+        //     $lead->location = 'India';
+        //     $lead->state = 'Uttarakhand';
+        //     $lead->district = 'Haridwar';
+        //     $lead->prop_type = '2BHK';
+        //     $lead->lead_from = '99acres.com';
+        //     $lead->status = 2;
+        //     $lead->save();
+        //     $this->command->info("lead 7 created Uttarakhand");
+        // }
 
-        $lead = lead::where('property_name', 'tuv')->first();
-        if(!$lead){
-            $lead = new lead();
-            $lead->property_name = 'tuv';
-            $lead->location = 'India';
-            $lead->state = 'Uttarakhand';
-            $lead->district = 'Haridwar';
-            $lead->prop_type = '2BHK';
-            $lead->lead_from = 'housing.com';
-            $lead->status = 3;
-            $lead->save();
-            $this->command->info("lead 8 created Uttarakhand");
-        }
+        // $lead = lead::where('property_name', 'tuv')->first();
+        // if(!$lead){
+        //     $lead = new lead();
+        //     $lead->property_name = 'tuv';
+        //     $lead->location = 'India';
+        //     $lead->state = 'Uttarakhand';
+        //     $lead->district = 'Haridwar';
+        //     $lead->prop_type = '2BHK';
+        //     $lead->lead_from = 'housing.com';
+        //     $lead->status = 3;
+        //     $lead->save();
+        //     $this->command->info("lead 8 created Uttarakhand");
+        // }
 
-        $lead = lead::where('property_name', 'wxy')->first();
-        if(!$lead){
-            $lead = new lead();
-            $lead->property_name = 'wxy';
-            $lead->location = 'India';
-            $lead->state = 'Uttarakhand';
-            $lead->district = 'Champawat';
-            $lead->prop_type = '2BHK';
-            $lead->lead_from = '99acres.com';
-            $lead->status = 1;
-            $lead->save();
-            $this->command->info("lead 9 created Uttarakhand");
-        }
+        // $lead = lead::where('property_name', 'wxy')->first();
+        // if(!$lead){
+        //     $lead = new lead();
+        //     $lead->property_name = 'wxy';
+        //     $lead->location = 'India';
+        //     $lead->state = 'Uttarakhand';
+        //     $lead->district = 'Champawat';
+        //     $lead->prop_type = '2BHK';
+        //     $lead->lead_from = '99acres.com';
+        //     $lead->status = 1;
+        //     $lead->save();
+        //     $this->command->info("lead 9 created Uttarakhand");
+        // }
         $assign = assign::where('employee_id', '3')->first();
         if(!$assign){
             $assign = new assign();

@@ -41,7 +41,8 @@
                     <div class="form-group">
                         <label for="number">Assigning lead:</label>
                         <div class="form-group">
-                            <select name="lead" class="form-control" id="lead">
+                            <select name="lead" class="form-control" id="lead" required>
+                                    <option value="" selected disabled>Select a lead</option>
                                 @foreach ($leads as $lead)
                                     <option value="{{$lead->id}}">{{$lead->property_name}}, {{$lead->district}}, {{$lead->address}} <span class="badge badge-success">active</span></option>
                                 @endforeach
@@ -51,13 +52,15 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Assign to:</label>
                         <div class="form-group">
-                            <select name="telecaller" class="form-control" id="lead">
+                            <select name="telecaller" class="form-control" id="lead" required>
+                                    <option value="" selected disabled>Select a telecaller</option>
                                 @foreach ($telecallers as $telecaller)
                                     <option value="{{$telecaller->id}}">{{$telecaller->name}}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
+                    
                     
                     <button type="submit" class="btn btn-primary mr-2">Assign</button>
                 </form>

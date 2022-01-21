@@ -24,7 +24,7 @@
                             <th>#id</th>
                             <th>From</th>
                             <th>Message</th>
-                            {{-- <th>Action</th> --}}
+                            <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,7 +33,7 @@
                                 <td>{{$message->id}}</td>
                                 <td>{{$message->sender_name}}</td>
                                 <td>{{$message->message}}</td>
-                                {{-- <td><a href="#" class="btn btn-info">Manage</a></td> --}}
+                                <td><a href="{{route('admin.reply', $message->sender_id)}}" class="btn btn-info">Reply</a></td>
                             </tr>
                             @endforeach
                         </tbody>

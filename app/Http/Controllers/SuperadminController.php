@@ -15,9 +15,27 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UsersImport;
 use App\Exports\UsersExport;
+use App\Models\assign;
+use App\Models\exepage;
+use App\Models\manpage;
+use App\Models\telepage;
+use Illuminate\Support\Facades\View;
 
 class SuperadminController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {      
+            $noti = User::where('id', Auth::user()->id)->get()->first()->notification;
+            $messages = message::where('reciever_id', Auth::user()->id)->get();
+            view()->share('messsages', $messages);
+            view()->share('noti', $noti);
+            return $next($request);
+        });
+        
+        
+    }
     public function index()
     {
         $emps = User::all();
@@ -91,8 +109,10 @@ class SuperadminController extends Controller
 
     public function addlead()
     {
-        $prop_types = proptype::all();
-        return view('superadmin.addlead', compact('prop_types'));
+        $props = properties::all();
+        $users = User::all();
+        $assigns = assign::all();
+        return view('superadmin.addlead', compact('props', 'users', 'assigns'));
     }
 
     public function profile()
@@ -108,30 +128,52 @@ class SuperadminController extends Controller
 
     public function savelead(Request $request)
     {
+        $prop= properties::where('propname', $request->propname)->get()->first();
         $lead = new lead();
-        $lead->property_name = $request->property_name;
-        $lead->address = $request->address;
-        $lead->state = $request->state;
-        $lead->district = $request->district;
-        $lead->prop_type = $request->prop_type;
-        $lead->lead_from = $request->lead_from;
-        $lead->status = $request->status;
+        $lead->client_name = $request->client_name;
+        $lead->client_phn = $request->client_phn;
+        $lead->client_em = $request->client_em;
+        $lead->property_name = $prop->propname;
+        $lead->address = $prop->address;
+        $lead->state = $prop->state;
+        $lead->district = $prop->district;
+        $lead->prop_type = $prop->prop_type;
+        $lead->assigned_man = $request->salesman;
+        $lead->assigned_exe = $request->salesexe;
+        $lead->status = 1;
         $lead->save();
+        $assign = new assign();
+        $assign->property_name = $prop->propname;
+        $assign->employee_id = $request->salesexe;
+        $assign->salesmanager = $request->salesman;
+        $assign->salesexecutive = $request->salesexe;
+        $assign->save();
         return redirect()->route('admin.leads')->with('message', 'Added a lead successfully.');
     }
 
     public function managelead($id)
     {
         $lead = lead::where('id', $id)->get()->first();
-        return view('superadmin.managelead', compact('lead'));
+        $prop_types = proptype::all();
+        $users = User::all();
+        $property = properties::where('propname', $lead->property_name)->get()->first();
+        $props = properties::all();
+        return view('superadmin.managelead', compact('lead', 'prop_types', 'users', 'props', 'property'));
     }
 
     public function updatelead(Request $request, $id)
     {
+        $prop = properties::where('id', $request->property_id)->get()->first();
         lead::where('id', $id)->update([
-            'property_name' => $request->property_name,
+            'property_name' => $prop->propname,
             'address' => $request->address,
-            'status' => $request->status
+            'state' => $request->state,
+            'district' => $request->district,
+            'prop_type' => $request->prop_type,
+            'assigned_man' => $request->salesman,
+            'assigned_exe' => $request->salesexe,
+            'status' => $request->status,
+            'feedback' => $request->feedback
         ]);
         return redirect()->route('admin.leads')->with('message', 'Lead updated successfully.');
     }
@@ -148,7 +190,7 @@ class SuperadminController extends Controller
             $superadmin = true;
             $salesmanager = false;
             $salesexecutive = false;
-            $truecaller = false;
+            $telecaller = false;
         }
         elseif ($request->position == 1) {
             $superadmin = false;
@@ -188,7 +230,9 @@ class SuperadminController extends Controller
     public function addprop()
     {
         $prop_types = proptype::all();
-        return view('superadmin.addprop', compact('prop_types'));
+        $props = properties::all();
+        $users = User::all();
+        return view('superadmin.addprop', compact('prop_types', 'props', 'users'));
     }
 
     public function saveprop(Request $request)
@@ -202,13 +246,31 @@ class SuperadminController extends Controller
         $prop->owner = $request->owner;
         $prop->status = $request->status;
         $prop->save();
+        
+        $assign = new assign();
+        $assign->property_name = $request->propname;
+        $assign->employee_id = $request->salesexe;
+        $assign->salesmanager = $request->salesman;
+        $assign->salesexecutive = $request->salesexe;
+        $assign->save();
+        // $lead = new lead();
+        // $lead->property_name = $request->propname;
+        // $lead->address = $request->address;
+        // $lead->state = $request->state;
+        // $lead->district = $request->district;
+        // $lead->prop_type = $request->prop_type;
+        // $lead->assigned_man = $request->salesman;
+        // $lead->assigned_exe = $request->salesexe;
+        // $lead->status = 1;
+        // $lead->save();
         return redirect()->route('admin.properties')->with('message', 'Added a property successfully.');
     }
 
     public function manageprop($id)
     {
         $prop = properties::where('id', $id)->get()->first();
-        return view('superadmin.manageprop', compact('prop'));
+        $prop_types = proptype::all();
+        return view('superadmin.manageprop', compact('prop', 'prop_types'));
     }
 
     public function updateprop(Request $request, $id)
@@ -244,6 +306,12 @@ class SuperadminController extends Controller
         return view('superadmin.message', compact('users'));
     }
 
+    public function reply($id)
+    {
+        $reciever = User::where('id', $id)->get()->first();
+        return view('superadmin.reply', compact('reciever'));
+    }
+
     public function messagesend(Request $request)
     {
         // $reciever = User::where('id', $request->reciever)->get()->first();
@@ -272,5 +340,74 @@ class SuperadminController extends Controller
     public function propertydown()
     {
         return Excel::download(new PropertiesExport, 'properties-collection.csv');
+    }
+
+    public function manpage()
+    {
+        // dd($this->user);
+        return view('superadmin.manpage');
+    }
+
+    public function manpagesave(Request $request)
+    {
+        manpage::where('id', 1)->update([
+            'message' => $request->message,
+            'whatsapp' => $request->whatsapp,
+            'calendar' => $request->calendar,
+            'employees' => $request->employees,
+            'add_user' => $request->add_user,
+            'apex' => $request->apex,
+            'gen_leads' => $request->gen_leads,
+            'add_lead' => $request->add_lead,
+            'gen_prop' => $request->gen_prop,
+            'add_prop' => $request->add_prop
+        ]);
+        return redirect()->back()->with('message', 'Salesmanager portal updated successfully.');
+    }
+
+    public function exepage()
+    {
+        return view('superadmin.exepage');
+    }
+
+    public function exepagesave(Request $request)
+    {
+        exepage::where('id', 1)->update([
+            'message' => $request->message,
+            'whatsapp' => $request->whatsapp,
+            'calendar' => $request->calendar,
+            'employees' => $request->employees,
+            'add_user' => $request->add_user,
+            'apex' => $request->apex,
+            'gen_leads' => $request->gen_leads,
+            'add_lead' => $request->add_lead,
+            'gen_prop' => $request->gen_prop,
+            'add_prop' => $request->add_prop,
+            'assign' => $request->assign
+        ]);
+        return redirect()->back()->with('message', 'Salesexecutive portal updated successfully.');
+    }
+
+    public function telepage()
+    {
+        return view('superadmin.telepage');
+    }
+
+    public function telepagesave(Request $request)
+    {
+        telepage::where('id', 1)->update([
+            'message' => $request->message,
+            'whatsapp' => $request->whatsapp,
+            'calendar' => $request->calendar,
+            'employees' => $request->employees,
+            'add_user' => $request->add_user,
+            'apex' => $request->apex,
+            'gen_leads' => $request->gen_leads,
+            'add_lead' => $request->add_lead,
+            'gen_prop' => $request->gen_prop,
+            'add_prop' => $request->add_prop,
+            'assigned_leads' => $request->assigned_leads
+        ]);
+        return redirect()->back()->with('message', 'Telecaller portal updated successfully.');
     }
 }

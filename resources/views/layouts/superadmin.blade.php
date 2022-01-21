@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }} | Superadmin</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -237,13 +237,13 @@
             <div class="collapse" id="permissions">
               <ul class="nav sub-menu">
                 <li class="nav-item">
-                  <a href="#" class="nav-link">Sales manager</a>
+                  <a href="{{route('admin.manpage')}}" class="nav-link">Sales manager</a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link">Sales executive</a>
+                  <a href="{{route('admin.exepage')}}" class="nav-link">Sales executive</a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link">Telecaller</a>
+                  <a href="{{route('admin.telepage')}}" class="nav-link">Telecaller</a>
                 </li>
               </ul>
             </div>
@@ -277,67 +277,34 @@
 						</div>
 					</form> --}}
 					<ul class="navbar-nav">
-						
-						
-						
 						<li class="nav-item dropdown nav-notifications">
 							<a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<i data-feather="bell"></i>
+								@if ($noti>0)
 								<div class="indicator">
 									<div class="circle"></div>
 								</div>
+								@endif
+								
 							</a>
 							<div class="dropdown-menu" aria-labelledby="notificationDropdown">
 								<div class="dropdown-header d-flex align-items-center justify-content-between">
-									<p class="mb-0 font-weight-medium">6 New Notifications</p>
+									<p class="mb-0 font-weight-medium">{{count($messsages)}} New Notifications</p>
 									<a href="javascript:;" class="text-muted">Clear all</a>
 								</div>
 								<div class="dropdown-body">
-									<a href="javascript:;" class="dropdown-item">
-										<div class="icon">
-											<i data-feather="user-plus"></i>
-										</div>
-										<div class="content">
-											<p>New customer registered</p>
-											<p class="sub-text text-muted">2 sec ago</p>
-										</div>
-									</a>
-									<a href="javascript:;" class="dropdown-item">
-										<div class="icon">
-											<i data-feather="gift"></i>
-										</div>
-										<div class="content">
-											<p>New Order Recieved</p>
-											<p class="sub-text text-muted">30 min ago</p>
-										</div>
-									</a>
-									<a href="javascript:;" class="dropdown-item">
-										<div class="icon">
-											<i data-feather="alert-circle"></i>
-										</div>
-										<div class="content">
-											<p>Server Limit Reached!</p>
-											<p class="sub-text text-muted">1 hrs ago</p>
-										</div>
-									</a>
+									@foreach ($messsages as $message)
 									<a href="javascript:;" class="dropdown-item">
 										<div class="icon">
 											<i data-feather="layers"></i>
 										</div>
 										<div class="content">
-											<p>Apps are ready for update</p>
-											<p class="sub-text text-muted">5 hrs ago</p>
+											<p>{{$message->message}}</p>
+											<p class="sub-text text-muted">{{$message->sender_name}}</p>
 										</div>
 									</a>
-									<a href="javascript:;" class="dropdown-item">
-										<div class="icon">
-											<i data-feather="download"></i>
-										</div>
-										<div class="content">
-											<p>Download completed</p>
-											<p class="sub-text text-muted">6 hrs ago</p>
-										</div>
-									</a>
+									@endforeach
+									
 								</div>
 								<div class="dropdown-footer d-flex align-items-center justify-content-center">
 									<a href="javascript:;">View all</a>

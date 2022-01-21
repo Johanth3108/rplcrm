@@ -4,14 +4,7 @@
 @endsection
 
 @section('content')
-@if ($message = Session::get('success'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-	<strong>New Employee </strong>portal created!
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-		<span aria-hidden="true">&times;</span>
-	</button>
-</div>
-@endif
+
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -20,6 +13,14 @@
       <li class="breadcrumb-item active" aria-current="page">Add employee</li>
     </ol>
 </nav>
+@if ($message = Session::get('success'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+	<strong>New Employee </strong>portal created!
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+@endif
 <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
@@ -45,8 +46,8 @@
                     </div>
                     <div class="form-group">
                         <label for="inputState">State</label>
-                        <select name="state" class="form-control" id="inputState">
-                          <option value="SelectState">Select State</option>
+                        <select name="state" class="form-control" id="inputState" required>
+                          <option value="">Select State</option>
                           <option value="Andra Pradesh">Andra Pradesh</option>
                           <option value="Arunachal Pradesh">Arunachal Pradesh</option>
                           <option value="Assam">Assam</option>
@@ -89,14 +90,14 @@
 
                     <div class="form-group">
                         <label for="inputDistrict">District</label>
-                        <select name="district" class="form-control" id="inputDistrict">
+                        <select name="district" class="form-control" id="inputDistrict" required>
                             <option value="">-- select one -- </option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1"> Department</label>
                         <select required name="dept" class="form-control" id="exampleFormControlSelect1">
-                            <option selected disabled value=null>Select User Department</option>
+                            <option selected disabled value="">Select User Department</option>
                             <option value="sales">Sales  </option>
                             <option value="telecaller">Telecaller</option>
                             
@@ -106,7 +107,7 @@
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">User type</label>
                         <select required name="usrtype" class="form-control" id="exampleFormControlSelect1">
-                            <option selected disabled>Select user type</option>
+                            <option value="" selected disabled>Select user type</option>
                             <option value="0">Super Admin </option>
                             <option value="1">Sales Managers </option>
                             <option value="2">Sales Executive </option>
@@ -124,11 +125,7 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 <script>
 var AndraPradesh = ["Anantapur","Chittoor","East Godavari","Guntur","Kadapa","Krishna","Kurnool","Prakasam","Nellore","Srikakulam","Visakhapatnam","Vizianagaram","West Godavari"];
 var ArunachalPradesh = ["Anjaw","Changlang","Dibang Valley","East Kameng","East Siang","Kra Daadi","Kurung Kumey","Lohit","Longding","Lower Dibang Valley","Lower Subansiri","Namsai","Papum Pare","Siang","Tawang","Tirap","Upper Siang","Upper Subansiri","West Kameng","West Siang","Itanagar"];

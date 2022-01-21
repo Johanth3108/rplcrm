@@ -49,8 +49,9 @@
                             <th>Employee name</th>
                             <th>Mail id</th>
                             <th>Contact number</th>
-                            <th>Department</th>
                             <th>Position</th>
+                            <th>District</th>
+                            <th>State</th>
                             <th>Current working lead</th>
                             <th>Action</th>
                             </tr>
@@ -62,9 +63,7 @@
                                 <td>{{$emp->name}}</td>
                                 <td>{{$emp->email}}</td>
                                 <td>{{$emp->contact_number}}</td>
-                                <td>{{$emp->department}}</td>
 
-                                
                                 @if ($emp->superadmin==true)
                                 <td>Super Admin</td>
                                 @elseif ($emp->salesmanager==true)
@@ -74,6 +73,9 @@
                                 @elseif ($emp->telecaller==true)
                                 <td>Telecaller</td>
                                 @endif
+
+                                <td>{{$emp->district}}</td>
+                                <td>{{$emp->state}}</td>
                                 <td>Housing.com</td>
                                 <td><a href="{{route('admin.employeeedit', $emp->id)}}" class="btn btn-primary">Manage</a></td>
                             </tr>

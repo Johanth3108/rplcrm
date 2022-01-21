@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\assign;
 use App\Models\lead;
+use App\Models\manpage;
 use App\Models\message;
 use App\Models\properties;
+use App\Models\proptype;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,10 +16,25 @@ use PhpOption\None;
 
 class SalesmanagerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {      
+            $noti = User::where('id', Auth::user()->id)->get()->first()->notification;
+            $manpage = manpage::where('id', 1)->get()->first();
+            $messages = message::where('reciever_id', Auth::user()->id)->get();
+            view()->share('manpage', $manpage);
+            view()->share('messsages', $messages);
+            view()->share('noti', $noti);
+            return $next($request);
+        });
+        
+        
+    }
     public function index()
     {
         $leads = lead::where('state', Auth::user()->state)->get();
-        return view('salesmanager.index', compact('leads'));
+        $execnt = User::where('salesexecutive', true)->count();
+        return view('salesmanager.index', compact('leads', 'execnt'));
     }
 
     public function profile()
@@ -105,20 +122,23 @@ class SalesmanagerController extends Controller
 
     public function addleads()
     {
-        return view('salesmanager.addleads');
+        $props = properties::all();
+        $users = User::all();
+        return view('salesmanager.addleads', compact('props', 'users'));
     }
 
     public function addleadsave(Request $request)
     {
         // dd($request->state);
+        $prop= properties::where('id', $request->propname)->get()->first();
         $lead = new lead();
-        $lead->property_name = $request->property_name;
-        $lead->address = $request->address;
-        $lead->location = 'India';
-        $lead->state = $request->state;
-        $lead->district = $request->district;
-        $lead->prop_type = $request->prop_type;
-        $lead->lead_from = $request->lead_from;
+        $lead->property_name = $prop->propname;
+        $lead->address = $prop->address;
+        $lead->state = $prop->state;
+        $lead->district = $prop->district;
+        $lead->prop_type = $prop->prop_type;
+        $lead->assigned_man = $request->salesman;
+        $lead->assigned_exe = $request->salesexe;
         $lead->status = 1;
         $lead->save();
         return redirect()->route('salesmanager.addleads')->with('success', 'Added a new lead.');
@@ -139,13 +159,26 @@ class SalesmanagerController extends Controller
     public function leadsview($id)
     {
         $lead= lead::where('id', $id)->get()->first();
-        return view('salesmanager.leadview', compact('lead'));
+        $prop_types = proptype::all();
+        $users = User::all();
+        $property = properties::where('propname', $lead->property_name)->get()->first();
+        $props = properties::all();
+        return view('salesmanager.leadview', compact('lead', 'prop_types', 'users', 'props', 'property'));
     }
 
     public function leadssave($id, Request $request)
     {
+        $prop = properties::where('id', $request->property_id)->get()->first();
         lead::where('id', $id)->update([
-            'status' => $request->upstat
+            'property_name' => $prop->propname,
+            'address' => $request->address,
+            'state' => $request->state,
+            'district' => $request->district,
+            'prop_type' => $request->prop_type,
+            'assigned_man' => $request->salesman,
+            'assigned_exe' => $request->salesexe,
+            'status' => $request->status,
+            'feedback' => $request->feedback
         ]);
         return redirect()->route('salesmanager.leads')->with('message', 'Lead status updated successfully.');
     }
@@ -154,6 +187,12 @@ class SalesmanagerController extends Controller
     {
         $users = User::all();
         return view('salesmanager.pmessage', compact('users'));
+    }
+
+    public function pmessagereply($id)
+    {
+        $reciever = User::where('id', $id)->get()->first();
+        return view('salesmanager.reply', compact('reciever'));
     }
 
     public function pmessagesend(Request $request)
@@ -180,5 +219,24 @@ class SalesmanagerController extends Controller
     {
         $props = properties::all();
         return view('salesmanager.properties', compact('props'));
+    }
+
+    public function assigned()
+    {
+        $leads = assign::where('salesmanager', Auth::user()->id)->get();
+        // dd($leads);
+        // dd(lead::where('property_name', 'Magic')->get()->first());
+        // $i = 1;
+        // foreach ($leads as $lead) {
+        //     dd($lead->property_name);
+        //     dd(lead::where('property_name', $lead->property_name)->get()->first()->property_name);
+        //     dd(lead::where('property_name', $lead->property_name)->get()->first()->address);
+        //     dd(lead::where('property_name', $lead->property_name)->get()->first()->state);
+        //     dd(lead::where('property_name', $lead->property_name)->get()->first()->district);
+        //     dd(lead::where('property_name', $lead->property_name)->get()->first()->prop_type);
+        //     dd(lead::where('property_name', $lead->property_name)->get()->first()->lead_from);
+        // }
+        // dd(gettype($leads));
+        return view('salesmanager.assigned', compact('leads'));
     }
 }

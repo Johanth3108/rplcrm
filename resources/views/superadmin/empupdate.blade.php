@@ -19,40 +19,40 @@
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputUsername1">Name</label>
-                        <input name="name" type="text" value="{{$emp->name}}" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Name">
+                        <input name="name" type="text" value="{{$emp->name}}" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Name" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="exampleInputUsername1">Email</label>
-                        <input name="email" type="email" value="{{$emp->email}}" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Email">
+                        <input name="email" type="email" value="{{$emp->email}}" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Email" required>
                     </div>
 
                     <div class="form-group">
                         <label for="exampleInputUsername1">Contact number</label>
-                        <input name="contact" type="text" value="{{$emp->contact_number}}" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Property Location">
+                        <input name="contact" type="text" value="{{$emp->contact_number}}" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Contact number" required>
                     </div>
 
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="exampleInputUsername1">Current employee position</label>
                         @if ($emp->superadmin==true)
-                            <input type="text" value="Super admin" class="form-control" disabled id="exampleInputUsername1" autocomplete="off" placeholder="Property Location">
+                            <input type="text" value="Super admin" class="form-control" disabled id="exampleInputUsername1" autocomplete="off" placeholder="Property Location" required>
                         @elseif ($emp->salesmanager==true)
-                            <input type="text" value="Sales manager" class="form-control" disabled id="exampleInputUsername1" autocomplete="off" placeholder="Property Location">
+                            <input type="text" value="Sales manager" class="form-control" disabled id="exampleInputUsername1" autocomplete="off" placeholder="Property Location" required>
                         @elseif ($emp->salesexecutive==true)
-                            <input type="text" value="Sales executive" class="form-control" disabled id="exampleInputUsername1" autocomplete="off" placeholder="Property Location">
+                            <input type="text" value="Sales executive" class="form-control" disabled id="exampleInputUsername1" autocomplete="off" placeholder="Property Location" required>
                         @else
-                            <input type="text" value="Telecaller" class="form-control" disabled id="exampleInputUsername1" autocomplete="off" placeholder="Property Location">
+                            <input type="text" value="Telecaller" class="form-control" disabled id="exampleInputUsername1" autocomplete="off" placeholder="Property Location" required>
                         @endif
-                    </div>
+                    </div> --}}
                 
                     <div class="form-group">
                         <label for="exampleFormControlSelect1"> Change employee position</label>
                         <select name="position" class="form-control" id="exampleFormControlSelect1">
                             <option selected disabled>Select employee position</option>
-                            <option value="0">Superadmin </option>
-                            <option value="1">Sales manager</option>
-                            <option value="2">Sales executive </option>
-                            <option value="3">Telecaller</option>
+                            <option value="0" @if ($emp->superadmin==true) selected @endif>Superadmin </option>
+                            <option value="1" @if ($emp->salesmanager==true) selected @endif>Sales manager</option>
+                            <option value="2" @if ($emp->salesexecutive==true) selected @endif>Sales executive </option>
+                            <option value="3" @if ($emp->telecaller==true) selected @endif>Telecaller</option>
                         </select>
                     </div>
 

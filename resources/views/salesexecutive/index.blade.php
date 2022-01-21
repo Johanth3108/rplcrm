@@ -107,7 +107,7 @@
   <div class="col-md-8 grid-margin stretch-card">
       <div class="card">
           <div class="card-body">
-              <h6 class="card-title">Employee details</h6>
+              <h6 class="card-title">Leads</h6>
               <div class="table-responsive">
                   <table id="dataTableExample" class="table">
                       <thead>

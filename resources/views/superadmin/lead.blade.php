@@ -55,7 +55,7 @@
                         <thead>
                             <tr>
                             <th>#id</th>
-                            <th>Owner name</th>
+                            <th>Client name</th>
                             <th>Contact number</th>
                             <th>Property name</th>
                             <th>State</th>
@@ -72,8 +72,8 @@
                             @foreach ($leads as $lead)
                             <tr>
                                 <td>{{$lead->id}}</td>
-                                <td>test owner</td>
-                                <td>123456789</td>
+                                <td>{{$lead->client_name}}</td>
+                                <td>{{$lead->client_phn}}</td>
                                 <td>{{$lead->property_name}}</td>
                                 <td>{{$lead->state}}</td>
                                 <td>{{$lead->district}}</td>

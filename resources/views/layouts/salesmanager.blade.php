@@ -200,6 +200,12 @@
 					  </ul>
 					</div>
 				</li>
+				<li class="nav-item">
+					<a href="{{route('salesmanager.assigned')}}" class="nav-link">
+					<i class="link-icon" data-feather="pie-chart"></i>
+					<span class="link-title">Assigned Leads</span>
+					</a>
+				</li>
 				
 			  </ul>
 	  

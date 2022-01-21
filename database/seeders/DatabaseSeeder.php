@@ -329,33 +329,33 @@ class DatabaseSeeder extends Seeder
         //     $lead->save();
         //     $this->command->info("lead 9 created Uttarakhand");
         // }
-        $assign = assign::where('employee_id', '3')->first();
-        if(!$assign){
-            $assign = new assign();
-            $assign->employee_id = 3;
-            $assign->property_name = 'wxy';
-            $assign->salesexecutive = true;
-            $assign->save();
-            $this->command->info("assign 1 created.");
-        }
-        $assign = assign::where('employee_id', '3')->first();
-        if($assign){
-            $assign = new assign();
-            $assign->employee_id = 3;
-            $assign->property_name = 'tuv';
-            $assign->salesexecutive = true;
-            $assign->save();
-            $this->command->info("assign 1 created.");
-        }
-        $assign = assign::where('employee_id', '3')->first();
-        if($assign){
-            $assign = new assign();
-            $assign->employee_id = 3;
-            $assign->property_name = 'qrs';
-            $assign->salesexecutive = true;
-            $assign->save();
-            $this->command->info("assign 1 created.");
-        }
+        // $assign = assign::where('employee_id', '3')->first();
+        // if(!$assign){
+        //     $assign = new assign();
+        //     $assign->employee_id = 3;
+        //     $assign->property_name = 'wxy';
+        //     $assign->salesexecutive = true;
+        //     $assign->save();
+        //     $this->command->info("assign 1 created.");
+        // }
+        // $assign = assign::where('employee_id', '3')->first();
+        // if($assign){
+        //     $assign = new assign();
+        //     $assign->employee_id = 3;
+        //     $assign->property_name = 'tuv';
+        //     $assign->salesexecutive = true;
+        //     $assign->save();
+        //     $this->command->info("assign 1 created.");
+        // }
+        // $assign = assign::where('employee_id', '3')->first();
+        // if($assign){
+        //     $assign = new assign();
+        //     $assign->employee_id = 3;
+        //     $assign->property_name = 'qrs';
+        //     $assign->salesexecutive = true;
+        //     $assign->save();
+        //     $this->command->info("assign 1 created.");
+        // }
 
         $prop_type = proptype::where('prop_type', '2BHK')->first();
         if (!$prop_type) {

@@ -123,4 +123,11 @@ class SalesexecutiveController extends Controller
         $messages = message::where('reciever_id', Auth::user()->id)->get();
         return view('salesexecutive.inbox', compact('messages'));
     }
+
+    public function assigned()
+    {
+        $leads = assign::where('salesexecutive', Auth::user()->id)->get();
+        // lead::where('property_name')
+        return view('salesexecutive.assigned', compact('leads'));
+    }
 }

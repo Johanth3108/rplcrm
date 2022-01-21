@@ -15,6 +15,9 @@ class CreateLeadsTable extends Migration
     {
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
+            $table->string('client_name')->nullable();
+            $table->string('client_phn')->nullable();
+            $table->string('client_em')->nullable();
             $table->string('property_name');
             $table->text('address')->nullable();
             $table->string('location')->default('India');

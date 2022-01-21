@@ -17,8 +17,9 @@ class CreateAssignsTable extends Migration
             $table->id();
             $table->integer('employee_id');
             $table->string('property_name');
-            $table->boolean('salesexecutive')->nullable();
-            $table->boolean('telecaller')->nullable();
+            $table->integer('salesmanager')->nullable();
+            $table->integer('salesexecutive')->nullable();
+            $table->integer('telecaller')->nullable();
             $table->timestamps();
         });
     }

@@ -156,6 +156,13 @@
 						</a>
 					</li>
 				@endif
+
+				<li class="nav-item">
+					<a href="{{route('salesexecutive.assigned')}}" class="nav-link">
+					<i class="link-icon" data-feather="pie-chart"></i>
+					<span class="link-title">Assigned Leads</span>
+					</a>
+				</li>
 				
 				@if ($exepage->assign==true)
 				<li class="nav-item">
@@ -165,6 +172,8 @@
 					</a>
 				</li>
 				@endif
+
+				
 				
 
 				<li class="nav-item">

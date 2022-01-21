@@ -99,6 +99,30 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="salesman">Assigning salesmanager</label>
+                        <select name="salesman" class="form-control" id="salesman" required>
+                            <option value="" selected disabled>Select a salesmanager</option>
+                            @foreach ($users as $user)
+                            @if ($user->salesmanager==true)
+                            <option value="{{$user->id}}">{{$user->name}}</option>
+                            @endif
+                            @endforeach
+                            
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="salesexe">Assigning salesexecutive</label>
+                        <select name="salesexe" class="form-control" id="salesexe" required>
+                            <option value="" selected disabled>Select a salesexecutive</option>
+                            @foreach ($users as $user)
+                            @if ($user->salesexecutive==true)
+                            <option value="{{$user->id}}">{{$user->name}}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="exampleFormControlSelect1"> Status</label>
                         <select required name="status" class="form-control" id="exampleFormControlSelect1">
                             <option selected disabled value="">Set current status of the property.</option>

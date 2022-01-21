@@ -220,4 +220,23 @@ class SalesmanagerController extends Controller
         $props = properties::all();
         return view('salesmanager.properties', compact('props'));
     }
+
+    public function assigned()
+    {
+        $leads = assign::where('salesmanager', Auth::user()->id)->get();
+        // dd($leads);
+        // dd(lead::where('property_name', 'Magic')->get()->first());
+        // $i = 1;
+        // foreach ($leads as $lead) {
+        //     dd($lead->property_name);
+        //     dd(lead::where('property_name', $lead->property_name)->get()->first()->property_name);
+        //     dd(lead::where('property_name', $lead->property_name)->get()->first()->address);
+        //     dd(lead::where('property_name', $lead->property_name)->get()->first()->state);
+        //     dd(lead::where('property_name', $lead->property_name)->get()->first()->district);
+        //     dd(lead::where('property_name', $lead->property_name)->get()->first()->prop_type);
+        //     dd(lead::where('property_name', $lead->property_name)->get()->first()->lead_from);
+        // }
+        // dd(gettype($leads));
+        return view('salesmanager.assigned', compact('leads'));
+    }
 }

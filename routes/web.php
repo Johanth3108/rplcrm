@@ -76,6 +76,7 @@ Route::post('superadmin/telepage/save', [SuperadminController::class, 'telepages
 // salesmanager
 Route::get('salesmanager/home', [SalesmanagerController::class, 'index'])->name('salesmanager.home')->middleware('salesmanager');
 Route::get('salesmanager/profile', [SalesmanagerController::class, 'profile'])->name('salesmanager.profile')->middleware('salesmanager');
+Route::get('salesmanager/assigned', [SalesmanagerController::class, 'assigned'])->name('salesmanager.assigned')->middleware('salesmanager');
 Route::get('salesmanager/calender', [SalesmanagerController::class, 'calender'])->name('salesmanager.calender')->middleware('salesmanager');
 Route::get('salesmanager/message', [SalesmanagerController::class, 'message'])->name('salesmanager.message')->middleware('salesmanager');
 Route::post('salesmanager/message/send', [SalesmanagerController::class, 'send'])->name('salesmanager.message.send')->middleware('salesmanager');
@@ -101,6 +102,7 @@ Route::get('salesmanager/properties', [SalesmanagerController::class, 'propertie
 // salesexecutive
 Route::get('salesexecutive/home', [App\Http\Controllers\SalesexecutiveController::class, 'index'])->name('salesexecutive.home')->middleware('salesexecutive');
 Route::get('salesexecutive/profile', [SalesexecutiveController::class, 'profile'])->name('salesexecutive.profile')->middleware('salesexecutive');
+Route::get('salesexecutive/assigned', [SalesexecutiveController::class, 'assigned'])->name('salesexecutive.assigned')->middleware('salesexecutive');
 Route::get('salesexecutive/message', [SalesexecutiveController::class, 'message'])->name('salesexecutive.message')->middleware('salesexecutive');
 Route::get('salesexecutive/whatsapp', [SalesexecutiveController::class, 'whatsapp'])->name('salesexecutive.whatsapp')->middleware('salesexecutive');
 Route::get('salesexecutive/calender', [SalesexecutiveController::class, 'calender'])->name('salesexecutive.calender')->middleware('salesexecutive');

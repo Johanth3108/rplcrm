@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UsersImport;
 use App\Exports\UsersExport;
+use App\Models\assign;
 use App\Models\exepage;
 use App\Models\manpage;
 use App\Models\telepage;
@@ -110,7 +111,8 @@ class SuperadminController extends Controller
     {
         $props = properties::all();
         $users = User::all();
-        return view('superadmin.addlead', compact('props', 'users'));
+        $assigns = assign::all();
+        return view('superadmin.addlead', compact('props', 'users', 'assigns'));
     }
 
     public function profile()
@@ -126,8 +128,11 @@ class SuperadminController extends Controller
 
     public function savelead(Request $request)
     {
-        $prop= properties::where('id', $request->propname)->get()->first();
+        $prop= properties::where('propname', $request->propname)->get()->first();
         $lead = new lead();
+        $lead->client_name = $request->client_name;
+        $lead->client_phn = $request->client_phn;
+        $lead->client_em = $request->client_em;
         $lead->property_name = $prop->propname;
         $lead->address = $prop->address;
         $lead->state = $prop->state;
@@ -137,6 +142,12 @@ class SuperadminController extends Controller
         $lead->assigned_exe = $request->salesexe;
         $lead->status = 1;
         $lead->save();
+        $assign = new assign();
+        $assign->property_name = $prop->propname;
+        $assign->employee_id = $request->salesexe;
+        $assign->salesmanager = $request->salesman;
+        $assign->salesexecutive = $request->salesexe;
+        $assign->save();
         return redirect()->route('admin.leads')->with('message', 'Added a lead successfully.');
     }
 
@@ -219,7 +230,9 @@ class SuperadminController extends Controller
     public function addprop()
     {
         $prop_types = proptype::all();
-        return view('superadmin.addprop', compact('prop_types'));
+        $props = properties::all();
+        $users = User::all();
+        return view('superadmin.addprop', compact('prop_types', 'props', 'users'));
     }
 
     public function saveprop(Request $request)
@@ -233,6 +246,23 @@ class SuperadminController extends Controller
         $prop->owner = $request->owner;
         $prop->status = $request->status;
         $prop->save();
+        
+        $assign = new assign();
+        $assign->property_name = $request->propname;
+        $assign->employee_id = $request->salesexe;
+        $assign->salesmanager = $request->salesman;
+        $assign->salesexecutive = $request->salesexe;
+        $assign->save();
+        // $lead = new lead();
+        // $lead->property_name = $request->propname;
+        // $lead->address = $request->address;
+        // $lead->state = $request->state;
+        // $lead->district = $request->district;
+        // $lead->prop_type = $request->prop_type;
+        // $lead->assigned_man = $request->salesman;
+        // $lead->assigned_exe = $request->salesexe;
+        // $lead->status = 1;
+        // $lead->save();
         return redirect()->route('admin.properties')->with('message', 'Added a property successfully.');
     }
 

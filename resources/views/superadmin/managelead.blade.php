@@ -162,12 +162,9 @@
                         <label for="exampleInputUsername1">Lead from</label>
                         <input type="text" class="form-control" value="{{$lead->lead_from}}" name="lead_from" id="exampleInputUsername1" autocomplete="off" placeholder="Property Location" required disabled>
                     </div>
-                    <div class="form-group">
-                        <label for="feedback">Feedback</label>
-                        <textarea name="feedback" id="feedback" class="form-control" cols="30" rows="10" placeholder="Leave your comments for this lead here...">{{$lead->feedback}}</textarea>
-                    </div>
                 
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <a href="{{route('admin.deletelead', $lead->id)}}" id="delete" class="btn btn-danger mr-2">Delete</a>
                     <a href="{{URL::previous()}}" class="btn btn-light">Cancel</a>
                 </form>
             </div>
@@ -175,7 +172,33 @@
     </div>
 </div>
 
+<script>
+    $('#delete').on('click',function (e) {
+        e.preventDefault();
+        var self = $(this);
+        console.log(self.data('title'));
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    'Lead has been deleted.',
+                    'success'
+                )
+                // document.getElementById('form').submit();
+                location.href = self.attr('href');
+            }
+        })
 
+    })
+</script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
 <script>

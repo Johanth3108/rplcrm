@@ -58,8 +58,6 @@
                             <th>Client name</th>
                             <th>Contact number</th>
                             <th>Property name</th>
-                            <th>State</th>
-                            <th>District</th>
                             <th>Property type</th>
                             <th>Lead from</th>
                             <th>Assigned Salesmanager</th>
@@ -75,8 +73,6 @@
                                 <td>{{$lead->client_name}}</td>
                                 <td>{{$lead->client_phn}}</td>
                                 <td>{{$lead->property_name}}</td>
-                                <td>{{$lead->state}}</td>
-                                <td>{{$lead->district}}</td>
                                 <td>{{$lead->prop_type}}</td>
 
                                 @if ($lead->lead_from)
@@ -95,7 +91,7 @@
                                 <td class="text-danger">Rejected</td>
                                 @endif
 
-                                <td><a href="{{route('admin.managelead', $lead->id)}}" class="btn btn-info">Manage</a></td>
+                                <td><a href="{{route('admin.managelead', $lead->id)}}" class="btn btn-info mr-2">Manage</a><a href="{{route('admin.feedback', $lead->id)}}" class="btn btn-info mr-2">Feedbacks</a></td>
                             </tr>
                             @endforeach
                         </tbody>

@@ -16,7 +16,9 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UsersImport;
 use App\Exports\UsersExport;
 use App\Models\assign;
+use App\Models\assign_lead;
 use App\Models\exepage;
+use App\Models\feedback;
 use App\Models\manpage;
 use App\Models\telepage;
 use Illuminate\Support\Facades\View;
@@ -161,6 +163,12 @@ class SuperadminController extends Controller
         return view('superadmin.managelead', compact('lead', 'prop_types', 'users', 'props', 'property'));
     }
 
+    public function deletelead($id)
+    {
+        lead::where('id', $id)->delete();
+        return redirect()->route('admin.leads')->with('message', 'Deleted a lead successfully.');
+    }
+
     public function updatelead(Request $request, $id)
     {
         $prop = properties::where('id', $request->property_id)->get()->first();
@@ -253,16 +261,7 @@ class SuperadminController extends Controller
         $assign->salesmanager = $request->salesman;
         $assign->salesexecutive = $request->salesexe;
         $assign->save();
-        // $lead = new lead();
-        // $lead->property_name = $request->propname;
-        // $lead->address = $request->address;
-        // $lead->state = $request->state;
-        // $lead->district = $request->district;
-        // $lead->prop_type = $request->prop_type;
-        // $lead->assigned_man = $request->salesman;
-        // $lead->assigned_exe = $request->salesexe;
-        // $lead->status = 1;
-        // $lead->save();
+
         return redirect()->route('admin.properties')->with('message', 'Added a property successfully.');
     }
 
@@ -271,6 +270,18 @@ class SuperadminController extends Controller
         $prop = properties::where('id', $id)->get()->first();
         $prop_types = proptype::all();
         return view('superadmin.manageprop', compact('prop', 'prop_types'));
+    }
+
+    public function deleteprop($id)
+    {
+        $prop = properties::where('id', $id)->first();
+        $text = "Deleted ".$prop->propname." property successfully.";
+        $assign_delete = assign::where('property_name', $prop->propname)->get();
+        foreach ($assign_delete as $assign) {
+            $assign->delete();
+        }
+        $prop->delete();
+        return redirect()->route('admin.properties')->with('message', $text);
     }
 
     public function updateprop(Request $request, $id)
@@ -409,5 +420,22 @@ class SuperadminController extends Controller
             'assigned_leads' => $request->assigned_leads
         ]);
         return redirect()->back()->with('message', 'Telecaller portal updated successfully.');
+    }
+
+    public function feedback($id)
+    {
+        $feedbacks = feedback::where('lead_id', $id)->get();
+        $lead = lead::where('id', $id)->first();
+        return view('superadmin.feedback', compact('feedbacks', 'lead'));
+    }
+    public function feedbacksend(Request $request)
+    {
+        // dd($request);
+        $feedback = new feedback();
+        $feedback->lead_id = $request->lead_id;
+        $feedback->fb_name = $request->fb_name;
+        $feedback->message = $request->message;
+        $feedback->save();
+        return redirect()->back()->with('message', 'Feedback submitted successfully');
     }
 }

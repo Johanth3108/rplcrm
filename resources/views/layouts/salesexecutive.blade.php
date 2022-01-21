@@ -172,10 +172,7 @@
 					</a>
 				</li>
 				@endif
-
 				
-				
-
 				<li class="nav-item">
 					<a class="nav-link" data-toggle="collapse" href="#message" role="button" aria-expanded="false" aria-controls="message">
 					  <i class="link-icon" data-feather="server"></i>

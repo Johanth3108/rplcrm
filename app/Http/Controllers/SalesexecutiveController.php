@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\assign;
 use App\Models\exepage;
+use App\Models\feedback;
 use App\Models\lead;
 use App\Models\message;
 use App\Models\User;
@@ -58,11 +59,13 @@ class SalesexecutiveController extends Controller
     {
         $telecallers = User::where('telecaller', true)->get();
         $leads = lead::where('district', Auth::user()->district)->get();
-        return view('salesexecutive.assign', compact('telecallers','leads'));
+        $a_leads = lead::where('assigned_exe', Auth::user()->id)->get();
+        return view('salesexecutive.assign', compact('telecallers','leads', 'a_leads'));
     }
     public function assignsend(Request $request)
     {
         $lead = lead::where('id', $request->lead)->get()->first();
+        $lead->update(['assigned_tele'=>$request->telecaller]);
         $telecaller = User::where('id', $request->telecaller)->get()->first();
         $assign = new assign();
         $assign->employee_id = $telecaller->id;
@@ -126,8 +129,25 @@ class SalesexecutiveController extends Controller
 
     public function assigned()
     {
-        $leads = assign::where('salesexecutive', Auth::user()->id)->get();
+        $leads = lead::where('assigned_exe', Auth::user()->id)->get();
         // lead::where('property_name')
         return view('salesexecutive.assigned', compact('leads'));
+    }
+
+    public function feedback($id)
+    {
+        $feedbacks = feedback::where('lead_id', $id)->get();
+        $lead = lead::where('id', $id)->first();
+        return view('salesexecutive.feedback', compact('feedbacks', 'lead'));
+    }
+
+    public function feedbacksend(Request $request)
+    {
+        $feedback = new feedback();
+        $feedback->lead_id = $request->lead_id;
+        $feedback->fb_name = $request->fb_name;
+        $feedback->message = $request->message;
+        $feedback->save();
+        return redirect()->back()->with('message', 'Feedback submitted successfully');
     }
 }

@@ -44,34 +44,38 @@
                         <thead>
                             <tr>
                             <th>#id</th>
+                            <th>Client name</th>
+                            <th>Contact number</th>
+                            <th>Email</th>
                             <th>Property name</th>
                             <th>Address</th>
-                            <th>State</th>
-                            <th>District</th>
                             <th>Property type</th>
                             <th>Lead from</th>
                             <th>Status</th>
-                            {{-- <th>Manage</th> --}}
+                            <th>Manage</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($leads as $lead)
                             <tr>
-                                <td>{{App\Models\lead::where('property_name', $lead->property_name)->get()->first()->id}}</td>
-                                <td>{{App\Models\lead::where('property_name', $lead->property_name)->get()->first()->property_name}}</td>
-                                <td>{{App\Models\lead::where('property_name', $lead->property_name)->get()->first()->address}}</td>
-                                <td>{{App\Models\lead::where('property_name', $lead->property_name)->get()->first()->state}}</td>
-                                <td>{{App\Models\lead::where('property_name', $lead->property_name)->get()->first()->district}}</td>
-                                <td>{{App\Models\lead::where('property_name', $lead->property_name)->get()->first()->prop_type}}</td>
-                                <td>{{App\Models\lead::where('property_name', $lead->property_name)->get()->first()->lead_from}}</td>
+                                <td>{{$lead->id}}</td>
+                                <td>{{$lead->client_name}}</td>
+                                <td>{{$lead->client_phn}}</td>
+                                <td>{{$lead->client_em}}</td>
+                                <td>{{$lead->property_name}}</td>
+                                <td>{{$lead->address}}</td>
+                                <td>{{$lead->prop_type}}</td>
+                                <td>{{$lead->lead_from}}</td>
 
-                                @if (App\Models\lead::where('property_name', $lead->property_name)->get()->first()->status==1)
+                                @if ($lead->status==1)
                                 <td class="text-success">Active</td>
-                                @elseif (App\Models\lead::where('property_name', $lead->property_name)->get()->first()->status==2)
+                                @elseif ($lead->status==2)
                                 <td class="text-warning">On-hold</td>
                                 @else
                                 <td class="text-danger">Rejected</td>
                                 @endif
+
+                                <td><a href="{{route('salesexecutive.feedback', $lead->id)}}" class="btn btn-info mr-2">Feedbacks</a></td>
                                 {{-- <td class="text-success"><a href="{{route('salesexecutive.leads.view', $lead->id)}}" class="btn btn-info">View</a></td> --}}
                             </tr>
                             @endforeach

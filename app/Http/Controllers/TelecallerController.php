@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\assign;
+use App\Models\feedback;
+use App\Models\lead;
 use App\Models\message;
 use App\Models\properties;
 use App\Models\telepage;
@@ -44,7 +46,7 @@ class TelecallerController extends Controller
 
     public function assigned()
     {
-        $leads = assign::where('employee_id', Auth::user()->id)->get();
+        $leads = lead::where('assigned_tele', Auth::user()->id)->get();
         // $property = properties::where('property_name', )
         return view('telecaller.assigned', compact('leads'));
     }
@@ -79,5 +81,22 @@ class TelecallerController extends Controller
     {
         $messages = message::where('reciever_id', Auth::user()->id)->get();
         return view('telecaller.inbox', compact('messages'));
+    }
+
+    public function feedback($id)
+    {
+        $feedbacks = feedback::where('lead_id', $id)->get();
+        $lead = lead::where('id', $id)->first();
+        return view('telecaller.feedback', compact('feedbacks', 'lead'));
+    }
+
+    public function feedbacksend(Request $request)
+    {
+        $feedback = new feedback();
+        $feedback->lead_id = $request->lead_id;
+        $feedback->fb_name = $request->fb_name;
+        $feedback->message = $request->message;
+        $feedback->save();
+        return redirect()->back()->with('message', 'Feedback submitted successfully');
     }
 }

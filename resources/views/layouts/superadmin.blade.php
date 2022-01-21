@@ -10,6 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }} | Superadmin</title>
 
     <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
 	<link rel="stylesheet" href="{{asset('assets/vendors/core/core.css')}}">
 	<link rel="stylesheet" href="{{asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
@@ -88,7 +89,7 @@
         </main>
     </div>
 </body> --}}
-<body class="sidebar-dark">
+<body class="sidebar-dark" id="body">
 	<div class="main-wrapper">
 
 		<!-- partial:partials/_sidebar.html -->
@@ -366,11 +367,6 @@
 			@yield('content')
 		</main>
         </div>
-
-        
-
-        
-
 			</div>
 
 			{{-- <!-- partial:partials/_footer.html -->
@@ -382,6 +378,9 @@
 		 --}}
 		</div>
 	</div>
+  
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 	<script src="{{asset('assets/vendors/core/core.js')}}"></script>
 	<script src="{{asset('assets/vendors/feather-icons/feather.min.js')}}"></script>
 	<script src="{{asset('assets/js/template.js')}}"></script>
@@ -400,6 +399,8 @@
 	<script src="{{asset('assets/js/apexcharts.js')}}"></script>
 
 	<script src="{{asset('assets/vendors/progressbar.js/progressbar.min.js')}}"></script>
+  
+
 
 </body>
 </html>

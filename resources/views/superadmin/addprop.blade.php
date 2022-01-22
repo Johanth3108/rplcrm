@@ -113,15 +113,25 @@
 
                     <div class="form-group">
                         <label for="salesexe">Assigning salesexecutive</label>
-                        <select name="salesexe" class="form-control" id="salesexe" required>
-                            <option value="" selected disabled>Select a salesexecutive</option>
+                        <select name="salesexe" class="form-control" id="salesexe" required multiple onchange="myFunction();">
+                            {{-- <option value="" selected disabled>Select a salesexecutive</option> --}}
                             @foreach ($users as $user)
                             @if ($user->salesexecutive==true)
                             <option value="{{$user->id}}">{{$user->name}}</option>
                             @endif
                             @endforeach
                         </select>
+                        <input type="text" name="exe" id="exe" hidden>
                     </div>
+                    <script>
+                        function myFunction() {
+                            console.log(Array.from(document.getElementById("salesexe").options).filter(option => option.selected).map(option => option.value));
+                            document.getElementById("exe").value = Array.from(document.getElementById("salesexe").options).filter(option => option.selected).map(option => option.value);
+                            console.log(document.getElementById("exe").value);
+                            // console.log([...select.options].filter(option => option.selected).map(option => option.value));
+                            // document.getElementById("exe").value = Array.from(this.selectedOptions).map(x=>x.value??x.text);
+                        }
+                    </script>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1"> Status</label>
                         <select required name="status" class="form-control" id="exampleFormControlSelect1">
@@ -130,6 +140,9 @@
                             <option value="sold">Sold</option>
                         </select>
                     </div>
+
+
+
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                 </form>
             </div>
@@ -139,6 +152,8 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+<script src="{{asset('multiselect/multiselect-dropdown.js')}}"></script>
 
 <script>
 var AndraPradesh = ["Anantapur","Chittoor","East Godavari","Guntur","Kadapa","Krishna","Kurnool","Prakasam","Nellore","Srikakulam","Visakhapatnam","Vizianagaram","West Godavari"];

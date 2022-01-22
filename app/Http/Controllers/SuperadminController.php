@@ -114,7 +114,13 @@ class SuperadminController extends Controller
         $props = properties::all();
         $users = User::all();
         $assigns = assign::all();
-        return view('superadmin.addlead', compact('props', 'users', 'assigns'));
+        $assign_exes = array();
+        foreach ($assigns as $assign) {
+            array_push($assign_exes, explode(",", $assign->salesexecutive));
+        }
+        // $assign_exes = explode(",", $assigns->salesexecutive);
+        // dd($assign_exes[0]);
+        return view('superadmin.addlead', compact('props', 'users', 'assigns', 'assign_exes'));
     }
 
     public function profile()
@@ -245,6 +251,7 @@ class SuperadminController extends Controller
 
     public function saveprop(Request $request)
     {
+        // dd(($request->exe));
         $prop = new properties();
         $prop->propname = $request->propname;
         $prop->address = $request->address;
@@ -259,7 +266,7 @@ class SuperadminController extends Controller
         $assign->property_name = $request->propname;
         $assign->employee_id = $request->salesexe;
         $assign->salesmanager = $request->salesman;
-        $assign->salesexecutive = $request->salesexe;
+        $assign->salesexecutive = $request->exe;
         $assign->save();
 
         return redirect()->route('admin.properties')->with('message', 'Added a property successfully.');

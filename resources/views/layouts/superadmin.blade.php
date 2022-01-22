@@ -10,6 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }} | Superadmin</title>
 
     <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
 	<link rel="stylesheet" href="{{asset('assets/vendors/core/core.css')}}">
 	<link rel="stylesheet" href="{{asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
@@ -88,7 +89,7 @@
         </main>
     </div>
 </body> --}}
-<body class="sidebar-dark">
+<body class="sidebar-dark" id="body">
 	<div class="main-wrapper">
 
 		<!-- partial:partials/_sidebar.html -->
@@ -266,16 +267,13 @@
 					<i data-feather="menu"></i>
 				</a>
 				<div class="navbar-content">
-					{{-- <form class="search-form">
+					<form class="search-form">
 						<div class="input-group">
 							<div class="input-group-prepend">
-								<div class="input-group-text">
-									<i data-feather="search"></i>
-								</div>
+                <iframe src="https://free.timeanddate.com/clock/i85z25nz/n553/fs22/ftb/pa0/tt0/tw1/th2/ta1" frameborder="0" width="404" height="26"></iframe>
 							</div>
-							<input type="text" class="form-control" id="navbarForm" placeholder="Search here...">
 						</div>
-					</form> --}}
+					</form>
 					<ul class="navbar-nav">
 						<li class="nav-item dropdown nav-notifications">
 							<a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -366,11 +364,6 @@
 			@yield('content')
 		</main>
         </div>
-
-        
-
-        
-
 			</div>
 
 			{{-- <!-- partial:partials/_footer.html -->
@@ -382,6 +375,9 @@
 		 --}}
 		</div>
 	</div>
+  
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 	<script src="{{asset('assets/vendors/core/core.js')}}"></script>
 	<script src="{{asset('assets/vendors/feather-icons/feather.min.js')}}"></script>
 	<script src="{{asset('assets/js/template.js')}}"></script>
@@ -400,6 +396,8 @@
 	<script src="{{asset('assets/js/apexcharts.js')}}"></script>
 
 	<script src="{{asset('assets/vendors/progressbar.js/progressbar.min.js')}}"></script>
+  
+
 
 </body>
 </html>

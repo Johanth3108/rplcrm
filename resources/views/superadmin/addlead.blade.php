@@ -3,7 +3,7 @@
 @section('content')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{{route('admin.home')}}">RPL CRM</a></li>
+      <li class="breadcrumb-item"><a href="{{route('admin.home')}}">SAGI CRM</a></li>
       <li class="breadcrumb-item"><a href="#">Leads</a></li>
       <li class="breadcrumb-item active" aria-current="page">Add leads</li>
     </ol>
@@ -54,12 +54,11 @@
 
                     <div class="form-group">
                         <label for="salesexe">Assigning salesexecutive</label>
-                        <select name="salesexe" class="form-control" id="salesexe" required>
-                            <option value="" selected disabled>Select a salesexecutive</option>
+                        <select name="salesexe" class="form-control" id="salesexe" required multiple>
                             @foreach ($users as $user)
-                            @if ($user->salesexecutive==true)
-                            <option value="{{$user->id}}" id="{{$user->id}}">{{$user->name}}</option>
-                            @endif
+                                @if ($user->salesexecutive==true)
+                                <option value="{{$user->id}}" id="{{$user->id}}">{{$user->name}}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>
@@ -72,14 +71,17 @@
     </div>
 </div>
 
+<script src="{{asset('multiselect/multiselect-dropdown.js')}}"></script>
+
 <script>
     function change() {
         var x = document.getElementById("propname").value;
-
+        {{$i=0}}
         @foreach ($assigns as $assign)
         if (x=='{{$assign->property_name}}') {
             document.getElementById("{{$assign->salesmanager}}").selected = true;
-            document.getElementById("{{$assign->salesexecutive}}").selected = true;
+            document.getElementById("5").selected = true;
+            $assign_exes[0];
         }
         @endforeach
     }

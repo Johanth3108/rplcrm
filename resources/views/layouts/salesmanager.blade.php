@@ -222,16 +222,13 @@
 					<i data-feather="menu"></i>
 				</a>
 				<div class="navbar-content">
-					{{-- <form class="search-form">
+					<form class="search-form">
 						<div class="input-group">
 							<div class="input-group-prepend">
-								<div class="input-group-text">
-									<i data-feather="search"></i>
-								</div>
+								<iframe src="https://free.timeanddate.com/clock/i85z25nz/n553/fs22/ftb/pa0/tt0/tw1/th2/ta1" frameborder="0" width="404" height="26"></iframe>
 							</div>
-							<input type="text" class="form-control" id="navbarForm" placeholder="Search here...">
 						</div>
-					</form> --}}
+					</form>
 					<ul class="navbar-nav">
 						
 						<li class="nav-item dropdown nav-notifications">

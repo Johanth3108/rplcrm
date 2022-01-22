@@ -17,7 +17,7 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{route('admin.home')}}">SAGI CRM</a></li>
       <li class="breadcrumb-item"><a href="#">Properties</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Add properties</li>
+      <li class="breadcrumb-item active" aria-current="page">Manage properties</li>
     </ol>
 </nav>
 <div class="row">
@@ -25,7 +25,7 @@
         <div class="card">
             <div class="card-body">
                 <h6 class="card-title">Manage a property.</h6>
-                <form class="forms-sample" action="{{route('admin.updateprop', $prop->id)}}" method="POST">
+                <form class="forms-sample" action="{{route('admin.updateprop', $prop->id)}}" method="POST" id="form">
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputUsername1">Property Name</label>
@@ -107,12 +107,41 @@
                             <option value="sold">Sold</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button type="submit" id="submit" class="btn btn-primary mr-2">Submit</button>
+                    <a href="{{route('admin.deleteprop', $prop->id)}}" id="delete" class="btn btn-danger mr-2">Delete</a>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $('#delete').on('click',function (e) {
+        e.preventDefault();
+        var self = $(this);
+        console.log(self.data('title'));
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    'Property has been deleted.',
+                    'success'
+                )
+                // document.getElementById('form').submit();
+                location.href = self.attr('href');
+            }
+        })
+
+    })
+</script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

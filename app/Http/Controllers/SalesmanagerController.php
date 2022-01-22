@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\assign;
+use App\Models\feedback;
 use App\Models\lead;
 use App\Models\manpage;
 use App\Models\message;
 use App\Models\properties;
 use App\Models\proptype;
 use App\Models\User;
+use ArrayObject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use PhpOption\None;
@@ -223,20 +226,24 @@ class SalesmanagerController extends Controller
 
     public function assigned()
     {
-        $leads = assign::where('salesmanager', Auth::user()->id)->get();
-        // dd($leads);
-        // dd(lead::where('property_name', 'Magic')->get()->first());
-        // $i = 1;
-        // foreach ($leads as $lead) {
-        //     dd($lead->property_name);
-        //     dd(lead::where('property_name', $lead->property_name)->get()->first()->property_name);
-        //     dd(lead::where('property_name', $lead->property_name)->get()->first()->address);
-        //     dd(lead::where('property_name', $lead->property_name)->get()->first()->state);
-        //     dd(lead::where('property_name', $lead->property_name)->get()->first()->district);
-        //     dd(lead::where('property_name', $lead->property_name)->get()->first()->prop_type);
-        //     dd(lead::where('property_name', $lead->property_name)->get()->first()->lead_from);
-        // }
-        // dd(gettype($leads));
+        $leads = lead::where('assigned_man', Auth::user()->id)->get();
         return view('salesmanager.assigned', compact('leads'));
+    }
+
+    public function feedback($id)
+    {
+        $feedbacks = feedback::where('lead_id', $id)->get();
+        $lead = lead::where('id', $id)->first();
+        return view('salesmanager.feedback', compact('feedbacks', 'lead'));
+    }
+
+    public function feedbacksend(Request $request)
+    {
+        $feedback = new feedback();
+        $feedback->lead_id = $request->lead_id;
+        $feedback->fb_name = $request->fb_name;
+        $feedback->message = $request->message;
+        $feedback->save();
+        return redirect()->back()->with('message', 'Feedback submitted successfully');
     }
 }

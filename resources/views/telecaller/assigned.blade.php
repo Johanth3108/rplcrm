@@ -18,25 +18,38 @@
                     <table id="dataTableExample" class="table">
                         <thead>
                             <tr>
-                            <th>#id</th>
-                            <th>Property name</th>
-                            <th>State</th>
-                            <th>District</th>
-                            <th>Property type</th>
-                            <th>Lead from</th>
-                            <th>Contact number</th>
+                                <th>#id</th>
+                                <th>Client name</th>
+                                <th>Contact number</th>
+                                <th>Email</th>
+                                <th>Property name</th>
+                                <th>Address</th>
+                                <th>Property type</th>
+                                <th>Lead from</th>
+                                <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($leads as $lead)
                             <tr>
                                 <td>{{$lead->id}}</td>
+                                <td>{{$lead->client_name}}</td>
+                                <td>{{$lead->client_phn}}</td>
+                                <td>{{$lead->client_em}}</td>
                                 <td>{{$lead->property_name}}</td>
-                                <td>{{App\Models\properties::where('propname', $lead->property_name)->get()->first()->state}}</td>
-                                <td>{{App\Models\properties::where('propname', $lead->property_name)->get()->first()->district}}</td>
-                                <td>{{App\Models\properties::where('propname', $lead->property_name)->get()->first()->prop_type}}</td>
-                                <td>{{App\Models\lead::where('property_name', $lead->property_name)->get()->first()->lead_from}}</td>
-                                <td>123456789</td>
+                                <td>{{$lead->address}}</td>
+                                <td>{{$lead->prop_type}}</td>
+                                <td>{{$lead->lead_from}}</td>
+
+                                @if ($lead->status==1)
+                                <td class="text-success">Active</td>
+                                @elseif ($lead->status==2)
+                                <td class="text-warning">On-hold</td>
+                                @else
+                                <td class="text-danger">Rejected</td>
+                                @endif
+                                <td><a href="{{route('telecaller.feedback', $lead->id)}}" class="btn btn-info mr-2">Feedbacks</a></td>
                             </tr>
                             @endforeach
                         </tbody>

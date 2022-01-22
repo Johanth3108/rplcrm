@@ -46,6 +46,9 @@
                                 @foreach ($leads as $lead)
                                     <option value="{{$lead->id}}">{{$lead->property_name}}, {{$lead->district}}, {{$lead->address}} <span class="badge badge-success">active</span></option>
                                 @endforeach
+                                @foreach ($a_leads as $a_lead)
+                                    <option value="{{$a_lead->id}}">{{$a_lead->client_name}}, {{$a_lead->property_name}}, {{$a_lead->address}} <span class="badge badge-success">active</span></option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

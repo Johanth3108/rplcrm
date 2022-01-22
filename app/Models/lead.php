@@ -9,6 +9,10 @@ class lead extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'assigned_tele',
+    ];
+
     public static function assigned($prop_name){
         echo((lead::where('property_name', $prop_name)->first()));
         return lead::where('property_name', $prop_name)->first();

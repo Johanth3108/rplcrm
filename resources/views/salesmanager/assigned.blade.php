@@ -46,13 +46,13 @@
                             <th>#id</th>
                             <th>Client name</th>
                             <th>Contact number</th>
-                            <th>Email</th>
                             <th>Property name</th>
-                            <th>Address</th>
                             <th>Property type</th>
                             <th>Lead from</th>
+                            <th>Assigned Salesmanager</th>
+                            <th>Assigned Salesexecutive</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,12 +61,17 @@
                                 <td>{{$lead->id}}</td>
                                 <td>{{$lead->client_name}}</td>
                                 <td>{{$lead->client_phn}}</td>
-                                <td>{{$lead->client_em}}</td>
                                 <td>{{$lead->property_name}}</td>
-                                <td>{{$lead->address}}</td>
                                 <td>{{$lead->prop_type}}</td>
-                                <td>{{$lead->lead_from}}</td>
 
+                                @if ($lead->lead_from)
+                                <td>{{$lead->lead_from}}</td>
+                                @else
+                                <td>Manual</td>
+                                @endif
+                                <td>{{App\Models\User::where('id', $lead->assigned_man)->get()->first()->name}}</span></td>
+                                <td>{{App\Models\User::where('id', $lead->assigned_exe)->get()->first()->name}}</td>
+                                
                                 @if ($lead->status==1)
                                 <td class="text-success">Active</td>
                                 @elseif ($lead->status==2)
@@ -74,8 +79,20 @@
                                 @else
                                 <td class="text-danger">Rejected</td>
                                 @endif
-                                <td><a href="{{route('salesmanager.feedback', $lead->id)}}" class="btn btn-info mr-2">Feedbacks</a></td>
-                                {{-- <td class="text-success"><a href="{{route('salesexecutive.leads.view', $lead->id)}}" class="btn btn-info">View</a></td> --}}
+
+
+                                <td>
+                                  <div class="dropdown">
+                                    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      Edit
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                      {{-- <a class="dropdown-item" href="{{route('admin.managelead', $lead->id)}}">Manage</a> --}}
+                                      <a href="{{route('salesmanager.feedback', $lead->id)}}" class="dropdown-item">Feedbacks</a>
+                                    </div>
+                                  </div>
+                                </td>
+                                {{-- <td><a href="{{route('admin.managelead', $lead->id)}}" class="btn btn-info mr-2">Manage</a><a href="{{route('admin.feedback', $lead->id)}}" class="btn btn-info mr-2">Feedbacks</a></td> --}}
                             </tr>
                             @endforeach
                         </tbody>

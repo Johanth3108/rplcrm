@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UsersImport;
 use App\Exports\UsersExport;
+use App\Http\Middleware\salesmanager;
 use App\Models\assign;
 use App\Models\assign_lead;
 use App\Models\exepage;
@@ -119,7 +120,8 @@ class SuperadminController extends Controller
             array_push($assign_exes, explode(",", $assign->salesexecutive));
         }
         // $assign_exes = explode(",", $assigns->salesexecutive);
-        // dd($assign_exes[0]);
+        // dd(($assign_exes[1][0]));
+
         return view('superadmin.addlead', compact('props', 'users', 'assigns', 'assign_exes'));
     }
 
@@ -147,15 +149,28 @@ class SuperadminController extends Controller
         $lead->district = $prop->district;
         $lead->prop_type = $prop->prop_type;
         $lead->assigned_man = $request->salesman;
-        $lead->assigned_exe = $request->salesexe;
+        $lead->assigned_exe = $request->exe;
         $lead->status = 1;
         $lead->save();
-        $assign = new assign();
-        $assign->property_name = $prop->propname;
-        $assign->employee_id = $request->salesexe;
-        $assign->salesmanager = $request->salesman;
-        $assign->salesexecutive = $request->salesexe;
-        $assign->save();
+        $assigns = (explode(",", $request->exe));
+
+        foreach($assigns as $assi){
+
+            $lead = new assign_lead();
+            $lead->client_name = $request->client_name;
+            $lead->client_phn = $request->client_phn;
+            $lead->client_em = $request->client_em;
+            $lead->property_name = $prop->propname;
+            $lead->address = $prop->address;
+            $lead->state = $prop->state;
+            $lead->district = $prop->district;
+            $lead->prop_type = $prop->prop_type;
+            $lead->assigned_man = $request->salesman;
+            $lead->assigned_exe = $assi;
+            $lead->status = 1;
+            $lead->save();
+        }
+        
         return redirect()->route('admin.leads')->with('message', 'Added a lead successfully.');
     }
 
@@ -166,7 +181,8 @@ class SuperadminController extends Controller
         $users = User::all();
         $property = properties::where('propname', $lead->property_name)->get()->first();
         $props = properties::all();
-        return view('superadmin.managelead', compact('lead', 'prop_types', 'users', 'props', 'property'));
+        $assign_exes = (explode(",", $lead->assigned_exe));
+        return view('superadmin.managelead', compact('lead', 'prop_types', 'users', 'props', 'property', 'assign_exes'));
     }
 
     public function deletelead($id)
@@ -185,7 +201,7 @@ class SuperadminController extends Controller
             'district' => $request->district,
             'prop_type' => $request->prop_type,
             'assigned_man' => $request->salesman,
-            'assigned_exe' => $request->salesexe,
+            'assigned_exe' => $request->exe,
             'status' => $request->status,
             'feedback' => $request->feedback
         ]);
@@ -260,11 +276,12 @@ class SuperadminController extends Controller
         $prop->prop_type = $request->prop_type;
         $prop->owner = $request->owner;
         $prop->status = $request->status;
+        $prop->salesmanager = $request->salesman;
+        $prop->salesexecutive = $request->exe;
         $prop->save();
         
         $assign = new assign();
         $assign->property_name = $request->propname;
-        $assign->employee_id = $request->salesexe;
         $assign->salesmanager = $request->salesman;
         $assign->salesexecutive = $request->exe;
         $assign->save();
@@ -276,7 +293,9 @@ class SuperadminController extends Controller
     {
         $prop = properties::where('id', $id)->get()->first();
         $prop_types = proptype::all();
-        return view('superadmin.manageprop', compact('prop', 'prop_types'));
+        $users = User::all();
+        $assign_exes = (explode(",", $prop->salesexecutive));
+        return view('superadmin.manageprop', compact('prop', 'prop_types', 'users', 'assign_exes'));
     }
 
     public function deleteprop($id)
@@ -293,6 +312,7 @@ class SuperadminController extends Controller
 
     public function updateprop(Request $request, $id)
     {
+        // dd($request->exe);
         properties::where('id', $id)->update([
             'propname' => $request->propname,
             'address' => $request->address,
@@ -301,7 +321,20 @@ class SuperadminController extends Controller
             'prop_type' => $request->prop_type,
             'owner' => $request->owner,
             'status' => $request->status,
+            'salesmanager' => $request->salesman,
+            'salesexecutive' => $request->exe
         ]);
+        // $assign = properties::where('id', $id)->first();
+        // $assign_exes = (explode(",", $assign->salesexecutive));
+        // $new_assign_exes = (explode(",", $request->exe));
+        // foreach($new_assign_exes as $new_assign_exe){
+        //     $assign = new assign();
+        //     $assign->property_name = $request->propname;
+        //     $assign->salesmanager = $request->salesman;
+        //     $assign->salesexecutive = $request->exe;
+        //     $assign->save();
+        // }
+
         return redirect()->route('admin.properties')->with('message', 'Property updated successfully.');
     }
     public function proptype()
@@ -316,6 +349,12 @@ class SuperadminController extends Controller
         $prop_add->prop_type = strtoupper($request->prop_type);
         $prop_add->save();
         return redirect()->route('admin.proptype')->with('message', 'Added a Property successfully.');
+    }
+
+    public function proptypedel($id)
+    {
+        proptype::where('id', $id)->delete();
+        return redirect()->back()->with('message', 'Successfully deleted a property.');
     }
 
     public function message()
@@ -362,8 +401,8 @@ class SuperadminController extends Controller
 
     public function manpage()
     {
-        // dd($this->user);
-        return view('superadmin.manpage');
+        $manpage = manpage::where('id', 1)->first();
+        return view('superadmin.manpage', compact('manpage'));
     }
 
     public function manpagesave(Request $request)
@@ -385,7 +424,8 @@ class SuperadminController extends Controller
 
     public function exepage()
     {
-        return view('superadmin.exepage');
+        $exepage = exepage::where('id', 1)->first();
+        return view('superadmin.exepage', compact('exepage'));
     }
 
     public function exepagesave(Request $request)
@@ -408,7 +448,8 @@ class SuperadminController extends Controller
 
     public function telepage()
     {
-        return view('superadmin.telepage');
+        $telepage = telepage::where('id', 1)->first();
+        return view('superadmin.telepage', compact('telepage'));
     }
 
     public function telepagesave(Request $request)

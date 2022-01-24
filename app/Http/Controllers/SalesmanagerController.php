@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\assign;
+use App\Models\assign_lead;
 use App\Models\feedback;
 use App\Models\lead;
 use App\Models\manpage;
@@ -127,23 +128,51 @@ class SalesmanagerController extends Controller
     {
         $props = properties::all();
         $users = User::all();
-        return view('salesmanager.addleads', compact('props', 'users'));
+
+        $assigns = assign::all();
+        $assign_exes = array();
+        foreach ($assigns as $assign) {
+            array_push($assign_exes, explode(",", $assign->salesexecutive));
+        }
+        return view('salesmanager.addleads', compact('props', 'users',  'assigns', 'assign_exes'));
     }
 
     public function addleadsave(Request $request)
     {
         // dd($request->state);
-        $prop= properties::where('id', $request->propname)->get()->first();
+
+        $prop= properties::where('propname', $request->propname)->get()->first();
         $lead = new lead();
+        $lead->client_name = $request->client_name;
+        $lead->client_phn = $request->client_phn;
+        $lead->client_em = $request->client_em;
         $lead->property_name = $prop->propname;
         $lead->address = $prop->address;
         $lead->state = $prop->state;
         $lead->district = $prop->district;
         $lead->prop_type = $prop->prop_type;
         $lead->assigned_man = $request->salesman;
-        $lead->assigned_exe = $request->salesexe;
+        $lead->assigned_exe = $request->exe;
         $lead->status = 1;
         $lead->save();
+        $assigns = (explode(",", $request->exe));
+
+        foreach($assigns as $assi){
+
+            $lead = new assign_lead();
+            $lead->client_name = $request->client_name;
+            $lead->client_phn = $request->client_phn;
+            $lead->client_em = $request->client_em;
+            $lead->property_name = $prop->propname;
+            $lead->address = $prop->address;
+            $lead->state = $prop->state;
+            $lead->district = $prop->district;
+            $lead->prop_type = $prop->prop_type;
+            $lead->assigned_man = $request->salesman;
+            $lead->assigned_exe = $assi;
+            $lead->status = 1;
+            $lead->save();
+        }
         return redirect()->route('salesmanager.addleads')->with('success', 'Added a new lead.');
 
     }

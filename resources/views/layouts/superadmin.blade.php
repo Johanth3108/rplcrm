@@ -113,33 +113,7 @@
               <span class="link-title">Dashboard</span>
             </a>
           </li>
-          <li class="nav-item nav-category">Broadcast</li>
-          
-		  <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#sms" role="button" aria-expanded="false" aria-controls="sms">
-              <i class="link-icon" data-feather="file-text"></i>
-              <span class="link-title">SMS</span>
-              <i class="link-arrow" data-feather="chevron-down"></i>
-            </a>
-            <div class="collapse" id="sms">
-              <ul class="nav sub-menu">
-                <li class="nav-item">
-                  <a href="#" class="nav-link">Message</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">Whatsapp</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a href="{{route('admin.calender')}}" class="nav-link">
-              <i class="link-icon" data-feather="calendar"></i>
-              <span class="link-title">Calendar</span>
-            </a>
-          </li>
 
-		  <li class="nav-item nav-category">Staffs </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#forms" role="button" aria-expanded="false" aria-controls="forms">
               <i class="link-icon" data-feather="user"></i>
@@ -158,20 +132,49 @@
               </ul>
             </div>
           </li>
-		  <li class="nav-item">
-            <a class="nav-link"  data-toggle="collapse" href="#charts" role="button" aria-expanded="false" aria-controls="charts">
-              <i class="link-icon" data-feather="pie-chart"></i>
-              <span class="link-title">Report</span>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#permissions" role="button" aria-expanded="false" aria-controls="permissions">
+              <i class="link-icon" data-feather="activity"></i>
+              <span class="link-title">User permissions</span>
               <i class="link-arrow" data-feather="chevron-down"></i>
             </a>
-            <div class="collapse" id="charts">
+            <div class="collapse" id="permissions">
               <ul class="nav sub-menu">
                 <li class="nav-item">
-                  <a href="{{route('admin.apex')}}" class="nav-link">Apex</a>
+                  <a href="{{route('admin.manpage')}}" class="nav-link">Sales manager</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.exepage')}}" class="nav-link">Sales executive</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.telepage')}}" class="nav-link">Telecaller</a>
                 </li>
               </ul>
             </div>
           </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#properties" role="button" aria-expanded="false" aria-controls="properties">
+              <i class="link-icon" data-feather="layout"></i>
+              <span class="link-title">Properties</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+            </a>
+            <div class="collapse" id="properties">
+              <ul class="nav sub-menu">
+                <li class="nav-item">
+                  <a href="{{route('admin.properties')}}" class="nav-link">Generated properties</a>
+                </li>
+                <li class="nav-item">
+					        <a href="{{route('admin.addprop')}}" class="nav-link">Add properties</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.proptype')}}" class="nav-link">Add property type</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#tables" role="button" aria-expanded="false" aria-controls="tables">
               <i class="link-icon" data-feather="briefcase"></i>
@@ -190,28 +193,49 @@
             </div>
           </li>
 
-		  <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#properties" role="button" aria-expanded="false" aria-controls="properties">
-              <i class="link-icon" data-feather="layout"></i>
-              <span class="link-title">Properties</span>
+
+          <li class="nav-item">
+            <a class="nav-link"  data-toggle="collapse" href="#charts" role="button" aria-expanded="false" aria-controls="charts">
+              <i class="link-icon" data-feather="pie-chart"></i>
+              <span class="link-title">Report</span>
               <i class="link-arrow" data-feather="chevron-down"></i>
             </a>
-            <div class="collapse" id="properties">
+            <div class="collapse" id="charts">
               <ul class="nav sub-menu">
                 <li class="nav-item">
-                  <a href="{{route('admin.properties')}}" class="nav-link">Generated properties</a>
+                  <a href="{{route('admin.apex')}}" class="nav-link">Apex</a>
                 </li>
-                <li class="nav-item">
-					<a href="{{route('admin.addprop')}}" class="nav-link">Add properties</a>
-				</li>
-				<li class="nav-item">
-					<a href="{{route('admin.proptype')}}" class="nav-link">Add property type</a>
-				</li>
               </ul>
             </div>
           </li>
 
-		      <li class="nav-item">
+
+          <li class="nav-item">
+            <a href="{{route('admin.calender')}}" class="nav-link">
+              <i class="link-icon" data-feather="calendar"></i>
+              <span class="link-title">Calendar</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#sms" role="button" aria-expanded="false" aria-controls="sms">
+              <i class="link-icon" data-feather="file-text"></i>
+              <span class="link-title">SMS</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+            </a>
+            <div class="collapse" id="sms">
+              <ul class="nav sub-menu">
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Message</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Whatsapp</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#message" role="button" aria-expanded="false" aria-controls="message">
               <i class="link-icon" data-feather="server"></i>
               <span class="link-title">Message</span>
@@ -228,33 +252,7 @@
               </ul>
             </div>
           </li>
-
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#permissions" role="button" aria-expanded="false" aria-controls="permissions">
-              <i class="link-icon" data-feather="activity"></i>
-              <span class="link-title">Permissions</span>
-              <i class="link-arrow" data-feather="chevron-down"></i>
-            </a>
-            <div class="collapse" id="permissions">
-              <ul class="nav sub-menu">
-                <li class="nav-item">
-                  <a href="{{route('admin.manpage')}}" class="nav-link">Sales manager</a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('admin.exepage')}}" class="nav-link">Sales executive</a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('admin.telepage')}}" class="nav-link">Telecaller</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          
-          
         </ul>
-
-
-		
       </div>
     </nav>
 		<!-- partial -->
@@ -270,7 +268,7 @@
 					<form class="search-form">
 						<div class="input-group">
 							<div class="input-group-prepend">
-                <iframe src="https://free.timeanddate.com/clock/i85z25nz/n553/fs22/ftb/pa0/tt0/tw1/th2/ta1" frameborder="0" width="404" height="26"></iframe>
+                <iframe src="https://free.timeanddate.com/clock/i85z25nz/n553/fs22/ftb/pa0/tt0/tw1/th2/ta1" frameborder="0" width="434" height="26"></iframe>
 							</div>
 						</div>
 					</form>

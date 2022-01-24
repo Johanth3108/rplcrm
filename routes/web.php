@@ -48,7 +48,7 @@ Route::get('superadmin/calender', [SuperadminController::class, 'calender'])->na
 Route::get('superadmin/apex', [SuperadminController::class, 'apex'])->name('admin.apex')->middleware('superadmin');
 Route::get('superadmin/addlead', [SuperadminController::class, 'addlead'])->name('admin.addlead')->middleware('superadmin');
 Route::post('superadmin/savelead', [SuperadminController::class, 'savelead'])->name('admin.savelead')->middleware('superadmin');
-Route::get('superadmin/managelead/{id}', [SuperadminController::class, 'managelead'])->name('admin.managelead')->middleware('superadmin');
+Route::get('superadmin/managelead/{id}', [SuperadminController::class, 'managelead'])->name('admin.managelead')->middleware('superadmin', 'salesmanager', 'salesexecutive');
 Route::post('superadmin/updatelead/{id}', [SuperadminController::class, 'updatelead'])->name('admin.updatelead')->middleware('superadmin');
 Route::get('superadmin/deletelead/{id}', [SuperadminController::class, 'deletelead'])->name('admin.deletelead')->middleware('superadmin');
 Route::get('superadmin/leads', [SuperadminController::class, 'leads'])->name('admin.leads')->middleware('superadmin');
@@ -60,6 +60,7 @@ Route::get('superadmin/addprop/delete/{id}', [SuperadminController::class, 'dele
 Route::post('superadmin/addprop/update/{id}', [SuperadminController::class, 'updateprop'])->name('admin.updateprop')->middleware('superadmin');
 Route::get('superadmin/prop-type', [SuperadminController::class, 'proptype'])->name('admin.proptype')->middleware('superadmin');
 Route::post('superadmin/prop-type/add', [SuperadminController::class, 'proptypeadd'])->name('admin.proptype.add')->middleware('superadmin');
+Route::get('superadmin/prop-type/delete/{id}', [SuperadminController::class, 'proptypedel'])->name('admin.proptype.delete')->middleware('superadmin');
 Route::get('superadmin/message', [SuperadminController::class, 'message'])->name('admin.message')->middleware('superadmin');
 Route::get('superadmin/message/reply/{id}', [SuperadminController::class, 'reply'])->name('admin.reply')->middleware('superadmin');
 Route::post('superadmin/message/send', [SuperadminController::class, 'messagesend'])->name('admin.message.send')->middleware('superadmin');

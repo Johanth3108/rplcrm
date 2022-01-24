@@ -2,14 +2,30 @@
 
 @section('content')
 
+<div class="d-flex justify-content-between align-items-center flex-wrap">
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{route('admin.home')}}">SAGI CRM</a></li>
+        <li class="breadcrumb-item"><a href="#">Staff</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Generated leads</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="d-flex align-items-center flex-wrap text-nowrap">
+    <div class="input-group date datepicker dashboard-date mr-2 mb-2 mb-md-0 d-md-none d-xl-flex" id="dashboardDate">
+      <span class="input-group-addon bg-transparent"><i data-feather="calendar" class=" text-primary"></i></span>
+      <input type="text" class="form-control">
+    </div>
+    <a type="button" href="{{route('admin.leads.download')}}" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+      <i class="btn-icon-prepend" data-feather="download-cloud"></i>
+      Download Report
+    </a>
+  </div>
+</div>
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{{route('admin.home')}}">SAGI CRM</a></li>
-      <li class="breadcrumb-item"><a href="#">Staff</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Generated leads</li>
-    </ol>
-</nav>
+
+
 
 @if ($message = Session::get('success'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -24,24 +40,7 @@
       <h4 class="mb-3 mb-md-0"></h4>
       <h4 class="mb-3 mb-md-0"></h4>
     </div>
-    <div class="d-flex align-items-center flex-wrap text-nowrap">
-      <div class="input-group date datepicker dashboard-date mr-2 mb-2 mb-md-0 d-md-none d-xl-flex" id="dashboardDate">
-        <span class="input-group-addon bg-transparent"><i data-feather="calendar" class=" text-primary"></i></span>
-        <input type="text" class="form-control">
-      </div>
-      {{-- <button type="button" class="btn btn-outline-info btn-icon-text mr-2 d-none d-md-block">
-        <i class="btn-icon-prepend" data-feather="download"></i>
-        Import
-      </button>
-      <button type="button" class="btn btn-outline-primary btn-icon-text mr-2 mb-2 mb-md-0">
-        <i class="btn-icon-prepend" data-feather="printer"></i>
-        Print
-      </button> --}}
-      <a type="button" href="{{route('admin.leads.download')}}" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
-        <i class="btn-icon-prepend" data-feather="download-cloud"></i>
-        Download Report
-      </a>
-    </div>
+    
 </div>
 <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
@@ -91,7 +90,20 @@
                                 <td class="text-danger">Rejected</td>
                                 @endif
 
-                                <td><a href="{{route('admin.managelead', $lead->id)}}" class="btn btn-info mr-2">Manage</a><a href="{{route('admin.feedback', $lead->id)}}" class="btn btn-info mr-2">Feedbacks</a></td>
+
+                                <td>
+                                  <div class="dropdown">
+                                    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      Edit
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                      <a class="dropdown-item" href="{{route('admin.managelead', $lead->id)}}">Manage</a>
+                                      <a href="{{route('admin.feedback', $lead->id)}}" class="dropdown-item">Feedbacks</a>
+                                      <a class="dropdown-item" id="delete" href="{{route('admin.deletelead', $lead->id)}}">Delete</a>
+                                    </div>
+                                  </div>
+                                </td>
+                                {{-- <td><a href="{{route('admin.managelead', $lead->id)}}" class="btn btn-info mr-2">Manage</a><a href="{{route('admin.feedback', $lead->id)}}" class="btn btn-info mr-2">Feedbacks</a></td> --}}
                             </tr>
                             @endforeach
                         </tbody>
@@ -101,5 +113,32 @@
         </div>
     </div>
 </div>
-    
+  
+<script>
+  $('#delete').on('click',function (e) {
+      e.preventDefault();
+      var self = $(this);
+      console.log(self.data('title'));
+      Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+          if (result.isConfirmed) {
+              Swal.fire(
+                  'Deleted!',
+                  'Lead has been deleted.',
+                  'success'
+              )
+              // document.getElementById('form').submit();
+              location.href = self.attr('href');
+          }
+      })
+
+  })
+</script>
 @endsection

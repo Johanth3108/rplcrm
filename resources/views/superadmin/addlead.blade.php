@@ -44,9 +44,9 @@
                         <select name="salesman" class="form-control" id="salesman" required>
                             <option value="" selected disabled>Select a salesmanager</option>
                             @foreach ($users as $user)
-                            @if ($user->salesmanager==true)
-                            <option value="{{$user->id}}" id="{{$user->id}}">{{$user->name}}</option>
-                            @endif
+                                @if ($user->salesmanager==true)
+                                    <option value="{{$user->id}}" id="{{$user->id}}">{{$user->name}}</option>
+                                @endif
                             @endforeach
                             
                         </select>
@@ -54,13 +54,14 @@
 
                     <div class="form-group">
                         <label for="salesexe">Assigning salesexecutive</label>
-                        <select name="salesexe" class="form-control" id="salesexe" required multiple>
+                        <select name="salesexe" class="form-control" id="salesexe" disabled multiple>
                             @foreach ($users as $user)
                                 @if ($user->salesexecutive==true)
                                 <option value="{{$user->id}}" id="{{$user->id}}">{{$user->name}}</option>
                                 @endif
                             @endforeach
                         </select>
+                        <input type="text" name="exe" id="exe" hidden>
                     </div>
                 
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
@@ -76,14 +77,17 @@
 <script>
     function change() {
         var x = document.getElementById("propname").value;
-        {{$i=0}}
+        {{$j=0}}
         @foreach ($assigns as $assign)
         if (x=='{{$assign->property_name}}') {
             document.getElementById("{{$assign->salesmanager}}").selected = true;
-            document.getElementById("5").selected = true;
-            $assign_exes[0];
+            @for ($i=0; $i<count($assign_exes[$j]); $i++)
+                document.getElementById("{{$assign_exes[$j][$i]}}").selected = true;
+            @endfor
+            {{$j = $j+1}}
         }
         @endforeach
+        document.getElementById("exe").value = Array.from(document.getElementById("salesexe").options).filter(option => option.selected).map(option => option.value);
     }
 </script>
 

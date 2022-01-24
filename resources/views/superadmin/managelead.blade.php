@@ -126,16 +126,24 @@
 
                     <div class="form-group">
                         <label for="salesexe">Assigning salesexecutive</label>
-                        <select name="salesexe" class="form-control" id="salesexe" required>
-                            <option value="" selected disabled>Assigning salesexecutive</option>
+                        <select name="salesexe" class="form-control" id="salesexe" onchange="change()" required multiple>
                             @foreach ($users as $user)
                             @if ($user->salesexecutive==true)
-                            <option value="{{$user->id}}"@if ($user->id==$lead->assigned_exe) selected @endif>
-                                {{$user->name}}</option>
+                            <option value="{{$user->id}}"@if (in_array($user->id, $assign_exes))
+                                selected
+                            @endif>{{$user->name}}</option>
                             @endif
                             @endforeach
                         </select>
+                        <input type="text" name="exe" id="exe" value="{{$lead->assigned_exe}}" hidden>
                     </div>
+
+                    <script src="{{asset('multiselect/multiselect-dropdown.js')}}"></script>
+                    <script>
+                        function change() {
+                            document.getElementById("exe").value = Array.from(document.getElementById("salesexe").options).filter(option => option.selected).map(option => option.value);
+                        }
+                    </script>
 
                     <div class="form-group">
                         <label for="exampleFormControlSelect1"> Status</label>

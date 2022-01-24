@@ -109,9 +109,42 @@
               <span class="link-title">Dashboard</span>
             </a>
           </li>
-          <li class="nav-item nav-category">Broadcast</li>
 
-          @if ($exepage->message==true || $exepage->whatsapp==true)
+		  	@if ($exepage->gen_leads==true)
+				<li class="nav-item">
+					<a href="{{route('salesexecutive.leads')}}" class="nav-link">
+					<i class="link-icon" data-feather="pie-chart"></i>
+					<span class="link-title">Generated leads</span>
+					</a>
+				</li>
+			@endif
+
+			<li class="nav-item">
+				<a href="{{route('salesexecutive.assigned')}}" class="nav-link">
+				<i class="link-icon" data-feather="pie-chart"></i>
+				<span class="link-title">Assigned Leads</span>
+				</a>
+			</li>
+			
+			@if ($exepage->assign==true)
+			<li class="nav-item">
+				<a href="{{route('salesexecutive.assign')}}" class="nav-link">
+				<i class="link-icon" data-feather="phone"></i>
+				<span class="link-title">Assign telecallers</span>
+				</a>
+			</li>
+			@endif
+
+			@if ($exepage->calendar)
+				<li class="nav-item">
+					<a href="{{route('salesexecutive.calender')}}" class="nav-link">
+					<i class="link-icon" data-feather="calendar"></i>
+					<span class="link-title">Calendar</span>
+					</a>
+				</li>
+		  	@endif
+
+			  @if ($exepage->message==true || $exepage->whatsapp==true)
 			<li class="nav-item">
 				<a class="nav-link" data-toggle="collapse" href="#sms" role="button" aria-expanded="false" aria-controls="sms">
 				<i class="link-icon" data-feather="file-text"></i>
@@ -136,61 +169,25 @@
 				</div>
 			</li>
 		  @endif
-			
-		  @if ($exepage->calendar)
-			<li class="nav-item">
-				<a href="{{route('salesexecutive.calender')}}" class="nav-link">
-				<i class="link-icon" data-feather="calendar"></i>
-				<span class="link-title">Calendar</span>
-				</a>
-			</li>
-		  @endif
-			
 
-			<li class="nav-item nav-category">Staffs </li>
-				@if ($exepage->gen_leads==true)
-					<li class="nav-item">
-						<a href="{{route('salesexecutive.leads')}}" class="nav-link">
-						<i class="link-icon" data-feather="pie-chart"></i>
-						<span class="link-title">Generated leads</span>
-						</a>
-					</li>
-				@endif
-
+		  <li class="nav-item">
+			<a class="nav-link" data-toggle="collapse" href="#message" role="button" aria-expanded="false" aria-controls="message">
+			  <i class="link-icon" data-feather="server"></i>
+			  <span class="link-title">Message</span>
+			  <i class="link-arrow" data-feather="chevron-down"></i>
+			</a>
+			<div class="collapse" id="message">
+			  <ul class="nav sub-menu">
 				<li class="nav-item">
-					<a href="{{route('salesexecutive.assigned')}}" class="nav-link">
-					<i class="link-icon" data-feather="pie-chart"></i>
-					<span class="link-title">Assigned Leads</span>
-					</a>
+				  <a href="{{route('salesexecutive.inbox')}}" class="nav-link">Inbox <span class="badge badge-pill badge-danger"> {{Auth::user()->notification}}</span></a>
 				</li>
+				<li class="nav-item">
+				  <a href="{{route('salesexecutive.pmessage')}}" class="nav-link">Send message</a>
+				</li>
+			  </ul>
+			</div>
+		</li>
 				
-				@if ($exepage->assign==true)
-				<li class="nav-item">
-					<a href="{{route('salesexecutive.assign')}}" class="nav-link">
-					<i class="link-icon" data-feather="phone"></i>
-					<span class="link-title">Assign telecallers</span>
-					</a>
-				</li>
-				@endif
-				
-				<li class="nav-item">
-					<a class="nav-link" data-toggle="collapse" href="#message" role="button" aria-expanded="false" aria-controls="message">
-					  <i class="link-icon" data-feather="server"></i>
-					  <span class="link-title">Message</span>
-					  <i class="link-arrow" data-feather="chevron-down"></i>
-					</a>
-					<div class="collapse" id="message">
-					  <ul class="nav sub-menu">
-						<li class="nav-item">
-						  <a href="{{route('salesexecutive.inbox')}}" class="nav-link">Inbox <span class="badge badge-pill badge-danger"> {{Auth::user()->notification}}</span></a>
-						</li>
-						<li class="nav-item">
-						  <a href="{{route('salesexecutive.pmessage')}}" class="nav-link">Send message</a>
-						</li>
-					  </ul>
-					</div>
-				</li>
-          
         </ul>
       </div>
     </nav>
@@ -207,7 +204,7 @@
 					<form class="search-form">
 						<div class="input-group">
 							<div class="input-group-prepend">
-								<iframe src="https://free.timeanddate.com/clock/i85z25nz/n553/fs22/ftb/pa0/tt0/tw1/th2/ta1" frameborder="0" width="404" height="26"></iframe>
+								<iframe src="https://free.timeanddate.com/clock/i85z25nz/n553/fs22/ftb/pa0/tt0/tw1/th2/ta1" frameborder="0" width="434" height="26"></iframe>
 							</div>
 						</div>
 					</form>

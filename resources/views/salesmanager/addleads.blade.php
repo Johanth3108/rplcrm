@@ -28,11 +28,23 @@
                 <form class="forms-sample" action="{{route('salesmanager.addleads.save')}}" method="POST">
                     @csrf
                     <div class="form-group">
+                        <label for="client_name">Client name</label>
+                        <input required type="text" name="client_name" class="form-control" id="client_name" autocomplete="off" placeholder="Enter client's name"  required>
+                    </div>
+                    <div class="form-group">
+                        <label for="client_phn">Client contact number</label>
+                        <input required type="text" name="client_phn" class="form-control" id="client_phn" autocomplete="off" placeholder="Enter client's contact number"  required>
+                    </div>
+                    <div class="form-group">
+                        <label for="client_em">Client email</label>
+                        <input required type="text" name="client_em" class="form-control" id="client_em" autocomplete="off" placeholder="Enter client's email"  required>
+                    </div>
+                    <div class="form-group">
                         <label for="propname">Property name</label>
-                        <select name="propname" class="form-control" id="propname" required>
+                        <select name="propname" id="propname" class="form-control" id="propname" onchange="change()" required>
                             <option value="" selected disabled>Select a property</option>
                             @foreach ($props as $prop)
-                            <option value="{{$prop->id}}">{{$prop->propname}}</option>
+                            <option value="{{$prop->propname}}" id="{{$prop->propname}}">{{$prop->propname}}</option>
                             @endforeach
                             
                         </select>
@@ -43,9 +55,9 @@
                         <select name="salesman" class="form-control" id="salesman" required>
                             <option value="" selected disabled>Select a salesmanager</option>
                             @foreach ($users as $user)
-                            @if ($user->salesmanager==true)
-                            <option value="{{$user->id}}">{{$user->name}}</option>
-                            @endif
+                                @if ($user->salesmanager==true)
+                                    <option value="{{$user->id}}" id="{{$user->id}}">{{$user->name}}</option>
+                                @endif
                             @endforeach
                             
                         </select>
@@ -53,14 +65,14 @@
 
                     <div class="form-group">
                         <label for="salesexe">Assigning salesexecutive</label>
-                        <select name="salesexe" class="form-control" id="salesexe" required>
-                            <option value="" selected disabled>Select a salesexecutive</option>
+                        <select name="salesexe" class="form-control" id="salesexe" disabled multiple>
                             @foreach ($users as $user)
-                            @if ($user->salesexecutive==true)
-                            <option value="{{$user->id}}">{{$user->name}}</option>
-                            @endif
+                                @if ($user->salesexecutive==true)
+                                <option value="{{$user->id}}" id="{{$user->id}}">{{$user->name}}</option>
+                                @endif
                             @endforeach
                         </select>
+                        <input type="text" name="exe" id="exe" hidden>
                     </div>
                 
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
@@ -70,6 +82,25 @@
         </div>
     </div>
 </div>
+
+<script src="{{asset('multiselect/multiselect-dropdown.js')}}"></script>
+
+<script>
+    function change() {
+        var x = document.getElementById("propname").value;
+        {{$j=0}}
+        @foreach ($assigns as $assign)
+        if (x=='{{$assign->property_name}}') {
+            document.getElementById("{{$assign->salesmanager}}").selected = true;
+            @for ($i=0; $i<count($assign_exes[$j]); $i++)
+                document.getElementById("{{$assign_exes[$j][$i]}}").selected = true;
+            @endfor
+            {{$j = $j+1}}
+        }
+        @endforeach
+        document.getElementById("exe").value = Array.from(document.getElementById("salesexe").options).filter(option => option.selected).map(option => option.value);
+    }
+</script>
 
 
 @endsection

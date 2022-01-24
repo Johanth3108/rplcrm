@@ -22,6 +22,9 @@ class CreatePropertiesTable extends Migration
             $table->string('prop_type');
             $table->string('owner');
             $table->string('status');
+            $table->integer('salesmanager')->nullable();
+            $table->string('salesexecutive')->nullable();
+            $table->integer('telecaller')->nullable();
             $table->timestamps();
         });
     }

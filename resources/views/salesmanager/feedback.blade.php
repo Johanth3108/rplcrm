@@ -35,8 +35,9 @@
                   <div class="status online"></div>
                 </figure>
                 <div>
-                  <h4>{{$lead->property_name}}</h4>
-                  <h5 class="text-muted tx-13">{{$lead->client_name}}</h5>
+                  <h4>{{$lead->client_name}}</h4>
+                  <h5>{{$lead->property_name}}</h5>
+                  <h5 class="text-muted tx-13">{{$lead->client_name}} / {{$lead->client_phn}} / {{$lead->client_em}}</h5>
                 </div>
               </div>
               

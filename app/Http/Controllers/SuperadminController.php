@@ -16,12 +16,16 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UsersImport;
 use App\Exports\UsersExport;
 use App\Http\Middleware\salesmanager;
+use App\Mail\leadassign;
+use App\Mail\newuser;
 use App\Models\assign;
 use App\Models\assign_lead;
 use App\Models\exepage;
 use App\Models\feedback;
 use App\Models\manpage;
 use App\Models\telepage;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 
 class SuperadminController extends Controller
@@ -67,6 +71,8 @@ class SuperadminController extends Controller
     }
     public function addemp(Request $request)
     {
+
+        dd($request->emppass);
         $user = new User();
         $user->name = $request->empname;
         $user->email = $request->empemail;
@@ -90,6 +96,18 @@ class SuperadminController extends Controller
 
         $user->password = bcrypt($request->emppass);
         $user->save();
+
+        $details = [
+            'subject' => 'Welcome to SAGI Pvt. Ltd.',
+            'title' => 'SAGICRM',
+            'body' => 'This is for testing email using smtp',
+            'usrname' => $request->empname,
+            'email' => $request->empemail,
+            'password' => $request->emppass,
+            'url' => URL::to('/').'/login'
+        ];
+       
+        Mail::to($request->empemail)->send(new newuser($details));
         return back()->with('success', 'Successfully added a employee');
     }
 
@@ -152,7 +170,29 @@ class SuperadminController extends Controller
         $lead->assigned_exe = $request->exe;
         $lead->status = 1;
         $lead->save();
+        
+        $message= new message();
+        $message->sender_id = Auth::user()->id;
+        $message->sender_name = Auth::user()->name;
+        $message->reciever_id = $request->salesman;
+        $message->message = 'You have a assigned lead.';
+        $message->save();
+        User::where('id', $request->salesman)->update([
+            'notification' => DB::raw('notification+1')
+        ]);
+
         $assigns = (explode(",", $request->exe));
+        $details = [
+            'subject' => $lead->client_name."'s Lead has been assigned. ".$lead->property_name,
+            'usrname' => User::where('id', $request->salesman)->first()->name,
+            'property_name' => $prop->propname,
+            'client_name' => $request->client_name,
+            'client_phn' => $request->client_phn,
+            'url' => URL::to('/').'/login'
+        ];
+        
+        Mail::to(User::where('id', $request->salesman)->first()->email)->send(new leadassign($details));
+
 
         foreach($assigns as $assi){
 
@@ -169,6 +209,28 @@ class SuperadminController extends Controller
             $lead->assigned_exe = $assi;
             $lead->status = 1;
             $lead->save();
+
+            
+            $message= new message();
+            $message->sender_id = Auth::user()->id;
+            $message->sender_name = Auth::user()->name;
+            $message->reciever_id = $assi;
+            $message->message = 'You have a assigned lead.';
+            $message->save();
+            User::where('id', $assi)->update([
+                'notification' => DB::raw('notification+1')
+            ]);
+            
+            $details = [
+                'subject' => $lead->client_name."'s Lead has been assigned. ".$lead->property_name,
+                'usrname' => User::where('id', $request->salesman)->first()->name,
+                'property_name' => $prop->propname,
+                'client_name' => $request->client_name,
+                'client_phn' => $request->client_phn,
+                'url' => URL::to('/').'/login'
+            ];
+            
+            Mail::to(User::where('id', $assi)->first()->email)->send(new leadassign($details));
         }
         
         return redirect()->route('admin.leads')->with('message', 'Added a lead successfully.');
@@ -485,5 +547,10 @@ class SuperadminController extends Controller
         $feedback->message = $request->message;
         $feedback->save();
         return redirect()->back()->with('message', 'Feedback submitted successfully');
+    }
+
+    public function clients(){
+        $clients = lead::select('client_name')->distinct()->get();
+        return view('superadmin.clients', compact('clients'));
     }
 }

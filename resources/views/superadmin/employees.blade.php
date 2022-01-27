@@ -21,6 +21,10 @@
         <span class="input-group-addon bg-transparent"><i data-feather="calendar" class=" text-primary"></i></span>
         <input type="text" class="form-control">
       </div>
+      <a type="button" class="btn btn-outline-info btn-icon-text mr-2 d-none d-md-block">
+        <i class="btn-icon-prepend" data-feather="download"></i>
+        Import
+      </a>
       <a type="button" href="{{route('admin.report.download')}}" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
         <i class="btn-icon-prepend" data-feather="download-cloud"></i>
         Download Report

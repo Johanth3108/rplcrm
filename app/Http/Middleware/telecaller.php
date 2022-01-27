@@ -20,6 +20,6 @@ class telecaller
             return $next($request);
         }
    
-        return redirect()->back()->with('error',"You are not a telecaller.");
+        return redirect()->back()->with('message',"You are not a telecaller.");
     }
 }

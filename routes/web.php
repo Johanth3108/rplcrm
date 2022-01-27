@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AreamanagerController;
 use App\Http\Controllers\SalesexecutiveController;
 use App\Http\Controllers\SuperadminController;
 use App\Http\Controllers\SalesmanagerController;
 use App\Http\Controllers\TelecallerController;
+use App\Models\areamanager;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -73,9 +75,48 @@ Route::get('superadmin/telepage', [SuperadminController::class, 'telepage'])->na
 Route::post('superadmin/telepage/save', [SuperadminController::class, 'telepagesave'])->name('admin.telepage.save')->middleware('superadmin');
 Route::get('superadmin/feedback/{id}', [SuperadminController::class, 'feedback'])->name('admin.feedback');
 Route::post('superadmin/feedback/send', [SuperadminController::class, 'feedbacksend'])->name('admin.feedback.send');
+Route::get('superadmin/clients', [SuperadminController::class, 'clients'])->name('admin.clients');
 
 
-
+// areamanager
+Route::get('areamanager/home', [App\Http\Controllers\AreamanagerController::class, 'index'])->name('areamanager.home')->middleware('areamanager');
+Route::get('areamanager/profile', [AreamanagerController::class, 'profile'])->name('areamanager.profile')->middleware('areamanager');
+Route::post('areamanager/profile/update/{id}', [AreamanagerController::class, 'profileupdate'])->name('areamanager.update')->middleware('areamanager');
+Route::get('areamanager/employees', [AreamanagerController::class, 'employees'])->name('areamanager.employees')->middleware('areamanager');
+Route::get('areamanager/employees/edit/{id}', [AreamanagerController::class, 'employeeedit'])->name('areamanager.employeeedit')->middleware('areamanager');
+Route::post('areamanager/employees/save/{id}', [AreamanagerController::class, 'save'])->name('areamanager.save')->middleware('areamanager');
+Route::get('areamanager/adduser', [AreamanagerController::class, 'adduser'])->name('areamanager.adduser')->middleware('areamanager');
+Route::post('areamanager/addemp', [AreamanagerController::class, 'addemp'])->name('areamanager.addemp')->middleware('areamanager');
+Route::get('areamanager/calender', [AreamanagerController::class, 'calender'])->name('areamanager.calender')->middleware('areamanager');
+Route::get('areamanager/apex', [AreamanagerController::class, 'apex'])->name('areamanager.apex')->middleware('areamanager');
+Route::get('areamanager/addlead', [AreamanagerController::class, 'addlead'])->name('areamanager.addlead')->middleware('areamanager');
+Route::post('areamanager/savelead', [AreamanagerController::class, 'savelead'])->name('areamanager.savelead')->middleware('areamanager');
+Route::get('areamanager/managelead/{id}', [AreamanagerController::class, 'managelead'])->name('areamanager.managelead')->middleware('areamanager');
+Route::post('areamanager/updatelead/{id}', [AreamanagerController::class, 'updatelead'])->name('areamanager.updatelead')->middleware('areamanager');
+Route::get('areamanager/deletelead/{id}', [AreamanagerController::class, 'deletelead'])->name('areamanager.deletelead')->middleware('areamanager');
+Route::get('areamanager/leads', [AreamanagerController::class, 'leads'])->name('areamanager.leads')->middleware('areamanager');
+Route::get('areamanager/properties', [AreamanagerController::class, 'properties'])->name('areamanager.properties')->middleware('areamanager');
+Route::get('areamanager/addprop', [AreamanagerController::class, 'addprop'])->name('areamanager.addprop')->middleware('areamanager');
+Route::post('areamanager/addprop/save', [AreamanagerController::class, 'saveprop'])->name('areamanager.saveprop')->middleware('areamanager');
+Route::get('areamanager/addprop/manage/{id}', [AreamanagerController::class, 'manageprop'])->name('areamanager.manageprop')->middleware('areamanager');
+Route::get('areamanager/addprop/delete/{id}', [AreamanagerController::class, 'deleteprop'])->name('areamanager.deleteprop')->middleware('areamanager');
+Route::post('areamanager/addprop/update/{id}', [AreamanagerController::class, 'updateprop'])->name('areamanager.updateprop')->middleware('areamanager');
+Route::get('areamanager/prop-type', [AreamanagerController::class, 'proptype'])->name('areamanager.proptype')->middleware('areamanager');
+Route::post('areamanager/prop-type/add', [AreamanagerController::class, 'proptypeadd'])->name('areamanager.proptype.add')->middleware('areamanager');
+Route::get('areamanager/prop-type/delete/{id}', [AreamanagerController::class, 'proptypedel'])->name('areamanager.proptype.delete')->middleware('areamanager');
+Route::get('areamanager/message', [AreamanagerController::class, 'message'])->name('areamanager.message')->middleware('areamanager');
+Route::get('areamanager/message/reply/{id}', [AreamanagerController::class, 'reply'])->name('areamanager.reply')->middleware('areamanager');
+Route::post('areamanager/message/send', [AreamanagerController::class, 'messagesend'])->name('areamanager.message.send')->middleware('areamanager');
+Route::get('areamanager/inbox', [AreamanagerController::class, 'inbox'])->name('areamanager.inbox')->middleware('areamanager');
+Route::get('areamanager/manpage', [AreamanagerController::class, 'manpage'])->name('areamanager.manpage')->middleware('areamanager');
+Route::post('areamanager/manpage/save', [AreamanagerController::class, 'manpagesave'])->name('areamanager.manpage.save')->middleware('areamanager');
+Route::get('areamanager/exepage', [AreamanagerController::class, 'exepage'])->name('areamanager.exepage')->middleware('areamanager');
+Route::post('areamanager/exepage/save', [AreamanagerController::class, 'exepagesave'])->name('areamanager.exepage.save')->middleware('areamanager');
+Route::get('areamanager/telepage', [AreamanagerController::class, 'telepage'])->name('areamanager.telepage')->middleware('areamanager');
+Route::post('areamanager/telepage/save', [AreamanagerController::class, 'telepagesave'])->name('areamanager.telepage.save')->middleware('areamanager');
+Route::get('areamanager/feedback/{id}', [AreamanagerController::class, 'feedback'])->name('areamanager.feedback');
+Route::post('areamanager/feedback/send', [AreamanagerController::class, 'feedbacksend'])->name('areamanager.feedback.send');
+Route::get('areamanager/clients', [AreamanagerController::class, 'clients'])->name('areamanager.clients');
 
 
 // salesmanager

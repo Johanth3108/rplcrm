@@ -193,6 +193,13 @@
             </div>
           </li>
 
+          <li class="nav-item">
+            <a href="{{route('admin.clients')}}" class="nav-link">
+              <i class="link-icon" data-feather="anchor"></i>
+              <span class="link-title">Clients</span>
+            </a>
+          </li>
+
 
           <li class="nav-item">
             <a class="nav-link"  data-toggle="collapse" href="#charts" role="button" aria-expanded="false" aria-controls="charts">
@@ -230,6 +237,9 @@
                 </li>
                 <li class="nav-item">
                   <a href="#" class="nav-link">Whatsapp</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">Bulk Email</a>
                 </li>
               </ul>
             </div>

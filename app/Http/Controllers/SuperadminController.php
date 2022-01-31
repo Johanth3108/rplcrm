@@ -196,6 +196,8 @@ class SuperadminController extends Controller
 
     public function savelead(Request $request)
     {
+
+        // dd($request->salesman);
         $prop= properties::where('propname', $request->propname)->get()->first();
         $lead = new lead();
         $lead->client_name = $request->client_name;

@@ -15,11 +15,21 @@ class CreateAssignLeadsTable extends Migration
     {
         Schema::create('assign_leads', function (Blueprint $table) {
             $table->id();
-            $table->integer('employee_id');
+            $table->string('client_name')->nullable();
+            $table->string('client_phn')->nullable();
+            $table->string('client_em')->nullable();
             $table->string('property_name');
-            $table->integer('salesmanager')->nullable();
-            $table->integer('salesexecutive')->nullable();
-            $table->integer('telecaller')->nullable();
+            $table->text('address')->nullable();
+            $table->string('location')->default('India');
+            $table->string('state');
+            $table->string('district');
+            $table->string('prop_type');
+            $table->string('lead_from')->default('manual');
+            $table->string('assigned_man')->nullable();
+            $table->string('assigned_exe')->nullable();
+            $table->string('assigned_tele')->nullable();
+            $table->integer('status');
+            $table->text('feedback')->nullable();
             $table->timestamps();
         });
     }

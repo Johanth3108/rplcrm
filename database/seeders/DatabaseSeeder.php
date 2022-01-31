@@ -39,6 +39,25 @@ class DatabaseSeeder extends Seeder
             $user->save();
             $this->command->info("User: Superadmin created.");
         }
+        $user = User::where('name', 'Test Area Manager')->first();
+        if (!$user) {
+            $user = new User;
+            $user->name = 'Test Area Manager';
+            $user->email = 'areamanager@test.com';
+            $user->contact_number = '123456789';
+            $user->department = 'sales';
+            $user->superadmin = null;
+            $user->areamanager = 1;
+            $user->salesmanager = null;
+            $user->salesexecutive = null;
+            $user->telecaller = null;
+            $user->state = 'Tamil Nadu';
+            $user->district = 'Chennai';
+            $user->email_verified_at = now();
+            $user->password = bcrypt('12345'); // RUN ```PHP ARTISAN TINKER``` IN YOUR TERMINAL, AND RUN ```HASH:MAKE('$YOUR PASSWORD')```
+            $user->save();
+            $this->command->info("User: Area manager created.");
+        }
         $user = User::where('name', 'Test salesmanager')->first();
         if (!$user) {
             $user = new User;

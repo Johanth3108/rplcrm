@@ -110,7 +110,14 @@
             </a>
           </li>
 
-          <li class="nav-item nav-category">Broadcast</li>
+		  @if ($telepage->assigned_leads==true)
+		  <li class="nav-item">
+            <a href="{{route('telecaller.assigned')}}" class="nav-link">
+              <i class="link-icon" data-feather="link"></i>
+              <span class="link-title">Assigned leads</span>
+            </a>
+          </li>
+		  @endif
 
 		  @if ($telepage->calendar==true)
 		  <li class="nav-item">
@@ -121,14 +128,7 @@
           </li>
 		  @endif
 		  
-		  @if ($telepage->assigned_leads==true)
-		  <li class="nav-item">
-            <a href="{{route('telecaller.assigned')}}" class="nav-link">
-              <i class="link-icon" data-feather="link"></i>
-              <span class="link-title">Assigned leads</span>
-            </a>
-          </li>
-		  @endif
+		  
 		  
 		  <li class="nav-item">
 			<a class="nav-link" data-toggle="collapse" href="#message" role="button" aria-expanded="false" aria-controls="message">
@@ -197,7 +197,7 @@
 					<form class="search-form">
 						<div class="input-group">
 							<div class="input-group-prepend">
-								<iframe src="https://free.timeanddate.com/clock/i85z25nz/n553/fs22/ftb/pa0/tt0/tw1/th2/ta1" frameborder="0" width="404" height="26"></iframe>
+								<iframe src="https://free.timeanddate.com/clock/i85z25nz/n553/fs22/ftb/pa0/tt0/tw1/th2/ta1" frameborder="0" width="434" height="26"></iframe>
 							</div>
 						</div>
 					</form>

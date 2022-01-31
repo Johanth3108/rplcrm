@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('department');
             $table->timestamp('email_verified_at')->nullable();
             $table->boolean('superadmin')->nullable();
+            $table->boolean('areamanager')->nullable();
             $table->boolean('salesmanager')->nullable();
             $table->boolean('salesexecutive')->nullable();
             $table->boolean('telecaller')->nullable();

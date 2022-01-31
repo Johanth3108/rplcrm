@@ -49,45 +49,6 @@
 				  </a>
 				</li>
 
-				<li class="nav-item nav-category">Broadcast</li>
-				@if ($manpage->message==true || $manpage->whatsapp==true)
-					<li class="nav-item">
-						<a class="nav-link" data-toggle="collapse" href="#sms" role="button" aria-expanded="false" aria-controls="sms">
-							<i class="link-icon" data-feather="file-text"></i>
-							<span class="link-title">SMS</span>
-							<i class="link-arrow" data-feather="chevron-down"></i>
-						</a>
-						<div class="collapse" id="sms">
-							<ul class="nav sub-menu">
-							@if ($manpage->message==true)
-								<li class="nav-item">
-									<a href="{{ route('salesmanager.message') }}" class="nav-link">Message</a>
-								</li>
-							@endif
-							
-							@if ($manpage->whatsapp==true)
-								<li class="nav-item">
-									<a href="{{ route('salesmanager.whatsapp') }}" class="nav-link">Whatsapp</a>
-								</li>
-							@endif
-							
-							</ul>
-						</div>
-					</li>
-				@endif
-				
-				@if ($manpage->calendar==true)
-				<li class="nav-item">
-				  <a href="{{route('salesmanager.calender')}}" class="nav-link">
-					<i class="link-icon" data-feather="calendar"></i>
-					<span class="link-title">Calendar</span>
-				  </a>
-				</li>
-				@endif
-
-				<li class="nav-item nav-category">Staffs </li>
-
-				
 				@if ($manpage->employees==true || $manpage->add_user==true)
 				<li class="nav-item">
 				  <a class="nav-link" data-toggle="collapse" href="#forms" role="button" aria-expanded="false" aria-controls="forms">
@@ -113,50 +74,8 @@
 				  </div>
 				</li>
 				@endif
-	  
-				@if ($manpage->apex==true)
-				<li class="nav-item">
-				  <a class="nav-link"  data-toggle="collapse" href="#charts" role="button" aria-expanded="false" aria-controls="charts">
-					<i class="link-icon" data-feather="pie-chart"></i>
-					<span class="link-title">Report</span>
-					<i class="link-arrow" data-feather="chevron-down"></i>
-				  </a>
-				  <div class="collapse" id="charts">
-					<ul class="nav sub-menu">
-					  <li class="nav-item">
-						<a href="{{route('salesmanager.apex')}}" class="nav-link">Apex</a>
-					  </li>
-					</ul>
-				  </div>
-				</li>
-				@endif
-				
 
-				@if ($manpage->gen_leads==true || $manpage->add_lead==true)
-				<li class="nav-item">
-				  <a class="nav-link" data-toggle="collapse" href="#leads" role="button" aria-expanded="false" aria-controls="leads">
-					<i class="link-icon" data-feather="briefcase"></i>
-					<span class="link-title">Leads</span>
-					<i class="link-arrow" data-feather="chevron-down"></i>
-				  </a>
-				  <div class="collapse" id="leads">
-					<ul class="nav sub-menu">
-						@if ($manpage->gen_leads==true)
-						<li class="nav-item">
-							<a href="{{ route('salesmanager.leads') }}" class="nav-link">Generated leads</a>
-					  	</li>
-						@endif
-						@if ($manpage->add_lead==true)
-						<li class="nav-item">
-							<a href="{{route('salesmanager.addleads')}}" class="nav-link">Add Lead</a>
-					  	</li>
-						@endif
-					  
-					</ul>
-				  </div>
-				</li>
-				@endif
-				
+
 				@if ($manpage->gen_prop==true || $manpage->add_prop==true)
 				<li class="nav-item">
 					<a class="nav-link" data-toggle="collapse" href="#properties" role="button" aria-expanded="false" aria-controls="properties">
@@ -182,7 +101,87 @@
 					</div>
 				</li>
 				@endif
-				
+
+				@if ($manpage->gen_leads==true || $manpage->add_lead==true)
+				<li class="nav-item">
+				  <a class="nav-link" data-toggle="collapse" href="#leads" role="button" aria-expanded="false" aria-controls="leads">
+					<i class="link-icon" data-feather="briefcase"></i>
+					<span class="link-title">Leads</span>
+					<i class="link-arrow" data-feather="chevron-down"></i>
+				  </a>
+				  <div class="collapse" id="leads">
+					<ul class="nav sub-menu">
+						@if ($manpage->gen_leads==true)
+						<li class="nav-item">
+							<a href="{{ route('salesmanager.leads') }}" class="nav-link">Generated leads</a>
+					  	</li>
+						@endif
+						@if ($manpage->add_lead==true)
+						<li class="nav-item">
+							<a href="{{route('salesmanager.addleads')}}" class="nav-link">Add Lead</a>
+					  	</li>
+						@endif
+						<li class="nav-item">
+							<a href="{{route('salesmanager.assigned')}}" class="nav-link">Assigned Leads</a>
+						</li>
+					  
+					</ul>
+				  </div>
+				</li>
+				@endif
+
+				@if ($manpage->apex==true)
+				<li class="nav-item">
+				  <a class="nav-link"  data-toggle="collapse" href="#charts" role="button" aria-expanded="false" aria-controls="charts">
+					<i class="link-icon" data-feather="pie-chart"></i>
+					<span class="link-title">Report</span>
+					<i class="link-arrow" data-feather="chevron-down"></i>
+				  </a>
+				  <div class="collapse" id="charts">
+					<ul class="nav sub-menu">
+					  <li class="nav-item">
+						<a href="{{route('salesmanager.apex')}}" class="nav-link">Apex</a>
+					  </li>
+					</ul>
+				  </div>
+				</li>
+				@endif
+
+				@if ($manpage->calendar==true)
+				<li class="nav-item">
+				  <a href="{{route('salesmanager.calender')}}" class="nav-link">
+					<i class="link-icon" data-feather="calendar"></i>
+					<span class="link-title">Calendar</span>
+				  </a>
+				</li>
+				@endif
+
+				@if ($manpage->message==true || $manpage->whatsapp==true)
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="collapse" href="#sms" role="button" aria-expanded="false" aria-controls="sms">
+							<i class="link-icon" data-feather="file-text"></i>
+							<span class="link-title">SMS</span>
+							<i class="link-arrow" data-feather="chevron-down"></i>
+						</a>
+						<div class="collapse" id="sms">
+							<ul class="nav sub-menu">
+							@if ($manpage->message==true)
+								<li class="nav-item">
+									<a href="{{ route('salesmanager.message') }}" class="nav-link">Message</a>
+								</li>
+							@endif
+							
+							@if ($manpage->whatsapp==true)
+								<li class="nav-item">
+									<a href="{{ route('salesmanager.whatsapp') }}" class="nav-link">Whatsapp</a>
+								</li>
+							@endif
+							
+							</ul>
+						</div>
+					</li>
+				@endif
+
 				<li class="nav-item">
 					<a class="nav-link" data-toggle="collapse" href="#message" role="button" aria-expanded="false" aria-controls="message">
 					  <i class="link-icon" data-feather="server"></i>
@@ -200,16 +199,7 @@
 					  </ul>
 					</div>
 				</li>
-				<li class="nav-item">
-					<a href="{{route('salesmanager.assigned')}}" class="nav-link">
-					<i class="link-icon" data-feather="pie-chart"></i>
-					<span class="link-title">Assigned Leads</span>
-					</a>
-				</li>
-				
 			  </ul>
-	  
-			  
 			</div>
 		  </nav>
 		<!-- partial -->
@@ -225,7 +215,7 @@
 					<form class="search-form">
 						<div class="input-group">
 							<div class="input-group-prepend">
-								<iframe src="https://free.timeanddate.com/clock/i85z25nz/n553/fs22/ftb/pa0/tt0/tw1/th2/ta1" frameborder="0" width="404" height="26"></iframe>
+								<iframe src="https://free.timeanddate.com/clock/i85z25nz/n553/fs22/ftb/pa0/tt0/tw1/th2/ta1" frameborder="0" width="434" height="26"></iframe>
 							</div>
 						</div>
 					</form>
@@ -248,7 +238,7 @@
 								</div>
 								<div class="dropdown-body">
 									@foreach ($messsages as $message)
-									<a href="javascript:;" class="dropdown-item">
+									<a href="{{route('salesmanager.pmessage.reply', $message->sender_id)}}" class="dropdown-item">
 										<div class="icon">
 											<i data-feather="layers"></i>
 										</div>
@@ -261,7 +251,7 @@
 									
 								</div>
 								<div class="dropdown-footer d-flex align-items-center justify-content-center">
-									<a href="javascript:;">View all</a>
+									<a href="{{ route('salesmanager.inbox') }}">View all</a>
 								</div>
 							</div>
 						</li>

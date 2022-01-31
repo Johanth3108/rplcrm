@@ -5,37 +5,42 @@
 @endsection
 
 @section('content')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{{route('admin.home')}}">SAGI CRM</a></li>
-      <li class="breadcrumb-item"><a href="#">Staff</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Employee detail</li>
-    </ol>
-</nav>
+
+@if ($message = Session::get('message'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+	<strong>{{$message}} </strong>
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+@endif
+
 <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
     <div>
-      <h4 class="mb-3 mb-md-0"></h4>
-      <h4 class="mb-3 mb-md-0"></h4>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{{route('admin.home')}}">SAGI CRM</a></li>
+              <li class="breadcrumb-item"><a href="#">Staff</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Employee detail</li>
+            </ol>
+        </nav>
     </div>
     <div class="d-flex align-items-center flex-wrap text-nowrap">
       <div class="input-group date datepicker dashboard-date mr-2 mb-2 mb-md-0 d-md-none d-xl-flex" id="dashboardDate">
         <span class="input-group-addon bg-transparent"><i data-feather="calendar" class=" text-primary"></i></span>
         <input type="text" class="form-control">
       </div>
-      {{-- <a type="button" class="btn btn-outline-info btn-icon-text mr-2 d-none d-md-block">
+      <a type="button" class="btn btn-outline-info btn-icon-text mr-2 d-none d-md-block">
         <i class="btn-icon-prepend" data-feather="download"></i>
         Import
       </a>
-      <button type="button" class="btn btn-outline-primary btn-icon-text mr-2 mb-2 mb-md-0">
-        <i class="btn-icon-prepend" data-feather="printer"></i>
-        Print
-      </button> --}}
       <a type="button" href="{{route('admin.report.download')}}" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
         <i class="btn-icon-prepend" data-feather="download-cloud"></i>
         Download Report
       </a>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
@@ -68,6 +73,8 @@
                                 <td>Super Admin</td>
                                 @elseif ($emp->salesmanager==true)
                                 <td>Sales Manager</td>
+                                @elseif ($emp->areamanager==true)
+                                <td>Area Manager</td>
                                 @elseif ($emp->salesexecutive==true)
                                 <td>Sales Executive</td>
                                 @elseif ($emp->telecaller==true)
@@ -77,7 +84,18 @@
                                 <td>{{$emp->district}}</td>
                                 <td>{{$emp->state}}</td>
                                 <td>Housing.com</td>
-                                <td><a href="{{route('admin.employeeedit', $emp->id)}}" class="btn btn-primary">Manage</a></td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                          Manage
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                          <a class="dropdown-item" href="{{route('admin.employeeedit', $emp->id)}}">Edit</a>
+                                          <a href="{{route('admin.report')}}" class="dropdown-item">View report</a>
+                                          <a class="dropdown-item" id="delete" href="{{route('admin.deluser', $emp->id)}}">Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>

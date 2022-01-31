@@ -20,6 +20,6 @@ class salesmanager
         if(Auth::user()->salesmanager == true){
             return $next($request);
         }
-        return redirect()->back()->with('error',"You are not a salesmanager.");
+        return redirect()->back()->with('message',"You are not a salesmanager.");
     }
 }

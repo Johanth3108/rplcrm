@@ -65,7 +65,7 @@
             </div>
             <div class="row">
               <div class="col-6 col-md-12 col-xl-5">
-                <h3 class="mb-2">35,084</h3>
+                <h3 class="mb-2">{{ $leadscn }}</h3>
                 <div class="d-flex align-items-baseline">
                   <a href="{{route('admin.addlead')}}" class="text-success">
                     <span>Click to add a new lead.</span>
@@ -83,23 +83,25 @@
       <div class="col-md-4 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <div class="d-flex justify-content-between align-items-baseline">
-              <h6 class="card-title mb-0">Growth</h6>
+            <h6 class="card- m-0">Leads on follow up</h6>
+            <h3 class="mb-2"><span class="text-success">{{ $follow_up }}</span></h3>
+            <h6 class="card- m-0">Pending leads</h6>
+            <h3 class=""><span class="text-warning">{{ $follow_up }}</span></h3>
+
+            {{-- <div class="d-flex justify-content-between align-items-baseline">
+              <h6 class="card-title mb-0">Follow-up and pending leads</h6>
             </div>
             <div class="row">
-              <div class="col-6 col-md-12 col-xl-5">
-                <h3 class="mb-2">89.87%</h3>
-                <div class="d-flex align-items-baseline">
-                  <p class="text-success">
-                    <span>+2.8%</span>
-                    <i data-feather="arrow-up" class="icon-sm mb-1"></i>
-                  </p>
+              <div class="col-12 col-md-12 col-xl-5">
+                  <h3 class="mb-2"><span class="text-success">89.87%</span></h3>
+                  <div class="d-flex align-items-baseline">
+                  <h6 class="card-title mb-0">Follow-up</h6><br>
+                  <h4 class="text-warning">
+                    <span>89.87%</span>
+                  </h4>
                 </div>
               </div>
-              <div class="col-6 col-md-12 col-xl-7">
-                <div id="apexChart3" class="mt-md-3 mt-xl-0"></div>
-              </div>
-            </div>
+            </div> --}}
           </div>
         </div>
       </div>
@@ -138,69 +140,21 @@
     <div class="card">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h6 class="card-title mb-0">Inbox</h6>
-          <div class="dropdown mb-2">
-            <button class="btn p-0" type="button" id="dropdownMenuButton6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton6">
-              <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">View</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="edit-2" class="icon-sm mr-2"></i> <span class="">Edit</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="trash" class="icon-sm mr-2"></i> <span class="">Delete</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Print</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Download</span></a>
-            </div>
-          </div>
+          <h6 class="card-title mb-2">Inbox</h6>
         </div>
         <div class="d-flex flex-column">
-          <a href="#" class="d-flex align-items-center border-bottom pb-3">
-            <div class="mr-3">
-              <img src="https://via.placeholder.com/35x35" class="rounded-circle wd-35" alt="user">
-            </div>
-            <div class="w-100">
-              <div class="d-flex justify-content-between">
-                <h6 class="text-body mb-2">Leonardo Payne</h6>
-                <p class="text-muted tx-12">12.30 PM</p>
+          @foreach ($messsages as $message)
+            <a href="#" class="d-flex align-items-center border-bottom pb-3">
+              <div class="w-100">
+                <div class="d-flex justify-content-between">
+                  <h6 class="text-body mb-2">{{$message->sender_name}}</h6>
+                  <p class="text-muted tx-12">{{$message->created_at}}</p>
+                </div>
+                <p class="text-muted tx-13">{{$message->message}}</p>
               </div>
-              <p class="text-muted tx-13">Hey! there I'm available...</p>
-            </div>
-          </a>
-          <a href="#" class="d-flex align-items-center border-bottom py-3">
-            <div class="mr-3">
-              <img src="https://via.placeholder.com/35x35" class="rounded-circle wd-35" alt="user">
-            </div>
-            <div class="w-100">
-              <div class="d-flex justify-content-between">
-                <h6 class="text-body mb-2">Carl Henson</h6>
-                <p class="text-muted tx-12">02.14 AM</p>
-              </div>
-              <p class="text-muted tx-13">I've finished it! See you so..</p>
-            </div>
-          </a>
-          <a href="#" class="d-flex align-items-center border-bottom py-3">
-            <div class="mr-3">
-              <img src="https://via.placeholder.com/35x35" class="rounded-circle wd-35" alt="user">
-            </div>
-            <div class="w-100">
-              <div class="d-flex justify-content-between">
-                <h6 class="text-body mb-2">Jensen Combs</h6>
-                <p class="text-muted tx-12">08.22 PM</p>
-              </div>
-              <p class="text-muted tx-13">This template is awesome!</p>
-            </div>
-          </a>
-          <a href="#" class="d-flex align-items-center border-bottom py-3">
-            <div class="mr-3">
-              <img src="https://via.placeholder.com/35x35" class="rounded-circle wd-35" alt="user">
-            </div>
-            <div class="w-100">
-              <div class="d-flex justify-content-between">
-                <h6 class="text-body mb-2">Amiah Burton</h6>
-                <p class="text-muted tx-12">05.49 AM</p>
-              </div>
-              <p class="text-muted tx-13">Nice to meet you</p>
-            </div>
-          </a>
+            </a>
+          @endforeach
+          
           
         </div>
       </div>
@@ -274,6 +228,8 @@
                               
                               @if ($emp->superadmin==true)
                               <td>Super Admin</td>
+                              @elseif ($emp->areamanager==true)
+                              <td>Area Manager</td>
                               @elseif ($emp->salesmanager==true)
                               <td>Sales Manager</td>
                               @elseif ($emp->salesexecutive==true)

@@ -21,6 +21,6 @@ class salesexecutive
             return $next($request);
         }
    
-        return redirect()->back()->with('error',"You are not a salesexecutive.");
+        return redirect()->back()->with('message',"You are not a salesexecutive.");
     }
 }

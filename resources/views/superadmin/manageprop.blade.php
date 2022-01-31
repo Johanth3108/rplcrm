@@ -96,6 +96,41 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="salesman">Assigned salesmanager</label>
+                        <select name="salesman" class="form-control" id="salesman" required>
+                            <option value="" selected disabled>Select a salesmanager</option>
+                            @foreach ($users as $user)
+                                @if ($user->salesmanager==true)
+                                    <option value="{{$user->id}}" id="{{$user->id}}" @if ($user->id==$prop->salesmanager)
+                                        selected
+                                    @endif>{{$user->name}}</option>
+                                @endif
+                            @endforeach
+                            
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="salesexe">Assigned salesexecutive</label>
+                        <select name="salesexe" class="form-control" id="salesexe" onchange="change()" multiple>
+                            @foreach ($users as $user)
+                                @if ($user->salesexecutive==true)
+                                <option value="{{$user->id}}" id="{{$user->id}}" @if (in_array($user->id, $assign_exes))
+                                    selected
+                                @endif>{{$user->name}}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                        <input type="text" name="exe" id="exe" value="{{$prop->salesexecutive}}" hidden>
+                    </div>
+
+                    <script src="{{asset('multiselect/multiselect-dropdown.js')}}"></script>
+                    <script>
+                        function change() {
+                            document.getElementById("exe").value = Array.from(document.getElementById("salesexe").options).filter(option => option.selected).map(option => option.value);
+                        }
+                    </script>
+                    <div class="form-group">
                         <label for="exampleInputUsername1">Name of Owner</label>
                         <input required type="text" value="{{$prop->owner}}" name="owner" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Owner name" required>
                     </div>

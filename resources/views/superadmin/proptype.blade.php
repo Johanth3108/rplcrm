@@ -28,23 +28,71 @@
                 <h3 class="card-title">Add a property type</h3>
                 <form class="forms-sample" method="POST" action="{{route('admin.proptype.add')}}">
                     @csrf
-                    <div class="form-group">
-                        <label for="inputState">Add a property type</label>
+                    <div class="form-group mx-3">
                         <input required type="text" name="prop_type" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Property type"  required>
                     </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputUsername1">Available property types</label>
-                        @foreach ($prop_types as $prop_type)
-                        <h6 class="card-subtitle ml-2 text-dark">{{strtoupper($prop_type->prop_type)}}</h6>
-                        @endforeach
+                    <button type="submit" class="btn btn-primary mx-3 mb-2">Add</button>
+                    <div class="col-md-6 grid-margin stretch-card mx-0">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title">Added property types</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Property type</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($prop_types as $prop_type)
+                                                <tr>
+                                                    <th>{{$prop_type->id}}</th>
+                                                    <td>{{$prop_type->prop_type}}</td>
+                                                    <td><a href="{{route('admin.proptype.delete', $prop_type->id)}}" id="delete" class="btn btn-danger">Delete</a></td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary mr-2">Add</button>
+                    
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $('#delete').on('click',function (e) {
+        e.preventDefault();
+        var self = $(this);
+        console.log(self.data('title'));
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    'Lead has been deleted.',
+                    'success'
+                )
+                // document.getElementById('form').submit();
+                location.href = self.attr('href');
+            }
+        })
+
+    })
+</script>
     
     
 @endsection

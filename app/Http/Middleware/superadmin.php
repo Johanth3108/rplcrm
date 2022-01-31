@@ -20,6 +20,6 @@ class superadmin
             return $next($request);
         }
    
-        return redirect()->back()->with('error',"You don't have admin access.");
+        return redirect()->back()->with('message',"You don't have admin access.");
     }
 }

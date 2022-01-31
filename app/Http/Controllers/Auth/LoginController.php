@@ -36,6 +36,7 @@ class LoginController extends Controller
     protected function redirectTo(){
         $for = [
             'superadmin' => 'admin.home',
+            'areamanager' => 'areamanager.home',
             'salesmanager'  => 'salesmanager.home',
             'salesexecutive'  => 'salesexecutive.home',
             'telecaller'  => 'telecaller.home',
@@ -45,6 +46,9 @@ class LoginController extends Controller
         }
         elseif (Auth::check() && Auth::user()->superadmin==1){
             return $this->redirectTo = route('admin.home');
+        }
+        elseif (Auth::check() && Auth::user()->areamanager==1){
+            return $this->redirectTo = route('areamanager.home');
         }
         elseif (Auth::check() && Auth::user()->salesexecutive==1){
             return $this->redirectTo = route('salesexecutive.home');

@@ -98,10 +98,10 @@
                                 <td>
                                   <div class="dropdown">
                                     <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      Edit
+                                      Manage
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                      <a class="dropdown-item" href="{{route('admin.managelead', $lead->id)}}">Manage</a>
+                                      <a class="dropdown-item" href="{{route('admin.managelead', $lead->id)}}">Edit</a>
                                       <a href="{{route('admin.feedback', $lead->id)}}" class="dropdown-item">Feedbacks</a>
                                       <a class="dropdown-item" id="delete" href="{{route('admin.deletelead', $lead->id)}}">Delete</a>
                                     </div>

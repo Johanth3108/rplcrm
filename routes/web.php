@@ -43,6 +43,7 @@ Route::get('superadmin/employees', [SuperadminController::class, 'employees'])->
 Route::get('superadmin/employees/edit/{id}', [SuperadminController::class, 'employeeedit'])->name('admin.employeeedit')->middleware('superadmin');
 Route::post('superadmin/employees/save/{id}', [SuperadminController::class, 'save'])->name('admin.save')->middleware('superadmin');
 Route::get('superadmin/adduser', [SuperadminController::class, 'adduser'])->name('admin.adduser')->middleware('superadmin');
+Route::get('superadmin/deluser/{id}', [SuperadminController::class, 'deluser'])->name('admin.deluser')->middleware('superadmin');
 Route::post('superadmin/addemp', [SuperadminController::class, 'addemp'])->name('admin.addemp')->middleware('superadmin');
 Route::get('superadmin/calender', [SuperadminController::class, 'calender'])->name('admin.calender')->middleware('superadmin');
 // Route::get('superadmin/read', [SuperadminController::class, 'read'])->name('admin.read')->middleware('superadmin');
@@ -76,6 +77,7 @@ Route::post('superadmin/telepage/save', [SuperadminController::class, 'telepages
 Route::get('superadmin/feedback/{id}', [SuperadminController::class, 'feedback'])->name('admin.feedback');
 Route::post('superadmin/feedback/send', [SuperadminController::class, 'feedbacksend'])->name('admin.feedback.send');
 Route::get('superadmin/clients', [SuperadminController::class, 'clients'])->name('admin.clients');
+Route::get('superadmin/view-report', [SuperadminController::class, 'report'])->name('admin.report');
 
 
 // areamanager
@@ -142,6 +144,7 @@ Route::get('salesmanager/pmessage/reply/{id}', [SalesmanagerController::class, '
 Route::post('salesmanager/pmessagesend', [SalesmanagerController::class, 'pmessagesend'])->name('salesmanager.pmessagesend')->middleware('salesmanager');
 Route::get('salesmanager/inbox', [SalesmanagerController::class, 'inbox'])->name('salesmanager.inbox')->middleware('salesmanager');
 Route::get('salesmanager/properties', [SalesmanagerController::class, 'properties'])->name('salesmanager.properties')->middleware('salesmanager');
+Route::get('salesmanager/view-report', [SalesmanagerController::class, 'report'])->name('salesmanager.report')->middleware('salesmanager');
 
 
 

@@ -46,11 +46,11 @@
                           <th>Employee name</th>
                           <th>Mail id</th>
                           <th>Contact number</th>
-                          <th>Department</th>
                           <th>Position</th>
                           <th>District</th>
                           <th>State</th>
                           <th>Current working lead</th>
+                          <th>Action</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -60,7 +60,6 @@
                               <td>{{$emp->name}}</td>
                               <td>{{$emp->email}}</td>
                               <td>{{$emp->contact_number}}</td>
-                              <td>{{$emp->department}}</td>
 
                               @if ($emp->superadmin==true)
                               <td>Super Admin</td>
@@ -75,6 +74,17 @@
                               <td>{{$emp->district}}</td>
                               <td>{{$emp->state}}</td>
                               <td>Housing.com <span class="badge badge-success">active</span></td>
+
+                              <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      Manage
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                      <a href="{{route('admin.report')}}" class="dropdown-item">View report</a>
+                                    </div>
+                                </div>
+                            </td>
                           </tr>
                           @endforeach
                         </tbody>

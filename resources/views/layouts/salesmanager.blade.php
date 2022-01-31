@@ -238,7 +238,7 @@
 								</div>
 								<div class="dropdown-body">
 									@foreach ($messsages as $message)
-									<a href="javascript:;" class="dropdown-item">
+									<a href="{{route('salesmanager.pmessage.reply', $message->sender_id)}}" class="dropdown-item">
 										<div class="icon">
 											<i data-feather="layers"></i>
 										</div>
@@ -251,7 +251,7 @@
 									
 								</div>
 								<div class="dropdown-footer d-flex align-items-center justify-content-center">
-									<a href="javascript:;">View all</a>
+									<a href="{{ route('salesmanager.inbox') }}">View all</a>
 								</div>
 							</div>
 						</li>

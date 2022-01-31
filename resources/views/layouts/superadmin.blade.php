@@ -300,7 +300,7 @@
 								</div>
 								<div class="dropdown-body">
 									@foreach ($messsages as $message)
-									<a href="javascript:;" class="dropdown-item">
+									<a href="{{route('admin.reply', $message->sender_id)}}" class="dropdown-item">
 										<div class="icon">
 											<i data-feather="layers"></i>
 										</div>
@@ -310,10 +310,9 @@
 										</div>
 									</a>
 									@endforeach
-									
 								</div>
 								<div class="dropdown-footer d-flex align-items-center justify-content-center">
-									<a href="javascript:;">View all</a>
+									<a href="{{ route('admin.inbox') }}">View all</a>
 								</div>
 							</div>
 						</li>

@@ -55,7 +55,6 @@
                                 <td>{{$emp->name}}</td>
                                 <td>{{$emp->email}}</td>
                                 <td>{{$emp->contact_number}}</td>
-
                                 @if ($emp->superadmin==true)
                                 <td>Super Admin</td>
                                 @elseif ($emp->areamanager==true)
@@ -71,7 +70,17 @@
                                 <td>{{$emp->district}}</td>
                                 <td>{{$emp->state}}</td>
                                 <td>Housing.com</td>
-                                <td><a href="{{route('areamanager.employeeedit', $emp->id)}}" class="btn btn-primary">Manage</a></td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                          Manage
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                          <a href="{{route('areamanager.employeeedit', $emp->id)}}" class="dropdown-item">Edit</a>
+                                          <a href="{{route('admin.report')}}" class="dropdown-item">View report</a>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -81,12 +90,6 @@
         </div>
     </div>
 </div>
-    {{-- <script src="{{asset('assets/vendors/datatables.net/jquery.dataTables.js')}}"></script>
-	<script src="{{asset('assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js')}}"></script>
-	<script src="{{asset('assets/js/data-table.js')}}"></script>
-    <script src="{{asset('assets/vendors/core/core.js')}}"></script>
-	<script src="{{asset('assets/vendors/feather-icons/feather.min.js')}}"></script>
-	<script src="{{asset('assets/js/template.js')}}"></script> --}}
 <script type="text/javascript">
     $(document).ready(function() {
         $('dataTableExample').DataTable();

@@ -118,6 +118,11 @@ class SalesmanagerController extends Controller
     {
         # code...
     }
+
+    public function report()
+    {
+        return view('salesmanager.empreport');
+    }
     public function leads()
     {
         $leads = lead::where('state', Auth::user()->state)->get();
@@ -179,7 +184,33 @@ class SalesmanagerController extends Controller
 
     public function apex()
     {
-        return view('salesmanager.apex');
+        $leads = [];
+        for ($i=1; $i <= 12 ; $i++) { 
+            array_push($leads, DB::table('leads')->whereMonth('created_at', $i)->get()->count());
+        }
+        $property = [];
+        $per_prop = [];
+        $prop_cnt = properties::all()->count();
+        for ($i=1; $i <= $prop_cnt; $i++) {
+            $prop = properties::where('id', $i)->first()->propname;
+            array_push($property, properties::where('id', $i)->first()->propname);
+            array_push($per_prop, assign_lead::where('property_name', $prop)->get()->count());
+        }
+        $property = implode("','",$property);
+        $per_prop = implode("','",$per_prop);
+        $leads = implode(",",$leads);
+        $manual_leads = [];
+        for ($i=1; $i <= 12 ; $i++) { 
+            array_push($manual_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('lead_from', 'manual')->get()->count());
+        }
+        $auto_leads = [];
+        for ($i=1; $i <= 12 ; $i++) {
+            array_push($auto_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('lead_from', '!=','manual')->get()->count());
+        }
+
+        $manual_leads = implode("','",$manual_leads);
+        $auto_leads = implode("','",$auto_leads);
+        return view('salesmanager.apex', compact('leads', 'property', 'per_prop', 'manual_leads', 'auto_leads'));
     }
     public function employer()
     {

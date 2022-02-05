@@ -2,11 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\areamanpage;
 use App\Models\assign;
 use App\Models\exepage;
 use App\Models\lead;
 use App\Models\manpage;
 use App\Models\proptype;
+use App\Models\status;
 use App\Models\telepage;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -376,6 +378,22 @@ class DatabaseSeeder extends Seeder
         //     $this->command->info("assign 1 created.");
         // }
 
+        $status = status::where('status', 'active')->first();
+        if (!$status) {
+            $status = new status();
+            $status->status = 'active';
+            $status->save();
+            $this->command->info("active status created.");
+        }
+
+        $status = status::where('status', 'sold')->first();
+        if (!$status) {
+            $status = new status();
+            $status->status = 'sold';
+            $status->save();
+            $this->command->info("active status created.");
+        }
+
         $prop_type = proptype::where('prop_type', '2BHK')->first();
         if (!$prop_type) {
             $prop_type = new proptype();
@@ -406,6 +424,24 @@ class DatabaseSeeder extends Seeder
             $prop_type->prop_type = 'VILLA';
             $prop_type->save();
             $this->command->info("villa property type created.");
+        }
+
+        $areamanpage = areamanpage::where('id', 1)->first();
+        if (!$areamanpage) {
+            $areamanpage = new areamanpage();
+            $areamanpage->message = true;
+            $areamanpage->whatsapp = true;
+            $areamanpage->calendar = true;
+            $areamanpage->employees = true;
+            $areamanpage->add_user = true;
+            $areamanpage->apex = true;
+            $areamanpage->clients = true;
+            $areamanpage->gen_leads = true;
+            $areamanpage->add_lead = true;
+            $areamanpage->gen_prop = true;
+            $areamanpage->add_prop = true;
+            $areamanpage->save();
+            $this->command->info("permissions for area manager page created.");
         }
 
         $manpage = manpage::where('id', 1)->first();

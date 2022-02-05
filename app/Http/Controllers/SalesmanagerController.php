@@ -10,6 +10,7 @@ use App\Models\manpage;
 use App\Models\message;
 use App\Models\properties;
 use App\Models\proptype;
+use App\Models\status;
 use App\Models\User;
 use ArrayObject;
 use Illuminate\Http\Request;
@@ -36,8 +37,14 @@ class SalesmanagerController extends Controller
     }
     public function index()
     {
-        $leads = lead::where('state', Auth::user()->state)->get();
+        // $leads = lead::where('state', Auth::user()->state)->get();
         $execnt = User::where('salesexecutive', true)->count();
+        $leads = [];
+        for ($i=1; $i <= 12 ; $i++) { 
+            array_push($leads, DB::table('leads')->whereMonth('created_at', $i)->get()->count());
+        }
+        
+        $leads = implode(",",$leads);
         return view('salesmanager.index', compact('leads', 'execnt'));
     }
 
@@ -119,9 +126,23 @@ class SalesmanagerController extends Controller
         # code...
     }
 
-    public function report()
+    public function report($id)
     {
-        return view('salesmanager.empreport');
+        $manual_leads = [];
+        $name = (User::where('id', $id)->first()->name);
+        for ($i=1; $i <= 12 ; $i++) { 
+            if(User::where('id', $id)->first()->salesmanager==true){
+                array_push($manual_leads, DB::table('leads')->whereMonth('created_at', $i)->where('assigned_man', $id)->get()->count());
+            }
+            elseif(User::where('id', $id)->first()->salesexecutive==true){
+                array_push($manual_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('assigned_exe', $id)->get()->count());
+            }
+            else{
+                array_push($manual_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('assigned_tele', $id)->get()->count());
+            }
+        }
+        $manual_leads = implode("','",$manual_leads);
+        return view('salesmanager.empreport',compact('manual_leads', 'name'));
     }
     public function leads()
     {
@@ -139,7 +160,8 @@ class SalesmanagerController extends Controller
         foreach ($assigns as $assign) {
             array_push($assign_exes, explode(",", $assign->salesexecutive));
         }
-        return view('salesmanager.addleads', compact('props', 'users',  'assigns', 'assign_exes'));
+        $status = status::where('stat', true)->get();
+        return view('salesmanager.addleads', compact('props', 'users',  'assigns', 'assign_exes', 'status'));
     }
 
     public function addleadsave(Request $request)
@@ -158,7 +180,7 @@ class SalesmanagerController extends Controller
         $lead->prop_type = $prop->prop_type;
         $lead->assigned_man = $request->salesman;
         $lead->assigned_exe = $request->exe;
-        $lead->status = 1;
+        $lead->status = $request->status;
         $lead->save();
         $assigns = (explode(",", $request->exe));
 
@@ -188,30 +210,49 @@ class SalesmanagerController extends Controller
         for ($i=1; $i <= 12 ; $i++) { 
             array_push($leads, DB::table('leads')->whereMonth('created_at', $i)->get()->count());
         }
+        
+        $leads = implode(",",$leads);
+        
+        return view('salesmanager.apex', compact('leads'));
+    }
+
+    public function leadproperty()
+    {
         $property = [];
         $per_prop = [];
         $prop_cnt = properties::all()->count();
         for ($i=1; $i <= $prop_cnt; $i++) {
             $prop = properties::where('id', $i)->first()->propname;
             array_push($property, properties::where('id', $i)->first()->propname);
-            array_push($per_prop, assign_lead::where('property_name', $prop)->get()->count());
+            array_push($per_prop, lead::where('property_name', $prop)->where('assigned_man', Auth::user()->id)->get()->count());
         }
         $property = implode("','",$property);
         $per_prop = implode("','",$per_prop);
-        $leads = implode(",",$leads);
+        return view('salesmanager.leadprop', compact('property', 'per_prop'));
+    }
+
+    public function leadmanual()
+    {
         $manual_leads = [];
         for ($i=1; $i <= 12 ; $i++) { 
-            array_push($manual_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('lead_from', 'manual')->get()->count());
+            array_push($manual_leads, DB::table('leads')->whereMonth('created_at', $i)->where('lead_from', 'manual')->where('assigned_man', Auth::user()->id)->get()->count());
         }
+        $manual_leads = implode("','",$manual_leads);
+        return view('salesmanager.manualead', compact('manual_leads'));
+    }
+
+    public function leadauto()
+    {
         $auto_leads = [];
         for ($i=1; $i <= 12 ; $i++) {
-            array_push($auto_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('lead_from', '!=','manual')->get()->count());
+            array_push($auto_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('lead_from', '!=','manual')->where('assigned_man', Auth::user()->id)->get()->count());
         }
 
-        $manual_leads = implode("','",$manual_leads);
         $auto_leads = implode("','",$auto_leads);
-        return view('salesmanager.apex', compact('leads', 'property', 'per_prop', 'manual_leads', 'auto_leads'));
+        return view('salesmanager.autolead', compact('auto_leads'));
+
     }
+    
     public function employer()
     {
         $emps = User::where('state', Auth::user()->state)->get();
@@ -226,7 +267,8 @@ class SalesmanagerController extends Controller
         $users = User::all();
         $property = properties::where('propname', $lead->property_name)->get()->first();
         $props = properties::all();
-        return view('salesmanager.leadview', compact('lead', 'prop_types', 'users', 'props', 'property'));
+        $status = status::where('stat', true)->get();
+        return view('salesmanager.leadview', compact('lead', 'prop_types', 'users', 'props', 'property', 'status'));
     }
 
     public function leadssave($id, Request $request)
@@ -305,5 +347,10 @@ class SalesmanagerController extends Controller
         $feedback->message = $request->message;
         $feedback->save();
         return redirect()->back()->with('message', 'Feedback submitted successfully');
+    }
+    public function clients()
+    {
+        $clients = lead::select('client_name')->distinct()->get();
+        return view('salesmanager.clients', compact('clients'));
     }
 }

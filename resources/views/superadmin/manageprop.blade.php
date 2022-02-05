@@ -95,6 +95,21 @@
                             @endforeach
                         </select>
                     </div>
+
+                    <div class="form-group">
+                        <label for="areaman">Assigning Areamanager</label>
+                        <select name="areaman" class="form-control" id="areaman" required>
+                            <option value="" selected disabled>Select a Areamanager</option>
+                            @foreach ($users as $user)
+                            @if ($user->areamanager==true)
+                                <option value="{{$user->id}}" id="{{$user->id}}" @if ($user->id==$prop->areamanager)
+                                    selected
+                                @endif>{{$user->name}}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="form-group">
                         <label for="salesman">Assigned salesmanager</label>
                         <select name="salesman" class="form-control" id="salesman" required>
@@ -135,11 +150,15 @@
                         <input required type="text" value="{{$prop->owner}}" name="owner" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Owner name" required>
                     </div>
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1"> Status</label>
-                        <select name="status" class="form-control" id="exampleFormControlSelect1">
-                            <option disabled value="">Set current status of the property.</option>
-                            <option value="active">Active  </option>
-                            <option value="sold">Sold</option>
+                        <label for="status">Status</label>
+                        <select name="status" id="status" class="form-control" id="status" required>
+                            <option value="" selected disabled>Select a status</option>
+                            @foreach ($status as $stat)
+                            <option value="{{$stat->id}}" id="{{$stat->id}}" @if ($stat->id==$prop->status)
+                                selected
+                            @endif>{{$stat->status}}</option>
+                            @endforeach
+                            
                         </select>
                     </div>
                     <button type="submit" id="submit" class="btn btn-primary mr-2">Submit</button>

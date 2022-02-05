@@ -10,6 +10,8 @@
     <title>{{ config('app.name', 'Laravel') }} | Salesexecutive</title>
 	<!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
 	<link rel="stylesheet" href="{{asset('assets/vendors/core/core.css')}}">
 	<link rel="stylesheet" href="{{asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
 	<link rel="stylesheet" href="{{asset('assets/fonts/feather-font/css/iconfont.css')}}">
@@ -110,21 +112,52 @@
             </a>
           </li>
 
-		  	@if ($exepage->gen_leads==true)
-				<li class="nav-item">
-					<a href="{{route('salesexecutive.leads')}}" class="nav-link">
-					<i class="link-icon" data-feather="pie-chart"></i>
-					<span class="link-title">Generated leads</span>
-					</a>
-				</li>
-			@endif
 
 			<li class="nav-item">
-				<a href="{{route('salesexecutive.assigned')}}" class="nav-link">
-				<i class="link-icon" data-feather="pie-chart"></i>
-				<span class="link-title">Assigned Leads</span>
+				<a class="nav-link"  data-toggle="collapse" href="#leads" role="button" aria-expanded="false" aria-controls="leads">
+				  <i class="link-icon" data-feather="pie-chart"></i>
+				  <span class="link-title">Leads</span>
+				  <i class="link-arrow" data-feather="chevron-down"></i>
+				</a>
+				<div class="collapse" id="leads">
+				  <ul class="nav sub-menu">
+					<li class="nav-item">
+						<a href="{{route('salesexecutive.assigned')}}" class="nav-link">Assigned Leads</a>
+					</li>
+					<li class="nav-item">
+						<a href="{{route('salesexecutive.leads')}}" class="nav-link">Generated leads</a>
+					</li>
+				  </ul>
+				</div>
+			</li>
+
+			<li class="nav-item">
+				<a href="{{route('salesexecutive.telecallers')}}" class="nav-link">
+				<i class="link-icon" data-feather="phone"></i>
+				<span class="link-title">Telecallers</span>
 				</a>
 			</li>
+
+			<li class="nav-item">
+				<a class="nav-link"  data-toggle="collapse" href="#charts" role="button" aria-expanded="false" aria-controls="charts">
+				  <i class="link-icon" data-feather="award"></i>
+				  <span class="link-title">Report</span>
+				  <i class="link-arrow" data-feather="chevron-down"></i>
+				</a>
+				<div class="collapse" id="charts">
+				  <ul class="nav sub-menu">
+					<li class="nav-item">
+					  <a href="{{route('salesexecutive.leadproperty')}}" class="nav-link">Leads per property</a>
+					</li>
+					<li class="nav-item">
+					  <a href="{{route('salesexecutive.leadmanual')}}" class="nav-link">Manual leads</a>
+					</li>
+					<li class="nav-item">
+					  <a href="{{route('salesexecutive.leadauto')}}" class="nav-link">Automatic leads</a>
+					</li>
+				  </ul>
+				</div>
+			  </li>
 			
 			@if ($exepage->assign==true)
 			<li class="nav-item">
@@ -143,6 +176,13 @@
 					</a>
 				</li>
 		  	@endif
+
+			  <li class="nav-item">
+				<a href="{{route('salesexecutive.clients')}}" class="nav-link">
+				  <i class="link-icon" data-feather="anchor"></i>
+				  <span class="link-title">Clients</span>
+				</a>
+			  </li>
 
 			  @if ($exepage->message==true || $exepage->whatsapp==true)
 			<li class="nav-item">

@@ -18,14 +18,21 @@ use App\Exports\UsersExport;
 use App\Http\Middleware\salesmanager;
 use App\Mail\leadassign;
 use App\Mail\newuser;
+use App\Models\areamanpage;
 use App\Models\assign;
 use App\Models\assign_lead;
+use App\Models\event;
 use App\Models\exepage;
 use App\Models\feedback;
 use App\Models\manpage;
+use App\Models\status;
 use App\Models\telepage;
 use Carbon\Carbon;
+use Exception;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Response as FacadesResponse;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 
@@ -46,11 +53,16 @@ class SuperadminController extends Controller
     }
     public function index()
     {
-        $emps = User::all();
         $empcn = User::all()->count();
         $leadscn = assign::all()->count();
         $follow_up = assign_lead::where('status', 2)->get()->count();
-        return view('superadmin.index', compact('emps', 'empcn', 'leadscn', 'follow_up'));
+        $leads = [];
+        for ($i=1; $i <= 12 ; $i++) { 
+            array_push($leads, DB::table('leads')->whereMonth('created_at', $i)->get()->count());
+        }
+        
+        $leads = implode(",",$leads);
+        return view('superadmin.index', compact('leads', 'empcn', 'leadscn', 'follow_up'));
     }
 
     public function profileupdate(Request $request, $id)
@@ -82,6 +94,19 @@ class SuperadminController extends Controller
     }
     public function addemp(Request $request)
     {
+        $details = [
+            'subject' => 'Welcome to SAGI Pvt. Ltd.',
+            'title' => 'SAGICRM',
+            'body' => 'This is for testing email using smtp',
+            'usrname' => $request->empname,
+            'email' => $request->empemail,
+            'password' => $request->emppass,
+            'url' => URL::to('/').'/login'
+        ];
+       
+        Mail::to($request->empemail)->send(new newuser($details));
+
+
         $user = new User();
         $user->name = $request->empname;
         $user->email = $request->empemail;
@@ -99,6 +124,9 @@ class SuperadminController extends Controller
         elseif ($request->usrtype == 2) {
             $user->salesexecutive = true;
         }
+        elseif ($request->usrtype == 4) {
+            $user->areamanager = true;
+        }
         else {
             $user->telecaller = true;
         }
@@ -106,23 +134,59 @@ class SuperadminController extends Controller
         $user->password = bcrypt($request->emppass);
         $user->save();
 
-        $details = [
-            'subject' => 'Welcome to SAGI Pvt. Ltd.',
-            'title' => 'SAGICRM',
-            'body' => 'This is for testing email using smtp',
-            'usrname' => $request->empname,
-            'email' => $request->empemail,
-            'password' => $request->emppass,
-            'url' => URL::to('/').'/login'
-        ];
-       
-        Mail::to($request->empemail)->send(new newuser($details));
+        
         return back()->with('success', 'Successfully added a employee');
     }
 
-    public function calender()
+    public function calender(Request $request)
     {
-        return view('superadmin.calender');
+        if($request->ajax()) {
+       
+            $data = event::whereDate('start', '>=', $request->start)
+                      ->whereDate('end',   '<=', $request->end)
+                      ->get(['id', 'title', 'start', 'end']);
+ 
+            return response()->json($data);
+       }
+ 
+       return view('superadmin.calender');
+    }
+
+    public function calenderajax(Request $request)
+    {
+
+        switch ($request->type) {
+            case 'add':
+               $event = Event::create([
+                   'title' => $request->title,
+                   'start' => $request->start,
+                   'end' => $request->end,
+               ]);
+  
+               return response()->json($event);
+              break;
+   
+            case 'update':
+               $event = Event::find($request->id)->update([
+                   'title' => $request->title,
+                   'start' => $request->start,
+                   'end' => $request->end,
+               ]);
+  
+               return response()->json($event);
+              break;
+   
+            case 'delete':
+               $event = Event::find($request->id)->delete();
+   
+               return response()->json($event);
+              break;
+              
+            default:
+              # code...
+              break;
+         }
+        
     }
 
     public function inbox()
@@ -138,34 +202,76 @@ class SuperadminController extends Controller
         for ($i=1; $i <= 12 ; $i++) { 
             array_push($leads, DB::table('leads')->whereMonth('created_at', $i)->get()->count());
         }
+        
+        $leads = implode(",",$leads);
+        
+        
+        return view('superadmin.apex', compact('leads'));
+    }
+
+    public function leadproperty()
+    {
         $property = [];
         $per_prop = [];
         $prop_cnt = properties::all()->count();
         for ($i=1; $i <= $prop_cnt; $i++) {
-            $prop = properties::where('id', $i)->first()->propname;
-            array_push($property, properties::where('id', $i)->first()->propname);
-            array_push($per_prop, assign_lead::where('property_name', $prop)->get()->count());
+            try{
+                $prop = properties::where('id', $i)->first()->propname;
+                array_push($property, (properties::where('id', $i)->first()->propname ? properties::where('id', $i)->first()->propname : ""));
+                array_push($per_prop, (assign_lead::where('property_name', $prop)->get()->count() ? assign_lead::where('property_name', $prop)->get()->count() : ""));
+            }
+            catch(Exception $e) {
+                continue;
+            }
+            
         }
         $property = implode("','",$property);
         $per_prop = implode("','",$per_prop);
-        $leads = implode(",",$leads);
+        return view('superadmin.leadprop', compact('property', 'per_prop'));
+    }
+
+    public function leadmanual()
+    {
         $manual_leads = [];
         for ($i=1; $i <= 12 ; $i++) { 
             array_push($manual_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('lead_from', 'manual')->get()->count());
         }
+        $manual_leads = implode("','",$manual_leads);
+        return view('superadmin.manualead', compact('manual_leads'));
+    }
+
+    public function leadauto()
+    {
         $auto_leads = [];
         for ($i=1; $i <= 12 ; $i++) {
             array_push($auto_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('lead_from', '!=','manual')->get()->count());
         }
 
-        $manual_leads = implode("','",$manual_leads);
         $auto_leads = implode("','",$auto_leads);
-        return view('superadmin.apex', compact('leads', 'property', 'per_prop', 'manual_leads', 'auto_leads'));
+        return view('superadmin.autolead', compact('auto_leads'));
     }
 
-    public function report()
+    public function report($id)
     {
-        return view('superadmin.empreport');
+        $manual_leads = [];
+        $name = (User::where('id', $id)->first()->name);
+        for ($i=1; $i <= 12 ; $i++) { 
+            if(User::where('id', $id)->first()->areamanager==true){
+                array_push($manual_leads, DB::table('leads')->whereMonth('created_at', $i)->where('assigned_areaman', $id)->get()->count());
+            }
+            elseif(User::where('id', $id)->first()->salesmanager==true){
+                array_push($manual_leads, DB::table('leads')->whereMonth('created_at', $i)->where('assigned_man', $id)->get()->count());
+            }
+            elseif(User::where('id', $id)->first()->salesexecutive==true){
+                array_push($manual_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('assigned_exe', $id)->get()->count());
+            }
+            else{
+                array_push($manual_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('assigned_tele', $id)->get()->count());
+            }
+            
+        }
+        $manual_leads = implode("','",$manual_leads);
+        return view('superadmin.empreport',compact('manual_leads', 'name'));
     }
 
     public function addlead()
@@ -177,10 +283,10 @@ class SuperadminController extends Controller
         foreach ($assigns as $assign) {
             array_push($assign_exes, explode(",", $assign->salesexecutive));
         }
-        // $assign_exes = explode(",", $assigns->salesexecutive);
-        // dd(($assign_exes[1][0]));
+        $status = status::where('stat', true)->get();
+        // dd($status);
 
-        return view('superadmin.addlead', compact('props', 'users', 'assigns', 'assign_exes'));
+        return view('superadmin.addlead', compact('props', 'users', 'assigns', 'assign_exes', 'status'));
     }
 
     public function profile()
@@ -196,8 +302,6 @@ class SuperadminController extends Controller
 
     public function savelead(Request $request)
     {
-
-        // dd($request->salesman);
         $prop= properties::where('propname', $request->propname)->get()->first();
         $lead = new lead();
         $lead->client_name = $request->client_name;
@@ -208,11 +312,12 @@ class SuperadminController extends Controller
         $lead->state = $prop->state;
         $lead->district = $prop->district;
         $lead->prop_type = $prop->prop_type;
+        $lead->assigned_areaman = $request->areaman;
         $lead->assigned_man = $request->salesman;
         $lead->assigned_exe = $request->exe;
-        $lead->status = 1;
+        $lead->status = $request->stat;
         $lead->save();
-        
+
         $message= new message();
         $message->sender_id = Auth::user()->id;
         $message->sender_name = Auth::user()->name;
@@ -222,6 +327,18 @@ class SuperadminController extends Controller
         User::where('id', $request->salesman)->update([
             'notification' => DB::raw('notification+1')
         ]);
+
+
+        $message= new message();
+        $message->sender_id = Auth::user()->id;
+        $message->sender_name = Auth::user()->name;
+        $message->reciever_id = $request->areaman;
+        $message->message = 'You have a assigned lead.';
+        $message->save();
+        User::where('id', $request->salesman)->update([
+            'notification' => DB::raw('notification+1')
+        ]);
+
 
         $assigns = (explode(",", $request->exe));
         $details = [
@@ -233,11 +350,11 @@ class SuperadminController extends Controller
             'url' => URL::to('/').'/login'
         ];
         
+        Mail::to(User::where('id', $request->areaman)->first()->email)->send(new leadassign($details));
         Mail::to(User::where('id', $request->salesman)->first()->email)->send(new leadassign($details));
 
 
         foreach($assigns as $assi){
-
             $lead = new assign_lead();
             $lead->client_name = $request->client_name;
             $lead->client_phn = $request->client_phn;
@@ -285,8 +402,9 @@ class SuperadminController extends Controller
         $users = User::all();
         $property = properties::where('propname', $lead->property_name)->get()->first();
         $props = properties::all();
+        $status = status::where('stat', true)->get();
         $assign_exes = (explode(",", $lead->assigned_exe));
-        return view('superadmin.managelead', compact('lead', 'prop_types', 'users', 'props', 'property', 'assign_exes'));
+        return view('superadmin.managelead', compact('lead', 'prop_types', 'users', 'props', 'property', 'assign_exes', 'status'));
     }
 
     public function deletelead($id)
@@ -304,6 +422,7 @@ class SuperadminController extends Controller
             'state' => $request->state,
             'district' => $request->district,
             'prop_type' => $request->prop_type,
+            'assigned_areaman' => $request->areaman,
             'assigned_man' => $request->salesman,
             'assigned_exe' => $request->exe,
             'status' => $request->status,
@@ -365,8 +484,9 @@ class SuperadminController extends Controller
     {
         $prop_types = proptype::all();
         $props = properties::all();
+        $status = status::where('stat', true)->get();
         $users = User::all();
-        return view('superadmin.addprop', compact('prop_types', 'props', 'users'));
+        return view('superadmin.addprop', compact('prop_types', 'props', 'users', 'status'));
     }
 
     public function saveprop(Request $request)
@@ -380,12 +500,14 @@ class SuperadminController extends Controller
         $prop->prop_type = $request->prop_type;
         $prop->owner = $request->owner;
         $prop->status = $request->status;
+        $prop->areamanager = $request->areaman;
         $prop->salesmanager = $request->salesman;
         $prop->salesexecutive = $request->exe;
         $prop->save();
         
         $assign = new assign();
         $assign->property_name = $request->propname;
+        $assign->areamanager = $request->areaman;
         $assign->salesmanager = $request->salesman;
         $assign->salesexecutive = $request->exe;
         $assign->save();
@@ -399,7 +521,8 @@ class SuperadminController extends Controller
         $prop_types = proptype::all();
         $users = User::all();
         $assign_exes = (explode(",", $prop->salesexecutive));
-        return view('superadmin.manageprop', compact('prop', 'prop_types', 'users', 'assign_exes'));
+        $status = status::all();
+        return view('superadmin.manageprop', compact('prop', 'prop_types', 'users', 'assign_exes', 'status'));
     }
 
     public function deleteprop($id)
@@ -416,7 +539,6 @@ class SuperadminController extends Controller
 
     public function updateprop(Request $request, $id)
     {
-        // dd($request->exe);
         properties::where('id', $id)->update([
             'propname' => $request->propname,
             'address' => $request->address,
@@ -425,6 +547,7 @@ class SuperadminController extends Controller
             'prop_type' => $request->prop_type,
             'owner' => $request->owner,
             'status' => $request->status,
+            'areamanager' => $request->areaman,
             'salesmanager' => $request->salesman,
             'salesexecutive' => $request->exe
         ]);
@@ -501,6 +624,30 @@ class SuperadminController extends Controller
     public function propertydown()
     {
         return Excel::download(new PropertiesExport, 'properties-collection.csv');
+    }
+
+    public function areamanpage()
+    {
+        $areamanpage = areamanpage::where('id', 1)->first();
+        return view('superadmin.areamanpage', compact('areamanpage'));
+    }
+
+    public function areamanpagesave(Request $request)
+    {
+        areamanpage::where('id', 1)->update([
+            'message' => $request->message,
+            'whatsapp' => $request->whatsapp,
+            'calendar' => $request->calendar,
+            'employees' => $request->employees,
+            'add_user' => $request->add_user,
+            'apex' => $request->apex,
+            'clients' => $request->clients,
+            'gen_leads' => $request->gen_leads,
+            'add_lead' => $request->add_lead,
+            'gen_prop' => $request->gen_prop,
+            'add_prop' => $request->add_prop
+        ]);
+        return redirect()->back()->with('message', 'Areamanager portal updated successfully.');
     }
 
     public function manpage()
@@ -594,5 +741,181 @@ class SuperadminController extends Controller
     public function clients(){
         $clients = lead::select('client_name')->distinct()->get();
         return view('superadmin.clients', compact('clients'));
+    }
+
+    public function upload()
+    {
+        return view('superadmin.upload');
+    }
+
+    public function sheet(Request $request)
+    {
+        $file = $request->file('sheet');
+        // $importData = $this->csvToArray($file);
+
+        $csvData = file_get_contents($file);
+        $lines = explode(PHP_EOL, $csvData);
+        $array = array();
+        foreach ($lines as $line) {
+            $importData[] = str_getcsv($line);
+        }
+
+        // echo($importData[1][1]);
+        $data = [];
+            for ($i = 0; $i < count($importData)-1; $i ++)
+            {
+                // echo (gettype($i));
+                $data[] = [
+                    'name' => $importData[$i][1],
+                    'email' => $importData[$i][2],
+                    'contact_number' => $importData[$i][3],
+                    'department' => $importData[$i][4],
+                    'superadmin' => $importData[$i][6] == '' ? null : 1,
+                    'areamanager' => $importData[$i][7] == '' ? null : 1,
+                    'salesmanager' => $importData[$i][8] == '' ? null : 1,
+                    'salesexecutive' => $importData[$i][9] == '' ? null : 1,
+                    'telecaller' => $importData[$i][10] == '' ? null : 1,
+                    'state' => $importData[$i][11],
+                    'district' => $importData[$i][12],
+                    'password' => bcrypt('12345')
+                ];
+
+            }
+        DB::table('users')->insert($data);
+        return redirect()->route('admin.employees')->with('message','Data uploaded successfully.');
+    }
+
+    public function upload_propertyup(Request $request)
+    {
+        $file = $request->file('sheet');
+        // $importData = $this->csvToArray($file);
+
+        $csvData = file_get_contents($file);
+        $lines = explode(PHP_EOL, $csvData);
+        $array = array();
+        foreach ($lines as $line) {
+            $importData[] = str_getcsv($line);
+        }
+
+        // dd($importData[0][2]);
+        $data = [];
+            for ($i = 0; $i < count($importData)-1; $i ++)
+            {
+                // echo (gettype($i));
+                $data[] = [
+                    'propname' => $importData[$i][1],
+                    'address' => $importData[$i][2],
+                    'district' => $importData[$i][3],
+                    'state' => $importData[$i][4],
+                    'prop_type' => $importData[$i][6],
+                    'owner' => $importData[$i][7],
+                    'status' => $importData[$i][8],
+                ];
+
+            }
+        DB::table('properties')->insert($data);
+        return redirect()->route('admin.properties')->with('message','Data uploaded successfully.');
+    }
+
+    public function upload_property()
+    {
+        return view('superadmin.uploadprop');
+    }
+
+    public function upload_leads()
+    {
+        return view('superadmin.uploadlead');
+    }
+    public function upload_leadsup(Request $request)
+    {
+        $file = $request->file('sheet');
+        // $importData = $this->csvToArray($file);
+
+        $csvData = file_get_contents($file);
+        $lines = explode(PHP_EOL, $csvData);
+        $array = array();
+        foreach ($lines as $line) {
+            $importData[] = str_getcsv($line);
+        }
+
+        // dd($importData[0][1]);
+        $data = [];
+            for ($i = 0; $i < count($importData)-1; $i ++)
+            {
+                // echo (gettype($i));
+                $data[] = [
+                    'client_name' => $importData[$i][1],
+                    'client_phn' => $importData[$i][2],
+                    'client_em' => $importData[$i][3],
+                    'property_name' => $importData[$i][4],
+                    'address' => $importData[$i][6],
+                    'location' => $importData[$i][7],
+                    'state' => $importData[$i][8],
+                    'district' => $importData[$i][9],
+                    'prop_type' => $importData[$i][10],
+                    'status' => 1
+                ];
+
+            }
+        DB::table('leads')->insert($data);
+        return redirect()->route('admin.leads')->with('message','Data uploaded successfully.');
+    }
+
+    public function message_delete($id)
+    {
+        message::where('id', $id)->first()->delete();
+        User::where('id', Auth::user()->id)->update([
+            'notification' => DB::raw('notification-1')
+        ]);
+        return redirect()->back()->with('message', 'Message deleted successfully.');
+    }
+
+    public function status()
+    {
+        $status = status::all();
+        return view('superadmin.managestat', compact('status'));
+    }
+
+    public function delstat($id)
+    {
+        status::where('id', $id)->delete();
+        return redirect()->back()->with('message', 'Deleted a stat successfully');
+    }
+
+    public function addstat(Request $request)
+    {
+        $status = new status();
+        $status->status = $request->status;
+        $status->save();
+        return redirect()->back()->with('message', 'Added a stat successfully');
+    }
+
+    public function updatestat($id)
+    {
+        if (status::where('id', $id)->first()->stat == true) {
+            status::where('id', $id)->update(['stat' => false]);
+        }
+        else{
+            status::where('id', $id)->update(['stat' => true]);
+        }
+        return redirect()->back()->with('message', 'Updated a stat successfully');
+        
+    }
+
+    public function sampleemployee()
+    {
+        $path = storage_path('app/public/sample/sampleusers.csv');
+        return response()->download($path);
+    }
+
+    public function samplelead()
+    {
+        $path = storage_path('app/public/sample/samplelead.csv');
+        return response()->download($path);
+    }
+    public function sampleproperty()
+    {
+        $path = storage_path('app/public/sample/sampleproperties.csv');
+        return response()->download($path);
     }
 }

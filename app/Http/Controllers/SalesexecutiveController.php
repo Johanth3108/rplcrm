@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\assign;
+use App\Models\assign_lead;
 use App\Models\exepage;
 use App\Models\feedback;
 use App\Models\lead;
 use App\Models\message;
+use App\Models\properties;
+use App\Models\status;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +34,12 @@ class SalesexecutiveController extends Controller
 
     public function index()
     {
-        $leads = lead::where('state', Auth::user()->state)->get();
+        $leads = [];
+        for ($i=1; $i <= 12 ; $i++) { 
+            array_push($leads, DB::table('leads')->whereMonth('created_at', $i)->get()->count());
+        }
+        
+        $leads = implode(",",$leads);
         return view('salesexecutive.index', compact('leads'));
     }
     public function profile()
@@ -67,16 +75,19 @@ class SalesexecutiveController extends Controller
         $lead = lead::where('id', $request->lead)->get()->first();
         $lead->update(['assigned_tele'=>$request->telecaller]);
         $telecaller = User::where('id', $request->telecaller)->get()->first();
-        $assign = new assign();
-        $assign->employee_id = $telecaller->id;
+        // dd($telecaller->id);
+        $assign = new assign_lead();
+        $assign->client_name = $lead->client_name;
+        $assign->client_phn = $lead->client_phn;
+        $assign->client_em = $lead->client_em;
         $assign->property_name = $lead->property_name;
-
-        if ($assign->salesexecutive==1) {
-        $assign->salesexecutive = true;
-        }
-        else{
-        $assign->telecaller = true;
-        }
+        $assign->address = $lead->address;
+        $assign->state = $lead->state;
+        $assign->district = $lead->district;
+        $assign->prop_type = $lead->prop_type;
+        $assign->lead_from = $lead->lead_from;
+        $assign->assigned_tele = $telecaller->id;
+        $assign->status = 1;
         $assign->save();
         return redirect()->route('salesexecutive.assign')->with('message', $lead->property_name.' has been assigned to '.$telecaller->name.' (telecaller).');
     }
@@ -84,7 +95,8 @@ class SalesexecutiveController extends Controller
     public function leadsview($id)
     {
         $lead = lead::where('id', $id)->get()->first();
-        return view('salesexecutive.viewlead', compact('lead'));
+        $status = status::where('stat', true)->get();
+        return view('salesexecutive.viewlead', compact('lead', 'status'));
     }
 
     public function leadssave(Request $request, $id)
@@ -105,6 +117,43 @@ class SalesexecutiveController extends Controller
     {
         $reciever = User::where('id', $id)->get()->first();
         return view('salesexecutive.reply', compact('reciever'));
+    }
+
+    public function leadproperty()
+    {
+        $property = [];
+        $per_prop = [];
+        $prop_cnt = properties::all()->count();
+        for ($i=1; $i <= $prop_cnt; $i++) {
+            $prop = properties::where('id', $i)->first()->propname;
+            array_push($property, properties::where('id', $i)->first()->propname);
+            array_push($per_prop, assign_lead::where('property_name', $prop)->where('assigned_exe', Auth::user()->id)->get()->count());
+        }
+        $property = implode("','",$property);
+        $per_prop = implode("','",$per_prop);
+        return view('salesexecutive.leadprop', compact('property', 'per_prop'));
+    }
+
+    public function leadmanual()
+    {
+        $manual_leads = [];
+        for ($i=1; $i <= 12 ; $i++) { 
+            array_push($manual_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('lead_from', 'manual')->where('assigned_exe', Auth::user()->id)->get()->count());
+        }
+        $manual_leads = implode("','",$manual_leads);
+        return view('salesexecutive.manualead', compact('manual_leads'));
+    }
+
+    public function leadauto()
+    {
+        $auto_leads = [];
+        for ($i=1; $i <= 12 ; $i++) {
+            array_push($auto_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('lead_from', '!=','manual')->where('assigned_man', Auth::user()->id)->get()->count());
+        }
+
+        $auto_leads = implode("','",$auto_leads);
+        return view('salesexecutive.autolead', compact('auto_leads'));
+
     }
 
     public function pmessagesend(Request $request)
@@ -149,5 +198,34 @@ class SalesexecutiveController extends Controller
         $feedback->message = $request->message;
         $feedback->save();
         return redirect()->back()->with('message', 'Feedback submitted successfully');
+    }
+    public function clients()
+    {
+        $clients = lead::select('client_name')->distinct()->get();
+        return view('salesexecutive.clients', compact('clients'));
+    }
+    public function telecallers()
+    {
+        $emps = User::where('telecaller', true)->get();
+        return view('salesexecutive.telecallers', compact('emps'));
+    }
+
+    public function report($id)
+    {
+        $manual_leads = [];
+        $name = (User::where('id', $id)->first()->name);
+        for ($i=1; $i <= 12 ; $i++) { 
+            if(User::where('id', $id)->first()->salesmanager==true){
+                array_push($manual_leads, DB::table('leads')->whereMonth('created_at', $i)->where('assigned_man', $id)->get()->count());
+            }
+            elseif(User::where('id', $id)->first()->salesexecutive==true){
+                array_push($manual_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('assigned_exe', $id)->get()->count());
+            }
+            else{
+                array_push($manual_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('assigned_tele', Auth::user()->id)->get()->count());
+            }
+        }
+        $manual_leads = implode("','",$manual_leads);
+        return view('salesexecutive.empreport',compact('manual_leads', 'name'));
     }
 }

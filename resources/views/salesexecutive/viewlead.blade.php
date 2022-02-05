@@ -50,14 +50,13 @@
                         <input required type="text" name="lead_from" value="{{$lead->lead_from}}" class="form-control" id="lead_from" autocomplete="off" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="stat">Current status :</label>
-                        @if ($lead->status==1)
-                        <input required type="text" name="stat" value="Active" class="form-control text-success" id="stat" autocomplete="off" disabled>
-                        @elseif ($lead->status==2)
-                        <input required type="text" name="stat" value="On-hold"  class="form-control text-warning" id="stat" autocomplete="off" disabled>
-                        @else
-                        <input required type="text" name="stat" value="Rejected"  class="form-control text-danger" id="stat" autocomplete="off" disabled>
-                        @endif
+                        <label for="status">Status</label>
+                        <select name="status" id="status" class="form-control" id="status" required>
+                            <option value="" selected disabled>Select a status</option>
+                            @foreach ($status as $stat)
+                            <option value="{{$stat->id}}" @if ($stat->id==$lead->status) selected @endif>{{$stat->status}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="upstat">Update status:</label>

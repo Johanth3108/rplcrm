@@ -112,6 +112,7 @@
                             <option value="1">Sales Managers </option>
                             <option value="2">Sales Executive </option>
                             <option value="3">Telecaller</option>
+                            <option value="4">Area manager </option>
                             
                         </select>
                     </div>

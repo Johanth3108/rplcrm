@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\assign;
+use App\Models\assign_lead;
 use App\Models\feedback;
 use App\Models\lead;
 use App\Models\message;
@@ -46,7 +47,7 @@ class TelecallerController extends Controller
 
     public function assigned()
     {
-        $leads = lead::where('assigned_tele', Auth::user()->id)->get();
+        $leads = assign_lead::where('assigned_tele', Auth::user()->id)->get();
         // $property = properties::where('property_name', )
         return view('telecaller.assigned', compact('leads'));
     }
@@ -98,5 +99,15 @@ class TelecallerController extends Controller
         $feedback->message = $request->message;
         $feedback->save();
         return redirect()->back()->with('message', 'Feedback submitted successfully');
+    }
+
+    public function leadtele()
+    {
+        $manual_leads = [];
+        for ($i=1; $i <= 12 ; $i++) { 
+            array_push($manual_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('assigned_tele', Auth::user()->id)->get()->count());
+        }
+        $manual_leads = implode("','",$manual_leads);
+        return view('telecaller.leadprop', compact('manual_leads'));
     }
 }

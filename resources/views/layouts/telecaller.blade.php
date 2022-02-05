@@ -10,6 +10,8 @@
     <title>{{ config('app.name', 'Laravel') }} | Telecaller</title>
 	<!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
 	<link rel="stylesheet" href="{{asset('assets/vendors/core/core.css')}}">
 	<link rel="stylesheet" href="{{asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
 	<link rel="stylesheet" href="{{asset('assets/fonts/feather-font/css/iconfont.css')}}">
@@ -118,6 +120,21 @@
             </a>
           </li>
 		  @endif
+
+		  <li class="nav-item">
+			<a class="nav-link"  data-toggle="collapse" href="#charts" role="button" aria-expanded="false" aria-controls="charts">
+			  <i class="link-icon" data-feather="pie-chart"></i>
+			  <span class="link-title">Report</span>
+			  <i class="link-arrow" data-feather="chevron-down"></i>
+			</a>
+			<div class="collapse" id="charts">
+			  <ul class="nav sub-menu">
+				<li class="nav-item">
+				  <a href="{{route('telecaller.leadtele')}}" class="nav-link">Leads received</a>
+				</li>
+			  </ul>
+			</div>
+		  </li>
 
 		  @if ($telepage->calendar==true)
 		  <li class="nav-item">

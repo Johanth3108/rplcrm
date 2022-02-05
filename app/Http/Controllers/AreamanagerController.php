@@ -18,11 +18,13 @@ use App\Exports\UsersExport;
 use App\Http\Middleware\salesmanager;
 use App\Mail\leadassign;
 use App\Mail\newuser;
+use App\Models\areamanpage;
 use App\Models\assign;
 use App\Models\assign_lead;
 use App\Models\exepage;
 use App\Models\feedback;
 use App\Models\manpage;
+use App\Models\status;
 use App\Models\telepage;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
@@ -35,6 +37,8 @@ class AreamanagerController extends Controller
         $this->middleware(function ($request, $next) {      
             $noti = User::where('id', Auth::user()->id)->get()->first()->notification;
             $messages = message::where('reciever_id', Auth::user()->id)->get();
+            $areamanpage = areamanpage::where('id', 1)->get()->first();
+            view()->share('areamanpage', $areamanpage);
             view()->share('messsages', $messages);
             view()->share('noti', $noti);
             return $next($request);
@@ -44,11 +48,16 @@ class AreamanagerController extends Controller
     }
     public function index()
     {
-        $emps = User::all();
         $empcn = User::all()->count();
         $leadscn = assign::all()->count();
         $follow_up = assign_lead::where('status', 2)->get()->count();
-        return view('areamanager.index', compact('emps', 'empcn', 'leadscn', 'follow_up'));
+        $leads = [];
+        for ($i=1; $i <= 12 ; $i++) { 
+            array_push($leads, DB::table('leads')->whereMonth('created_at', $i)->get()->count());
+        }
+        
+        $leads = implode(",",$leads);
+        return view('areamanager.index', compact('leads', 'empcn', 'leadscn', 'follow_up'));
     }
 
     public function profileupdate(Request $request, $id)
@@ -131,6 +140,30 @@ class AreamanagerController extends Controller
         for ($i=1; $i <= 12 ; $i++) { 
             array_push($leads, DB::table('leads')->whereMonth('created_at', $i)->get()->count());
         }
+        $leads = implode(",",$leads);
+        return view('areamanager.apex', compact('leads'));
+    }
+
+    public function report($id)
+    {
+        $manual_leads = [];
+        $name = (User::where('id', $id)->first()->name);
+        for ($i=1; $i <= 12 ; $i++) { 
+            if(User::where('id', $id)->first()->salesmanager==true){
+                array_push($manual_leads, DB::table('leads')->whereMonth('created_at', $i)->where('assigned_man', $id)->get()->count());
+            }
+            elseif(User::where('id', $id)->first()->salesexecutive==true){
+                array_push($manual_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('assigned_exe', $id)->get()->count());
+            }
+            else{
+                array_push($manual_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('assigned_tele', $id)->get()->count());
+            }
+        }
+        $manual_leads = implode("','",$manual_leads);
+        return view('areamanager.empreport',compact('manual_leads', 'name'));
+    }
+    public function leadproperty()
+    {
         $property = [];
         $per_prop = [];
         $prop_cnt = properties::all()->count();
@@ -141,20 +174,30 @@ class AreamanagerController extends Controller
         }
         $property = implode("','",$property);
         $per_prop = implode("','",$per_prop);
-        $leads = implode(",",$leads);
+        return view('areamanager.leadprop', compact('property', 'per_prop'));
+    }
+
+    public function leadmanual()
+    {
         $manual_leads = [];
         for ($i=1; $i <= 12 ; $i++) { 
             array_push($manual_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('lead_from', 'manual')->get()->count());
         }
+        $manual_leads = implode("','",$manual_leads);
+        return view('areamanager.manualead', compact('manual_leads'));
+    }
+
+    public function leadauto()
+    {
         $auto_leads = [];
         for ($i=1; $i <= 12 ; $i++) {
             array_push($auto_leads, DB::table('assign_leads')->whereMonth('created_at', $i)->where('lead_from', '!=','manual')->get()->count());
         }
 
-        $manual_leads = implode("','",$manual_leads);
         $auto_leads = implode("','",$auto_leads);
-        return view('areamanager.apex', compact('leads', 'property', 'per_prop', 'manual_leads', 'auto_leads'));
+        return view('areamanager.autolead', compact('auto_leads'));
     }
+
 
     public function addlead()
     {
@@ -165,10 +208,11 @@ class AreamanagerController extends Controller
         foreach ($assigns as $assign) {
             array_push($assign_exes, explode(",", $assign->salesexecutive));
         }
+        $status = status::where('stat', true)->get();
         // $assign_exes = explode(",", $assigns->salesexecutive);
         // dd(($assign_exes[1][0]));
 
-        return view('areamanager.addlead', compact('props', 'users', 'assigns', 'assign_exes'));
+        return view('areamanager.addlead', compact('props', 'users', 'assigns', 'assign_exes', 'status'));
     }
 
     public function profile()
@@ -194,15 +238,26 @@ class AreamanagerController extends Controller
         $lead->state = $prop->state;
         $lead->district = $prop->district;
         $lead->prop_type = $prop->prop_type;
+        $lead->assigned_areaman = $request->areaman;
         $lead->assigned_man = $request->salesman;
         $lead->assigned_exe = $request->exe;
-        $lead->status = 1;
+        $lead->status = $request->stat;
         $lead->save();
 
         $message= new message();
         $message->sender_id = Auth::user()->id;
         $message->sender_name = Auth::user()->name;
         $message->reciever_id = $request->salesman;
+        $message->message = 'You have a assigned lead.';
+        $message->save();
+        User::where('id', $request->salesman)->update([
+            'notification' => DB::raw('notification+1')
+        ]);
+
+        $message= new message();
+        $message->sender_id = Auth::user()->id;
+        $message->sender_name = Auth::user()->name;
+        $message->reciever_id = $request->areaman;
         $message->message = 'You have a assigned lead.';
         $message->save();
         User::where('id', $request->salesman)->update([
@@ -219,6 +274,7 @@ class AreamanagerController extends Controller
             'url' => URL::to('/').'/login'
         ];
         
+        Mail::to(User::where('id', $request->areaman)->first()->email)->send(new leadassign($details));
         Mail::to(User::where('id', $request->salesman)->first()->email)->send(new leadassign($details));
 
         foreach($assigns as $assi){
@@ -269,8 +325,9 @@ class AreamanagerController extends Controller
         $users = User::all();
         $property = properties::where('propname', $lead->property_name)->get()->first();
         $props = properties::all();
+        $status = status::where('stat', true)->get();
         $assign_exes = (explode(",", $lead->assigned_exe));
-        return view('areamanager.managelead', compact('lead', 'prop_types', 'users', 'props', 'property', 'assign_exes'));
+        return view('areamanager.managelead', compact('lead', 'prop_types', 'users', 'props', 'property', 'assign_exes', 'status'));
     }
 
     public function deletelead($id)
@@ -350,7 +407,8 @@ class AreamanagerController extends Controller
         $prop_types = proptype::all();
         $props = properties::all();
         $users = User::all();
-        return view('areamanager.addprop', compact('prop_types', 'props', 'users'));
+        $status = status::where('stat', true)->get();
+        return view('areamanager.addprop', compact('prop_types', 'props', 'users', 'status'));
     }
 
     public function saveprop(Request $request)
@@ -364,12 +422,14 @@ class AreamanagerController extends Controller
         $prop->prop_type = $request->prop_type;
         $prop->owner = $request->owner;
         $prop->status = $request->status;
+        $prop->areamanager = $request->areaman;
         $prop->salesmanager = $request->salesman;
         $prop->salesexecutive = $request->exe;
         $prop->save();
         
         $assign = new assign();
         $assign->property_name = $request->propname;
+        $assign->areamanager = $request->areaman;
         $assign->salesmanager = $request->salesman;
         $assign->salesexecutive = $request->exe;
         $assign->save();
@@ -383,7 +443,8 @@ class AreamanagerController extends Controller
         $prop_types = proptype::all();
         $users = User::all();
         $assign_exes = (explode(",", $prop->salesexecutive));
-        return view('areamanager.manageprop', compact('prop', 'prop_types', 'users', 'assign_exes'));
+        $status = status::where('stat', true)->get();
+        return view('areamanager.manageprop', compact('prop', 'prop_types', 'users', 'assign_exes', 'status'));
     }
 
     public function deleteprop($id)
@@ -409,6 +470,7 @@ class AreamanagerController extends Controller
             'prop_type' => $request->prop_type,
             'owner' => $request->owner,
             'status' => $request->status,
+            'areamanager' => $request->areaman,
             'salesmanager' => $request->salesman,
             'salesexecutive' => $request->exe
         ]);

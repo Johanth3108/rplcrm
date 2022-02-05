@@ -10,6 +10,8 @@
     <title>{{ config('app.name', 'Laravel') }} | Salesmanager</title>
 
     <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
     <script src="{{ asset('js/app.js') }}" defer></script>
 	<link rel="stylesheet" href="{{asset('assets/vendors/core/core.css')}}">
 	<link rel="stylesheet" href="{{asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
@@ -64,11 +66,11 @@
 						</li>
 						@endif
 
-						@if ($manpage->add_user==true)
+						{{-- @if ($manpage->add_user==true)
 						<li class="nav-item">
 							<a href="#" class="nav-link">Add employee</a>
 						</li>
-						@endif
+						@endif --}}
 					 
 					</ul>
 				  </div>
@@ -91,11 +93,11 @@
 						</li>
 						@endif
 						
-						@if ($manpage->add_prop==true)
+						{{-- @if ($manpage->add_prop==true)
 						<li class="nav-item">
 							<a href="#" class="nav-link">Add properties</a>
 						</li>
-						@endif
+						@endif --}}
 						
 					  </ul>
 					</div>
@@ -140,12 +142,24 @@
 				  <div class="collapse" id="charts">
 					<ul class="nav sub-menu">
 					  <li class="nav-item">
-						<a href="{{route('salesmanager.apex')}}" class="nav-link">Apex</a>
+						<a href="{{route('salesmanager.leadprop')}}" class="nav-link">Leads per property</a>
+					  </li>
+					  <li class="nav-item">
+						<a href="{{route('salesmanager.leadmanual')}}" class="nav-link">Manual leads</a>
+					  </li>
+					  <li class="nav-item">
+						<a href="{{route('salesmanager.leadauto')}}" class="nav-link">Automatic leads</a>
 					  </li>
 					</ul>
 				  </div>
 				</li>
 				@endif
+				<li class="nav-item">
+					<a href="{{route('salesmanager.clients')}}" class="nav-link">
+					  <i class="link-icon" data-feather="anchor"></i>
+					  <span class="link-title">Clients</span>
+					</a>
+				</li>
 
 				@if ($manpage->calendar==true)
 				<li class="nav-item">
@@ -347,7 +361,7 @@
 	<script src="{{asset('assets/vendors/jquery.flot/jquery.flot.js')}}"></script>
 	<script src="{{asset('assets/vendors/jquery.flot/jquery.flot.resize.js')}}"></script>
 	<script src="{{asset('assets/vendors/apexcharts/apexcharts.min.js')}}"></script>
-	<script src="{{asset('assets/js/apexcharts.js')}}"></script>
+	{{-- <script src="{{asset('assets/js/apexcharts.js')}}"></script> --}}
 
 	<script src="{{asset('assets/vendors/progressbar.js/progressbar.min.js')}}"></script>
 

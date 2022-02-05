@@ -15,7 +15,7 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{route('salesexecutive.home')}}">SAGI CRM</a></li>
       <li class="breadcrumb-item"><a href="#">Staff</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Generated leads</li>
+      <li class="breadcrumb-item active" aria-current="page">Assigned leads</li>
     </ol>
 </nav>
 <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
@@ -38,7 +38,7 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h6 class="card-title">Generated leads</h6>
+                <h6 class="card-title">Assigned leads</h6>
                 <div class="table-responsive">
                     <table id="dataTableExample" class="table">
                         <thead>
@@ -72,13 +72,8 @@
                                 <td>{{App\Models\User::where('id', $lead->assigned_man)->get()->first()->name}}</span></td>
                                 <td>{{App\Models\User::where('id', $lead->assigned_exe)->get()->first()->name}}</td>
                                 
-                                @if ($lead->status==1)
-                                <td class="text-success">Active</td>
-                                @elseif ($lead->status==2)
-                                <td class="text-warning">On-hold</td>
-                                @else
-                                <td class="text-danger">Rejected</td>
-                                @endif
+                                <td>{{App\Models\status::where('id', $lead->status)->first()->status}}</td>
+
 
 
                                 <td>

@@ -77,13 +77,8 @@
                                 <td>{{$lead->prop_type}}</td>
                                 <td>{{$lead->lead_from}}</td>
 
-                                @if ($lead->status==1)
-                                <td class="text-success">Active</td>
-                                @elseif ($lead->status==2)
-                                <td class="text-warning">On-hold</td>
-                                @else
-                                <td class="text-danger">Rejected</td>
-                                @endif
+                                <td>{{App\Models\status::where('id', $lead->status)->first()->status}}</td>
+
                                 <td class="text-success"><a href="{{route('salesexecutive.leads.view', $lead->id)}}" class="btn btn-info">View</a></td>
                             </tr>
                             @endforeach

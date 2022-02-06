@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\assign;
 use App\Models\assign_lead;
+use App\Models\event;
 use App\Models\feedback;
 use App\Models\lead;
 use App\Models\manpage;
@@ -53,9 +54,55 @@ class SalesmanagerController extends Controller
         return view('salesmanager.profile');
     }
 
-    public function calender()
+    public function calender(Request $request)
     {
-        return view('salesmanager.calender');
+        if($request->ajax()) {
+       
+            $data = event::whereDate('start', '>=', $request->start)
+                      ->whereDate('end',   '<=', $request->end)
+                      ->where('user_id', Auth::user()->id)
+                      ->get(['id', 'title', 'start', 'end']);
+            return response()->json($data);
+       }
+ 
+       return view('salesmanager.calender');
+    }
+
+    public function calenderajax(Request $request)
+    {
+        switch ($request->type) {
+            case 'add':
+               $event = Event::create([
+                    'user_id' => Auth::user()->id,
+                    'title' => $request->title,
+                    'start' => $request->start,
+                    'end' => $request->end,
+               ]);
+  
+               return response()->json($event);
+              break;
+   
+            case 'update':
+               $event = Event::find($request->id)->update([
+                    'user_id' => Auth::user()->id,
+                    'title' => $request->title,
+                    'start' => $request->start,
+                    'end' => $request->end,
+               ]);
+  
+               return response()->json($event);
+              break;
+   
+            case 'delete':
+               $event = Event::find($request->id)->delete();
+   
+               return response()->json($event);
+              break;
+              
+            default:
+              break;
+         }
+        
     }
 
     public function message()

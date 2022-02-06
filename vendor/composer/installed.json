@@ -1,6 +1,60 @@
 {
     "packages": [
         {
+            "name": "acaronlex/laravel-calendar",
+            "version": "1.6",
+            "version_normalized": "1.6.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/acaronlex/laravel-calendar.git",
+                "reference": "03490c4990187b1191e2d6686a881502b8cb7439"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/acaronlex/laravel-calendar/zipball/03490c4990187b1191e2d6686a881502b8cb7439",
+                "reference": "03490c4990187b1191e2d6686a881502b8cb7439",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~7.0|~8.0",
+                "php": ">=7.2.5"
+            },
+            "time": "2021-11-14T19:32:18+00:00",
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Acaronlex\\LaravelCalendar\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "Calendar": "Acaronlex\\LaravelCalendar\\Facades\\Calendar"
+                    }
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "Acaronlex\\LaravelCalendar\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "acaronlex",
+                    "email": "acaronlex@outlook.com"
+                }
+            ],
+            "description": "Laravel helper for FullCalendar.io",
+            "support": {
+                "issues": "https://github.com/acaronlex/laravel-calendar/issues",
+                "source": "https://github.com/acaronlex/laravel-calendar/tree/1.6"
+            },
+            "install-path": "../acaronlex/laravel-calendar"
+        },
+        {
             "name": "asm89/stack-cors",
             "version": "v2.1.1",
             "version_normalized": "2.1.1.0",
@@ -1203,17 +1257,17 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.233.0",
-            "version_normalized": "0.233.0.0",
+            "version": "v0.233.1",
+            "version_normalized": "0.233.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "c3632d433742f1e0660460c1d9c220adf4e83885"
+                "reference": "b00fb5f236c64978dd12320380ae8de596de83f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/c3632d433742f1e0660460c1d9c220adf4e83885",
-                "reference": "c3632d433742f1e0660460c1d9c220adf4e83885",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/b00fb5f236c64978dd12320380ae8de596de83f7",
+                "reference": "b00fb5f236c64978dd12320380ae8de596de83f7",
                 "shasum": ""
             },
             "require": {
@@ -1222,16 +1276,16 @@
             "require-dev": {
                 "phpunit/phpunit": "^5.7||^8.5.13"
             },
-            "time": "2022-01-30T12:26:38+00:00",
+            "time": "2022-02-05T14:25:56+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
-                "psr-4": {
-                    "Google\\Service\\": "src"
-                },
                 "files": [
                     "autoload.php"
-                ]
+                ],
+                "psr-4": {
+                    "Google\\Service\\": "src"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1244,7 +1298,7 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/google-api-php-client-services/issues",
-                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.233.0"
+                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.233.1"
             },
             "install-path": "../google/apiclient-services"
         },

@@ -439,6 +439,9 @@
 	<script src="{{asset('assets/vendors/apexcharts/apexcharts.min.js')}}"></script>
 	<script src="{{asset('assets/js/apexcharts.js')}}"></script>
 
+  @yield('script')
+
+
 	<script src="{{asset('assets/vendors/progressbar.js/progressbar.min.js')}}"></script>
   
 

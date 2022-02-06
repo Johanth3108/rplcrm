@@ -52,7 +52,7 @@ Route::get('superadmin/adduser', [SuperadminController::class, 'adduser'])->name
 Route::get('superadmin/deluser/{id}', [SuperadminController::class, 'deluser'])->name('admin.deluser')->middleware('superadmin');
 Route::post('superadmin/addemp', [SuperadminController::class, 'addemp'])->name('admin.addemp')->middleware('superadmin');
 Route::get('superadmin/calender', [SuperadminController::class, 'calender'])->name('admin.calender')->middleware('superadmin');
-Route::post('superadmin/calenderajax', [SuperadminController::class, 'calenderajax'])->name('admin.calenderajax')->middleware('superadmin');
+Route::get('superadmin/calenderajax', [SuperadminController::class, 'calenderajax'])->name('admin.calenderajax')->middleware('superadmin');
 // Route::get('superadmin/read', [SuperadminController::class, 'read'])->name('admin.read')->middleware('superadmin');
 // Route::get('superadmin/compose', [SuperadminController::class, 'compose'])->name('admin.compose')->middleware('superadmin');
 // Route::get('superadmin/apex', [SuperadminController::class, 'apex'])->name('admin.apex')->middleware('superadmin');
@@ -113,6 +113,7 @@ Route::post('areamanager/employees/save/{id}', [AreamanagerController::class, 's
 Route::get('areamanager/adduser', [AreamanagerController::class, 'adduser'])->name('areamanager.adduser')->middleware('areamanager');
 Route::post('areamanager/addemp', [AreamanagerController::class, 'addemp'])->name('areamanager.addemp')->middleware('areamanager');
 Route::get('areamanager/calender', [AreamanagerController::class, 'calender'])->name('areamanager.calender')->middleware('areamanager');
+Route::get('areamanager/calenderajax', [AreamanagerController::class, 'calenderajax'])->name('areamanager.calenderajax')->middleware('areamanager');
 Route::get('areamanager/apex', [AreamanagerController::class, 'apex'])->name('areamanager.apex')->middleware('areamanager');
 Route::get('areamanager/leads/property', [AreamanagerController::class, 'leadproperty'])->name('areamanager.leadproperty')->middleware('areamanager');
 Route::get('areamanager/leads/manual', [AreamanagerController::class, 'leadmanual'])->name('areamanager.leadmanual')->middleware('areamanager');
@@ -155,6 +156,7 @@ Route::get('salesmanager/assigned', [SalesmanagerController::class, 'assigned'])
 Route::get('salesmanager/feedback/{id}', [SalesmanagerController::class, 'feedback'])->name('salesmanager.feedback')->middleware('salesmanager');
 Route::post('salesmanager/feedback/send', [SalesmanagerController::class, 'feedbacksend'])->name('salesmanager.feedback.send')->middleware('salesmanager');
 Route::get('salesmanager/calender', [SalesmanagerController::class, 'calender'])->name('salesmanager.calender')->middleware('salesmanager');
+Route::get('salesmanager/calenderajax', [SalesmanagerController::class, 'calenderajax'])->name('salesmanager.calenderajax')->middleware('salesmanager');
 Route::get('salesmanager/message', [SalesmanagerController::class, 'message'])->name('salesmanager.message')->middleware('salesmanager');
 Route::post('salesmanager/message/send', [SalesmanagerController::class, 'send'])->name('salesmanager.message.send')->middleware('salesmanager');
 Route::get('salesmanager/whatsapp', [SalesmanagerController::class, 'whatsapp'])->name('salesmanager.whatsapp')->middleware('salesmanager');
@@ -189,6 +191,7 @@ Route::post('salesexecutive/feedback/send', [SalesexecutiveController::class, 'f
 Route::get('salesexecutive/message', [SalesexecutiveController::class, 'message'])->name('salesexecutive.message')->middleware('salesexecutive');
 Route::get('salesexecutive/whatsapp', [SalesexecutiveController::class, 'whatsapp'])->name('salesexecutive.whatsapp')->middleware('salesexecutive');
 Route::get('salesexecutive/calender', [SalesexecutiveController::class, 'calender'])->name('salesexecutive.calender')->middleware('salesexecutive');
+Route::get('salesexecutive/calenderajax', [SalesexecutiveController::class, 'calenderajax'])->name('salesexecutive.calenderajax')->middleware('salesexecutive');
 Route::get('salesexecutive/leads', [SalesexecutiveController::class, 'leads'])->name('salesexecutive.leads')->middleware('salesexecutive');
 Route::get('salesexecutive/leads/view/{id}', [SalesexecutiveController::class, 'leadsview'])->name('salesexecutive.leads.view')->middleware('salesexecutive');
 Route::post('salesexecutive/leads/view/save/{id}', [SalesexecutiveController::class, 'leadssave'])->name('salesexecutive.leads.save')->middleware('salesexecutive');
@@ -211,6 +214,7 @@ Route::get('salesexecutive/view-report/{id}', [SalesexecutiveController::class, 
 Route::get('telecaller/home', [App\Http\Controllers\TelecallerController::class, 'index'])->name('telecaller.home')->middleware('telecaller');
 Route::get('telecaller/profile', [TelecallerController::class, 'profile'])->name('telecaller.profile')->middleware('telecaller');
 Route::get('telecaller/calender', [TelecallerController::class, 'calender'])->name('telecaller.calender')->middleware('telecaller');
+Route::get('telecaller/calenderajax', [TelecallerController::class, 'calenderajax'])->name('telecaller.calenderajax')->middleware('telecaller');
 Route::get('telecaller/assigned', [TelecallerController::class, 'assigned'])->name('telecaller.assigned')->middleware('telecaller');
 Route::get('telecaller/message', [TelecallerController::class, 'message'])->name('telecaller.message')->middleware('telecaller');
 Route::get('telecaller/message/reply/{id}', [TelecallerController::class, 'reply'])->name('telecaller.message.reply')->middleware('telecaller');

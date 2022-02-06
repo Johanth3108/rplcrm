@@ -5,11 +5,20 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '36f88c88eddf402927a7bb78475cf360ffe2ac96',
+        'reference' => '72702663844155bdb8a42786e3fe4a618c3637bb',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
     'versions' => array(
+        'acaronlex/laravel-calendar' => array(
+            'pretty_version' => '1.6',
+            'version' => '1.6.0.0',
+            'type' => 'package',
+            'install_path' => __DIR__ . '/../acaronlex/laravel-calendar',
+            'aliases' => array(),
+            'reference' => '03490c4990187b1191e2d6686a881502b8cb7439',
+            'dev_requirement' => false,
+        ),
         'asm89/stack-cors' => array(
             'pretty_version' => 'v2.1.1',
             'version' => '2.1.1.0',
@@ -176,12 +185,12 @@
             'dev_requirement' => false,
         ),
         'google/apiclient-services' => array(
-            'pretty_version' => 'v0.233.0',
-            'version' => '0.233.0.0',
+            'pretty_version' => 'v0.233.1',
+            'version' => '0.233.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../google/apiclient-services',
             'aliases' => array(),
-            'reference' => 'c3632d433742f1e0660460c1d9c220adf4e83885',
+            'reference' => 'b00fb5f236c64978dd12320380ae8de596de83f7',
             'dev_requirement' => false,
         ),
         'google/auth' => array(
@@ -445,7 +454,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '36f88c88eddf402927a7bb78475cf360ffe2ac96',
+            'reference' => '72702663844155bdb8a42786e3fe4a618c3637bb',
             'dev_requirement' => false,
         ),
         'laravel/sail' => array(

@@ -144,8 +144,8 @@ class SuperadminController extends Controller
        
             $data = event::whereDate('start', '>=', $request->start)
                       ->whereDate('end',   '<=', $request->end)
+                      ->where('user_id', Auth::user()->id)
                       ->get(['id', 'title', 'start', 'end']);
- 
             return response()->json($data);
        }
  
@@ -154,13 +154,13 @@ class SuperadminController extends Controller
 
     public function calenderajax(Request $request)
     {
-
         switch ($request->type) {
             case 'add':
                $event = Event::create([
-                   'title' => $request->title,
-                   'start' => $request->start,
-                   'end' => $request->end,
+                    'user_id' => Auth::user()->id,
+                    'title' => $request->title,
+                    'start' => $request->start,
+                    'end' => $request->end,
                ]);
   
                return response()->json($event);
@@ -168,9 +168,10 @@ class SuperadminController extends Controller
    
             case 'update':
                $event = Event::find($request->id)->update([
-                   'title' => $request->title,
-                   'start' => $request->start,
-                   'end' => $request->end,
+                    'user_id' => Auth::user()->id,
+                    'title' => $request->title,
+                    'start' => $request->start,
+                    'end' => $request->end,
                ]);
   
                return response()->json($event);
@@ -183,7 +184,6 @@ class SuperadminController extends Controller
               break;
               
             default:
-              # code...
               break;
          }
         

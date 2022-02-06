@@ -22,6 +22,7 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+	@yield('head')
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -362,6 +363,8 @@
 	<script src="{{asset('assets/vendors/jquery.flot/jquery.flot.resize.js')}}"></script>
 	<script src="{{asset('assets/vendors/apexcharts/apexcharts.min.js')}}"></script>
 	{{-- <script src="{{asset('assets/js/apexcharts.js')}}"></script> --}}
+
+	@yield('script')
 
 	<script src="{{asset('assets/vendors/progressbar.js/progressbar.min.js')}}"></script>
 

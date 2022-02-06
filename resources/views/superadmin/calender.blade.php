@@ -20,7 +20,6 @@
 </nav>
 
 <div class="row">
-    <h3 class="text-secondary mx-4">Calender</h3>
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
@@ -30,10 +29,13 @@
     </div>
 </div>
 @section('script')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
     $(document).ready(function () {
        
@@ -48,7 +50,7 @@
     var calendar = $('#calendar').fullCalendar({
                         editable: true,
                         events: SITEURL + "/superadmin/calender",
-                        displayEventTime: false,
+                        displayEventTime: true,
                         editable: true,
                         eventRender: function (event, element, view) {
                             if (event.allDay === 'true') {
@@ -67,12 +69,13 @@
                                 $.ajax({
                                     url: SITEURL + "/superadmin/calenderajax",
                                     data: {
+                                        user_id: {{Auth::user()->id}},
                                         title: title,
                                         start: start,
                                         end: end,
                                         type: 'add'
                                     },
-                                    type: "POST",
+                                    type: "GET",
                                     success: function (data) {
                                         displayMessage("Event Created Successfully");
       
@@ -97,13 +100,14 @@
                             $.ajax({
                                 url: SITEURL + '/superadmin/calenderajax',
                                 data: {
+                                    user_id: {{Auth::user()->id}},
                                     title: event.title,
                                     start: start,
                                     end: end,
                                     id: event.id,
                                     type: 'update'
                                 },
-                                type: "POST",
+                                type: "GET",
                                 success: function (response) {
                                     displayMessage("Event Updated Successfully");
                                 }
@@ -113,7 +117,7 @@
                             var deleteMsg = confirm("Do you really want to delete?");
                             if (deleteMsg) {
                                 $.ajax({
-                                    type: "POST",
+                                    type: "GET",
                                     url: SITEURL + '/superadmin/calenderajax',
                                     data: {
                                             id: event.id,

@@ -110,6 +110,18 @@
                             
                         </select>
                     </div> --}}
+
+                    <div class="form-group">
+                        <label for="areaman">Assigning Areamanager</label>
+                        <select name="areaman" class="form-control" id="areaman" required>
+                            <option value="" selected disabled>Select a Areamanager</option>
+                            @foreach ($users as $user)
+                            @if ($user->areamanager==true)
+                                <option value="{{$user->id}}" id="{{$user->id}}"@if ($user->id==$lead->assigned_areaman) selected @endif>{{$user->name}}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="salesman">Assigned salesmanager</label>
                         <select name="salesman" class="form-control" id="salesman" required>
@@ -146,30 +158,21 @@
                     </script>
 
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1"> Status</label>
-                        <select required name="status" class="form-control" id="exampleFormControlSelect1">
-                            @if ($lead->status==1)
-                            <option disabled value=null>Set current status of the property.</option>
-                            <option selected value="1">Active</option>
-                            <option value="2">On-hold</option>
-                            <option value="3">Rejected</option>
-                            @elseif ($lead->status==2)
-                            <option disabled value=null>Set current status of the property.</option>
-                            <option value="1">Active</option>
-                            <option selected value="2">On-hold</option>
-                            <option value="3">Rejected</option>
-                            @else
-                            <option disabled value=null>Set current status of the property.</option>
-                            <option value="1">Active</option>
-                            <option value="2">On-hold</option>
-                            <option selected value="3">Rejected</option>
-                            @endif
+                        <label for="status">Status</label>
+                        <select name="status" id="status" class="form-control" id="status" required>
+                            <option value="" selected disabled>Select a status</option>
+                            @foreach ($status as $stat)
+                            <option value="{{$stat->id}}" @if ($stat->id==$lead->status) selected @endif>{{$stat->status}}</option>
+                            @endforeach
+                            
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputUsername1">Lead from</label>
                         <input type="text" class="form-control" value="{{$lead->lead_from}}" name="lead_from" id="exampleInputUsername1" autocomplete="off" placeholder="Property Location" required disabled>
                     </div>
+
+                    
                 
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <a href="{{route('areamanager.deletelead', $lead->id)}}" id="delete" class="btn btn-danger mr-2">Delete</a>

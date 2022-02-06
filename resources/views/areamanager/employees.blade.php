@@ -77,7 +77,7 @@
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                           <a href="{{route('areamanager.employeeedit', $emp->id)}}" class="dropdown-item">Edit</a>
-                                          <a href="{{route('admin.report')}}" class="dropdown-item">View report</a>
+                                          <a href="{{route('areamanager.report', $emp->id)}}" class="dropdown-item">View report</a>
                                         </div>
                                     </div>
                                 </td>

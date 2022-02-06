@@ -20,7 +20,7 @@
       <span class="input-group-addon bg-transparent"><i data-feather="calendar" class=" text-primary"></i></span>
       <input type="text" class="form-control">
     </div>
-    <a type="button" class="btn btn-outline-info btn-icon-text mr-2 d-none d-md-block">
+    <a href="{{route('admin.property')}}" type="button" class="btn btn-outline-info btn-icon-text mr-2 d-none d-md-block">
       <i class="btn-icon-prepend" data-feather="download"></i>
       Import
     </a>
@@ -71,11 +71,7 @@
                             <td>{{$prop->state}}</td>
                             <td>{{$prop->district}}</td>
                             <td>{{$prop->prop_type}}</td>
-                            @if ($prop->status=='active')
-                            <td class="text-success">Active</td>
-                            @else
-                            <td class="text-danger">Sold</td>
-                            @endif
+                            <td>{{App\Models\status::where('id', $prop->status)->first()->status}}</td>
                             <td class="text-info">{{$prop->owner}}</td>
                             <td><a href="{{route('admin.manageprop', $prop->id)}}" class="btn btn-info">Manage</a></td>
                         </tr>

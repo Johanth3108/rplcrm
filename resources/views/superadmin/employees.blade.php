@@ -6,15 +6,6 @@
 
 @section('content')
 
-@if ($message = Session::get('message'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-	<strong>{{$message}} </strong>
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-		<span aria-hidden="true">&times;</span>
-	</button>
-</div>
-@endif
-
 <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
     <div>
         <nav aria-label="breadcrumb">
@@ -30,7 +21,7 @@
         <span class="input-group-addon bg-transparent"><i data-feather="calendar" class=" text-primary"></i></span>
         <input type="text" class="form-control">
       </div>
-      <a type="button" class="btn btn-outline-info btn-icon-text mr-2 d-none d-md-block">
+      <a href="{{route('admin.upload')}}" type="button" class="btn btn-outline-info btn-icon-text mr-2 d-none d-md-block">
         <i class="btn-icon-prepend" data-feather="download"></i>
         Import
       </a>
@@ -40,6 +31,15 @@
       </a>
     </div>
 </div>
+
+@if ($message = Session::get('message'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+	<strong>{{$message}} </strong>
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+@endif
 
 <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
@@ -91,7 +91,7 @@
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                           <a class="dropdown-item" href="{{route('admin.employeeedit', $emp->id)}}">Edit</a>
-                                          <a href="{{route('admin.report')}}" class="dropdown-item">View report</a>
+                                          <a href="{{route('admin.report', $emp->id)}}" class="dropdown-item">View report</a>
                                           <a class="dropdown-item" id="delete" href="{{route('admin.deluser', $emp->id)}}">Delete</a>
                                         </div>
                                     </div>

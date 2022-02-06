@@ -111,32 +111,24 @@
 
 
 <div class="row">
-  <div class="col-lg-7 col-xl-8 grid-margin stretch-card">
+  <div class="col-lg-8 col-xl-8 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h6 class="card-title mb-0">Monthly sales</h6>
-          <div class="dropdown mb-2">
-            <button class="btn p-0" type="button" id="dropdownMenuButton4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton4">
-              <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">View</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="edit-2" class="icon-sm mr-2"></i> <span class="">Edit</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="trash" class="icon-sm mr-2"></i> <span class="">Delete</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Print</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Download</span></a>
-            </div>
+        
+        <div class="row">
+          <div class="col-xl-12 grid-margin stretch-card">
+              <div class="card">
+                  <div class="card-body">
+                      <h6 class="card-title">Leads generated every month.</h6>
+                      <div id="leads"></div>
+                  </div>
+              </div>
           </div>
-        </div>
-        <p class="text-muted mb-4">Sales are activities related to selling or the number of goods or services sold in a given time period.</p>
-        <div class="monthly-sales-chart-wrapper">
-          <canvas id="monthly-sales-chart"></canvas>
         </div>
       </div> 
     </div>
   </div>
-  <div class="col-lg-5 col-xl-4 grid-margin grid-margin-xl-1 stretch-card">
+  <div class="col-lg-4 col-xl-4 grid-margin grid-margin-xl-1 stretch-card">
     <div class="card">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-baseline mb-2">
@@ -160,6 +152,8 @@
       </div>
     </div>
   </div>
+</div>
+  
   {{-- <div class="col-lg-5 col-xl-4 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
@@ -199,54 +193,39 @@
   </div> --}}
 </div>
 
-<div class="row">
-  <div class="col-md-12 grid-margin stretch-card">
-      <div class="card">
-          <div class="card-body">
-              <h6 class="card-title">Employee details</h6>
-              <div class="table-responsive">
-                  <table id="dataTableExample" class="table">
-                      <thead>
-                          <tr>
-                          <th>#id</th>
-                          <th>Employee name</th>
-                          <th>Mail id</th>
-                          <th>Contact number</th>
-                          <th>Department</th>
-                          <th>Position</th>
-                          <th>Current working lead</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          @foreach ($emps as $emp)
-                          <tr>
-                              <td>{{$emp->id}}</td>
-                              <td>{{$emp->name}}</td>
-                              <td>{{$emp->email}}</td>
-                              <td>{{$emp->contact_number}}</td>
-                              <td>{{$emp->department}}</td>
-                              
-                              @if ($emp->superadmin==true)
-                              <td>Super Admin</td>
-                              @elseif ($emp->areamanager==true)
-                              <td>Area Manager</td>
-                              @elseif ($emp->salesmanager==true)
-                              <td>Sales Manager</td>
-                              @elseif ($emp->salesexecutive==true)
-                              <td>Sales Executive</td>
-                              @elseif ($emp->telecaller==true)
-                              <td>Telecaller</td>
-                              @endif
-                              <td>Housing.com</td>
-                          </tr>
-                          @endforeach
-                      </tbody>
-                  </table>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>
+
+<script>
+  $(function() {
+  'use strict';
+  var options = {
+  chart: {
+    type: 'bar',
+    height: '500',
+    parentHeightOffset: 0
+  },
+  colors: ["#5CFF5C"],
+  grid: {
+    borderColor: "rgba(0, 255, 240, .1)",
+    padding: {
+      bottom: 0
+    }
+  },
+  series: [{
+    name: 'leads',
+    data: [{!! $leads !!}]
+  }],
+  xaxis: {
+    type: 'Months',
+    categories: ['January','Feburary','March','April','May','June','July','August','September', 'October', 'November', 'December']
+  }
+}
+
+var apexBarChart = new ApexCharts(document.querySelector("#leads"), options);
+
+apexBarChart.render();
+
+});
+</script>
 
 
 @endsection

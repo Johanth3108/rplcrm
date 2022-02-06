@@ -40,6 +40,18 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="areaman">Assigning Areamanager</label>
+                        <select name="areaman" class="form-control" id="areaman" required>
+                            <option value="" selected disabled>Select a Areamanager</option>
+                            @foreach ($users as $user)
+                            @if ($user->areamanager==true)
+                                <option value="{{$user->id}}" id="{{$user->id}}">{{$user->name}}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label for="salesman">Assigning salesmanager</label>
                         <select name="salesman" class="form-control" id="salesman" required>
                             <option value="" selected disabled>Select a salesmanager</option>
@@ -63,6 +75,17 @@
                         </select>
                         <input type="text" name="exe" id="exe" hidden>
                     </div>
+
+                    <div class="form-group">
+                        <label for="stat">Status</label>
+                        <select name="stat" id="stat" class="form-control" id="stat" required>
+                            <option value="" selected disabled>Select a status</option>
+                            @foreach ($status as $stat)
+                            <option value="{{$stat->id}}" id="{{$stat->id}}">{{$stat->status}}</option>
+                            @endforeach
+                            
+                        </select>
+                    </div>
                 
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     
@@ -77,14 +100,19 @@
 <script>
     function change() {
         var x = document.getElementById("propname").value;
-        {{$j=0}}
+        @php
+            $j=0;
+        @endphp
         @foreach ($assigns as $assign)
         if (x=='{{$assign->property_name}}') {
             document.getElementById("{{$assign->salesmanager}}").selected = true;
+            document.getElementById("{{$assign->areamanager}}").selected = true;
             @for ($i=0; $i<count($assign_exes[$j]); $i++)
                 document.getElementById("{{$assign_exes[$j][$i]}}").selected = true;
             @endfor
-            {{$j = $j+1}}
+            @php
+                $j = $j+1;
+            @endphp
         }
         @endforeach
         document.getElementById("exe").value = Array.from(document.getElementById("salesexe").options).filter(option => option.selected).map(option => option.value);

@@ -67,11 +67,7 @@
                             <td>{{$prop->state}}</td>
                             <td>{{$prop->district}}</td>
                             <td>{{$prop->prop_type}}</td>
-                            @if ($prop->status=='active')
-                            <td class="text-success">Active</td>
-                            @else
-                            <td class="text-danger">Sold</td>
-                            @endif
+                            <td>{{App\Models\status::where('id', $prop->status)->first()->status}}</td>
                             <td class="text-info">{{$prop->owner}}</td>
                             <td><a href="{{route('areamanager.manageprop', $prop->id)}}" class="btn btn-info">Manage</a></td>
                         </tr>

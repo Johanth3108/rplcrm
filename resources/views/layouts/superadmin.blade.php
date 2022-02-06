@@ -142,6 +142,9 @@
             <div class="collapse" id="permissions">
               <ul class="nav sub-menu">
                 <li class="nav-item">
+                  <a href="{{route('admin.areamanpage')}}" class="nav-link">Area manager</a>
+                </li>
+                <li class="nav-item">
                   <a href="{{route('admin.manpage')}}" class="nav-link">Sales manager</a>
                 </li>
                 <li class="nav-item">
@@ -170,6 +173,9 @@
                 </li>
                 <li class="nav-item">
                   <a href="{{route('admin.proptype')}}" class="nav-link">Add property type</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.status.view')}}" class="nav-link">Manage status</a>
                 </li>
               </ul>
             </div>
@@ -210,7 +216,16 @@
             <div class="collapse" id="charts">
               <ul class="nav sub-menu">
                 <li class="nav-item">
-                  <a href="{{route('admin.apex')}}" class="nav-link">Apex</a>
+                  <a href="{{route('admin.apex')}}" class="nav-link">Leads per month</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.leadproperty')}}" class="nav-link">Leads per property</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.leadmanual')}}" class="nav-link">Manual assigned leads</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.leadauto')}}" class="nav-link">Automatic assigned leads</a>
                 </li>
               </ul>
             </div>
@@ -401,6 +416,8 @@
 	<script src="{{asset('assets/vendors/jquery.flot/jquery.flot.resize.js')}}"></script>
 	<script src="{{asset('assets/vendors/apexcharts/apexcharts.min.js')}}"></script>
 	<script src="{{asset('assets/js/apexcharts.js')}}"></script>
+
+  @yield('script')
 
 	<script src="{{asset('assets/vendors/progressbar.js/progressbar.min.js')}}"></script>
   

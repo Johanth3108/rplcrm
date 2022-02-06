@@ -17,7 +17,7 @@
       <span class="input-group-addon bg-transparent"><i data-feather="calendar" class=" text-primary"></i></span>
       <input type="text" class="form-control">
     </div>
-    <a type="button" class="btn btn-outline-info btn-icon-text mr-2 d-none d-md-block">
+    <a href="{{route('admin.leads.view')}}" type="button" class="btn btn-outline-info btn-icon-text mr-2 d-none d-md-block">
       <i class="btn-icon-prepend" data-feather="download"></i>
       Import
     </a>
@@ -31,9 +31,9 @@
 
 
 
-@if ($message = Session::get('success'))
+@if ($message = Session::get('message'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
-	<strong>New Employee </strong>portal created!
+	<strong>{{$message}} </strong>
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 		<span aria-hidden="true">&times;</span>
 	</button>
@@ -83,18 +83,19 @@
                                 @else
                                 <td>Manual</td>
                                 @endif
-                                <td>{{App\Models\User::where('id', $lead->assigned_man)->get()->first()->name}}</span></td>
-                                <td>{{App\Models\User::where('id', $lead->assigned_exe)->get()->first()->name}}</td>
+                                <td>@if (App\Models\User::where('id', $lead->assigned_man)->get()->first())
+                                  {{App\Models\User::where('id', $lead->assigned_man)->get()->first()->name}}
+                                  @else
+                                  none
+                                @endif</td>
+                                <td>@if (App\Models\User::where('id', $lead->assigned_exe)->get()->first())
+                                  {{App\Models\User::where('id', $lead->assigned_exe)->get()->first()->name}}
+                                  @else
+                                  none
+                                @endif </td>
                                 
-                                @if ($lead->status==1)
-                                <td class="text-success">Active</td>
-                                @elseif ($lead->status==2)
-                                <td class="text-warning">On-hold</td>
-                                @else
-                                <td class="text-danger">Rejected</td>
-                                @endif
-
-
+                                <td>{{App\Models\status::where('id', $lead->status)->first()->status}}</td>
+                                
                                 <td>
                                   <div class="dropdown">
                                     <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

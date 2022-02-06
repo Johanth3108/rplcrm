@@ -74,6 +74,17 @@
                         </select>
                         <input type="text" name="exe" id="exe" hidden>
                     </div>
+
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select name="status" id="status" class="form-control" id="status" required>
+                            <option value="" selected disabled>Select a status</option>
+                            @foreach ($status as $stat)
+                            <option value="{{$stat->id}}" id="{{$stat->id}}">{{$stat->status}}</option>
+                            @endforeach
+                            
+                        </select>
+                    </div>
                 
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     

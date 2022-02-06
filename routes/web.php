@@ -32,7 +32,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('report/download', [SuperadminController::class, 'repdown'])->name('admin.report.download');
 Route::get('leads/download', [SuperadminController::class, 'leadsdown'])->name('admin.leads.download');
 Route::get('properties/download', [SuperadminController::class, 'propertydown'])->name('admin.property.download');
+Route::get('message/delete/{id}', [SuperadminController::class, 'message_delete'])->name('admin.message.delete');
 
+//download sample
+
+Route::get('/download/employee/sample',[SuperadminController::class, 'sampleemployee'])->name('sample.download.employee');
+Route::get('/download/lead/sample',[SuperadminController::class, 'samplelead'])->name('sample.download.lead');
+Route::get('/download/property/sample',[SuperadminController::class, 'sampleproperty'])->name('sample.download.property');
 
 
 // superadmin
@@ -46,12 +52,17 @@ Route::get('superadmin/adduser', [SuperadminController::class, 'adduser'])->name
 Route::get('superadmin/deluser/{id}', [SuperadminController::class, 'deluser'])->name('admin.deluser')->middleware('superadmin');
 Route::post('superadmin/addemp', [SuperadminController::class, 'addemp'])->name('admin.addemp')->middleware('superadmin');
 Route::get('superadmin/calender', [SuperadminController::class, 'calender'])->name('admin.calender')->middleware('superadmin');
+Route::get('superadmin/calenderajax', [SuperadminController::class, 'calenderajax'])->name('admin.calenderajax')->middleware('superadmin');
 // Route::get('superadmin/read', [SuperadminController::class, 'read'])->name('admin.read')->middleware('superadmin');
 // Route::get('superadmin/compose', [SuperadminController::class, 'compose'])->name('admin.compose')->middleware('superadmin');
-Route::get('superadmin/apex', [SuperadminController::class, 'apex'])->name('admin.apex')->middleware('superadmin');
+// Route::get('superadmin/apex', [SuperadminController::class, 'apex'])->name('admin.apex')->middleware('superadmin');
+Route::get('superadmin/leads/month', [SuperadminController::class, 'apex'])->name('admin.apex')->middleware('superadmin');
+Route::get('superadmin/leads/property', [SuperadminController::class, 'leadproperty'])->name('admin.leadproperty')->middleware('superadmin');
+Route::get('superadmin/leads/manual', [SuperadminController::class, 'leadmanual'])->name('admin.leadmanual')->middleware('superadmin');
+Route::get('superadmin/leads/auto', [SuperadminController::class, 'leadauto'])->name('admin.leadauto')->middleware('superadmin');
 Route::get('superadmin/addlead', [SuperadminController::class, 'addlead'])->name('admin.addlead')->middleware('superadmin');
 Route::post('superadmin/savelead', [SuperadminController::class, 'savelead'])->name('admin.savelead')->middleware('superadmin');
-Route::get('superadmin/managelead/{id}', [SuperadminController::class, 'managelead'])->name('admin.managelead')->middleware('superadmin', 'salesmanager', 'salesexecutive');
+Route::get('superadmin/managelead/{id}', [SuperadminController::class, 'managelead'])->name('admin.managelead')->middleware('superadmin');
 Route::post('superadmin/updatelead/{id}', [SuperadminController::class, 'updatelead'])->name('admin.updatelead')->middleware('superadmin');
 Route::get('superadmin/deletelead/{id}', [SuperadminController::class, 'deletelead'])->name('admin.deletelead')->middleware('superadmin');
 Route::get('superadmin/leads', [SuperadminController::class, 'leads'])->name('admin.leads')->middleware('superadmin');
@@ -70,6 +81,8 @@ Route::post('superadmin/message/send', [SuperadminController::class, 'messagesen
 Route::get('superadmin/inbox', [SuperadminController::class, 'inbox'])->name('admin.inbox')->middleware('superadmin');
 Route::get('superadmin/manpage', [SuperadminController::class, 'manpage'])->name('admin.manpage')->middleware('superadmin');
 Route::post('superadmin/manpage/save', [SuperadminController::class, 'manpagesave'])->name('admin.manpage.save')->middleware('superadmin');
+Route::get('superadmin/areamanpage', [SuperadminController::class, 'areamanpage'])->name('admin.areamanpage')->middleware('superadmin');
+Route::post('superadmin/areamanpage/save', [SuperadminController::class, 'areamanpagesave'])->name('admin.areamanpage.save')->middleware('superadmin');
 Route::get('superadmin/exepage', [SuperadminController::class, 'exepage'])->name('admin.exepage')->middleware('superadmin');
 Route::post('superadmin/exepage/save', [SuperadminController::class, 'exepagesave'])->name('admin.exepage.save')->middleware('superadmin');
 Route::get('superadmin/telepage', [SuperadminController::class, 'telepage'])->name('admin.telepage')->middleware('superadmin');
@@ -77,7 +90,17 @@ Route::post('superadmin/telepage/save', [SuperadminController::class, 'telepages
 Route::get('superadmin/feedback/{id}', [SuperadminController::class, 'feedback'])->name('admin.feedback');
 Route::post('superadmin/feedback/send', [SuperadminController::class, 'feedbacksend'])->name('admin.feedback.send');
 Route::get('superadmin/clients', [SuperadminController::class, 'clients'])->name('admin.clients');
-Route::get('superadmin/view-report', [SuperadminController::class, 'report'])->name('admin.report');
+Route::get('superadmin/view-report/{id}', [SuperadminController::class, 'report'])->name('admin.report');
+Route::get('superadmin/upload', [SuperadminController::class, 'upload'])->name('admin.upload')->middleware('superadmin');
+Route::post('superadmin/upload/sheet', [SuperadminController::class, 'sheet'])->name('admin.sheet')->middleware('superadmin');
+Route::get('superadmin/upload-property', [SuperadminController::class, 'upload_property'])->name('admin.property')->middleware('superadmin');
+Route::post('superadmin/upload-property/upload', [SuperadminController::class, 'upload_propertyup'])->name('admin.property.upload')->middleware('superadmin');
+Route::get('superadmin/upload-leads', [SuperadminController::class, 'upload_leads'])->name('admin.leads.view')->middleware('superadmin');
+Route::post('superadmin/upload-leads/upload', [SuperadminController::class, 'upload_leadsup'])->name('admin.leads.upload')->middleware('superadmin');
+Route::get('superadmin/manage-stat', [SuperadminController::class, 'status'])->name('admin.status.view')->middleware('superadmin');
+Route::post('superadmin/add-stat', [SuperadminController::class, 'addstat'])->name('admin.status.add')->middleware('superadmin');
+Route::get('superadmin/update-stat/{id}', [SuperadminController::class, 'updatestat'])->name('admin.status.update')->middleware('superadmin');
+Route::get('superadmin/delete-stat/{id}', [SuperadminController::class, 'delstat'])->name('admin.status.delete')->middleware('superadmin');
 
 
 // areamanager
@@ -90,7 +113,12 @@ Route::post('areamanager/employees/save/{id}', [AreamanagerController::class, 's
 Route::get('areamanager/adduser', [AreamanagerController::class, 'adduser'])->name('areamanager.adduser')->middleware('areamanager');
 Route::post('areamanager/addemp', [AreamanagerController::class, 'addemp'])->name('areamanager.addemp')->middleware('areamanager');
 Route::get('areamanager/calender', [AreamanagerController::class, 'calender'])->name('areamanager.calender')->middleware('areamanager');
+Route::get('areamanager/calenderajax', [AreamanagerController::class, 'calenderajax'])->name('areamanager.calenderajax')->middleware('areamanager');
 Route::get('areamanager/apex', [AreamanagerController::class, 'apex'])->name('areamanager.apex')->middleware('areamanager');
+Route::get('areamanager/leads/property', [AreamanagerController::class, 'leadproperty'])->name('areamanager.leadproperty')->middleware('areamanager');
+Route::get('areamanager/leads/manual', [AreamanagerController::class, 'leadmanual'])->name('areamanager.leadmanual')->middleware('areamanager');
+Route::get('areamanager/leads/auto', [AreamanagerController::class, 'leadauto'])->name('areamanager.leadauto')->middleware('areamanager');
+Route::get('areamanager/view-report/{id}', [AreamanagerController::class, 'report'])->name('areamanager.report');
 Route::get('areamanager/addlead', [AreamanagerController::class, 'addlead'])->name('areamanager.addlead')->middleware('areamanager');
 Route::post('areamanager/savelead', [AreamanagerController::class, 'savelead'])->name('areamanager.savelead')->middleware('areamanager');
 Route::get('areamanager/managelead/{id}', [AreamanagerController::class, 'managelead'])->name('areamanager.managelead')->middleware('areamanager');
@@ -128,6 +156,7 @@ Route::get('salesmanager/assigned', [SalesmanagerController::class, 'assigned'])
 Route::get('salesmanager/feedback/{id}', [SalesmanagerController::class, 'feedback'])->name('salesmanager.feedback')->middleware('salesmanager');
 Route::post('salesmanager/feedback/send', [SalesmanagerController::class, 'feedbacksend'])->name('salesmanager.feedback.send')->middleware('salesmanager');
 Route::get('salesmanager/calender', [SalesmanagerController::class, 'calender'])->name('salesmanager.calender')->middleware('salesmanager');
+Route::get('salesmanager/calenderajax', [SalesmanagerController::class, 'calenderajax'])->name('salesmanager.calenderajax')->middleware('salesmanager');
 Route::get('salesmanager/message', [SalesmanagerController::class, 'message'])->name('salesmanager.message')->middleware('salesmanager');
 Route::post('salesmanager/message/send', [SalesmanagerController::class, 'send'])->name('salesmanager.message.send')->middleware('salesmanager');
 Route::get('salesmanager/whatsapp', [SalesmanagerController::class, 'whatsapp'])->name('salesmanager.whatsapp')->middleware('salesmanager');
@@ -137,16 +166,19 @@ Route::get('salesmanager/leads/view/{id}', [SalesmanagerController::class, 'lead
 Route::post('salesmanager/leads/view/save/{id}', [SalesmanagerController::class, 'leadssave'])->name('salesmanager.leads.save')->middleware('salesmanager');
 Route::get('salesmanager/addleads', [SalesmanagerController::class, 'addleads'])->name('salesmanager.addleads')->middleware('salesmanager');
 Route::post('salesmanager/addleads/save', [SalesmanagerController::class, 'addleadsave'])->name('salesmanager.addleads.save')->middleware('salesmanager');
-Route::get('salesmanager/apex', [SalesmanagerController::class, 'apex'])->name('salesmanager.apex')->middleware('salesmanager');
 Route::get('salesmanager/employer', [SalesmanagerController::class, 'employer'])->name('salesmanager.employer')->middleware('salesmanager');
 Route::get('salesmanager/pmessage', [SalesmanagerController::class, 'pmessage'])->name('salesmanager.pmessage')->middleware('salesmanager');
 Route::get('salesmanager/pmessage/reply/{id}', [SalesmanagerController::class, 'pmessagereply'])->name('salesmanager.pmessage.reply')->middleware('salesmanager');
 Route::post('salesmanager/pmessagesend', [SalesmanagerController::class, 'pmessagesend'])->name('salesmanager.pmessagesend')->middleware('salesmanager');
 Route::get('salesmanager/inbox', [SalesmanagerController::class, 'inbox'])->name('salesmanager.inbox')->middleware('salesmanager');
 Route::get('salesmanager/properties', [SalesmanagerController::class, 'properties'])->name('salesmanager.properties')->middleware('salesmanager');
-Route::get('salesmanager/view-report', [SalesmanagerController::class, 'report'])->name('salesmanager.report')->middleware('salesmanager');
-
-
+Route::get('salesmanager/view-report/{id}', [SalesmanagerController::class, 'report'])->name('salesmanager.report')->middleware('salesmanager');
+Route::get('salesmanager/leads/month', [SalesmanagerController::class, 'apex'])->name('salesmanager.apex')->middleware('salesmanager');
+// Route::get('salesmanager/leads/property', [SalesmanagerController::class, 'leadproperty'])->name('salesmanager.leadperprop')->middleware('salesmanager');
+Route::get('salesmanager/leads/property', [SalesmanagerController::class, 'leadproperty'])->name('salesmanager.leadprop')->middleware('salesmanager');
+Route::get('salesmanager/leads/manual', [SalesmanagerController::class, 'leadmanual'])->name('salesmanager.leadmanual')->middleware('salesmanager');
+Route::get('salesmanager/leads/auto', [SalesmanagerController::class, 'leadauto'])->name('salesmanager.leadauto')->middleware('salesmanager');
+Route::get('salesmanager/clients', [SalesmanagerController::class, 'clients'])->name('salesmanager.clients')->middleware('salesmanager');
 
 
 
@@ -159,6 +191,7 @@ Route::post('salesexecutive/feedback/send', [SalesexecutiveController::class, 'f
 Route::get('salesexecutive/message', [SalesexecutiveController::class, 'message'])->name('salesexecutive.message')->middleware('salesexecutive');
 Route::get('salesexecutive/whatsapp', [SalesexecutiveController::class, 'whatsapp'])->name('salesexecutive.whatsapp')->middleware('salesexecutive');
 Route::get('salesexecutive/calender', [SalesexecutiveController::class, 'calender'])->name('salesexecutive.calender')->middleware('salesexecutive');
+Route::get('salesexecutive/calenderajax', [SalesexecutiveController::class, 'calenderajax'])->name('salesexecutive.calenderajax')->middleware('salesexecutive');
 Route::get('salesexecutive/leads', [SalesexecutiveController::class, 'leads'])->name('salesexecutive.leads')->middleware('salesexecutive');
 Route::get('salesexecutive/leads/view/{id}', [SalesexecutiveController::class, 'leadsview'])->name('salesexecutive.leads.view')->middleware('salesexecutive');
 Route::post('salesexecutive/leads/view/save/{id}', [SalesexecutiveController::class, 'leadssave'])->name('salesexecutive.leads.save')->middleware('salesexecutive');
@@ -168,12 +201,20 @@ Route::get('salesexecutive/pmessage', [SalesexecutiveController::class, 'pmessag
 Route::get('salesexecutive/pmessage/reply/{id}', [SalesexecutiveController::class, 'pmessagereply'])->name('salesexecutive.pmessage.reply')->middleware('salesexecutive');
 Route::post('salesexecutive/pmessage/send', [SalesexecutiveController::class, 'pmessagesend'])->name('salesexecutive.pmessage.send')->middleware('salesexecutive');
 Route::get('salesexecutive/inbox', [SalesexecutiveController::class, 'inbox'])->name('salesexecutive.inbox')->middleware('salesexecutive');
+Route::get('salesexecutive/leads/property', [SalesexecutiveController::class, 'leadproperty'])->name('salesexecutive.leadproperty')->middleware('salesexecutive');
+Route::get('salesexecutive/leads/manual', [SalesexecutiveController::class, 'leadmanual'])->name('salesexecutive.leadmanual')->middleware('salesexecutive');
+Route::get('salesexecutive/leads/auto', [SalesexecutiveController::class, 'leadauto'])->name('salesexecutive.leadauto')->middleware('salesexecutive');
+Route::get('salesexecutive/clients', [SalesexecutiveController::class, 'clients'])->name('salesexecutive.clients')->middleware('salesexecutive');
+Route::get('salesexecutive/telecallers', [SalesexecutiveController::class, 'telecallers'])->name('salesexecutive.telecallers')->middleware('salesexecutive');
+Route::get('salesexecutive/view-report/{id}', [SalesexecutiveController::class, 'report'])->name('salesexecutive.report')->middleware('salesexecutive');
+
 
 
 // telecaller
 Route::get('telecaller/home', [App\Http\Controllers\TelecallerController::class, 'index'])->name('telecaller.home')->middleware('telecaller');
 Route::get('telecaller/profile', [TelecallerController::class, 'profile'])->name('telecaller.profile')->middleware('telecaller');
 Route::get('telecaller/calender', [TelecallerController::class, 'calender'])->name('telecaller.calender')->middleware('telecaller');
+Route::get('telecaller/calenderajax', [TelecallerController::class, 'calenderajax'])->name('telecaller.calenderajax')->middleware('telecaller');
 Route::get('telecaller/assigned', [TelecallerController::class, 'assigned'])->name('telecaller.assigned')->middleware('telecaller');
 Route::get('telecaller/message', [TelecallerController::class, 'message'])->name('telecaller.message')->middleware('telecaller');
 Route::get('telecaller/message/reply/{id}', [TelecallerController::class, 'reply'])->name('telecaller.message.reply')->middleware('telecaller');
@@ -181,5 +222,6 @@ Route::post('telecaller/message/send', [TelecallerController::class, 'messagesen
 Route::get('telecaller/inbox', [TelecallerController::class, 'inbox'])->name('telecaller.inbox')->middleware('telecaller');
 Route::get('telecaller/feedback/{id}', [TelecallerController::class, 'feedback'])->name('telecaller.feedback')->middleware('telecaller');
 Route::post('telecaller/feedback/send', [TelecallerController::class, 'feedbacksend'])->name('telecaller.feedback.send')->middleware('telecaller');
+Route::get('telecaller/leads/tele', [TelecallerController::class, 'leadtele'])->name('telecaller.leadtele')->middleware('telecaller');
 
 

@@ -1,6 +1,8 @@
 @extends('layouts.superadmin')
 
 @section('head')
+<link rel="stylesheet" href="{{asset('assets/vendors/dropify/dist/dropify.min.css')}}">
+
 @endsection
 
 @section('content')
@@ -98,6 +100,19 @@
                             @endforeach
                         </select>
                     </div>
+
+                    <div class="form-group">
+                        <label for="areaman">Assigning Areamanager</label>
+                        <select name="areaman" class="form-control" id="areaman" required>
+                            <option value="" selected disabled>Select a Areamanager</option>
+                            @foreach ($users as $user)
+                            @if ($user->areamanager==true)
+                                <option value="{{$user->id}}">{{$user->name}}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="form-group">
                         <label for="salesman">Assigning salesmanager</label>
                         <select name="salesman" class="form-control" id="salesman" required>
@@ -107,9 +122,10 @@
                             <option value="{{$user->id}}">{{$user->name}}</option>
                             @endif
                             @endforeach
-                            
                         </select>
                     </div>
+
+                    
 
                     <div class="form-group">
                         <label for="salesexe">Assigning salesexecutive</label>
@@ -136,9 +152,16 @@
                         <label for="exampleFormControlSelect1"> Status</label>
                         <select required name="status" class="form-control" id="exampleFormControlSelect1">
                             <option selected disabled value="">Set current status of the property.</option>
-                            <option value="active">Active</option>
-                            <option value="sold">Sold</option>
+                            @foreach ($status as $stat)
+                            <option value="{{$stat->id}}">{{$stat->status}}</option>
+                                
+                            @endforeach
                         </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">Property broucher</label>
+                        <input type="file" name="sheet" id="myDropify" class="border" data-height="400"  data-show-errors="true" data-allowed-file-extensions="pdf" required/>
                     </div>
 
 
@@ -150,10 +173,13 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
+@section('script')
+    <script src="{{asset('assets/vendors/dropify/dist/dropify.min.js')}}"></script>
+    <script src="{{asset('assets/js/dropify.js')}}"></script>
 <script src="{{asset('multiselect/multiselect-dropdown.js')}}"></script>
+@endsection
 
 <script>
 var AndraPradesh = ["Anantapur","Chittoor","East Godavari","Guntur","Kadapa","Krishna","Kurnool","Prakasam","Nellore","Srikakulam","Visakhapatnam","Vizianagaram","West Godavari"];

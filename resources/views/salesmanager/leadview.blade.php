@@ -147,24 +147,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1"> Status</label>
-                        <select required name="status" class="form-control" id="exampleFormControlSelect1">
-                            @if ($lead->status==1)
-                            <option disabled value=null>Set current status of the property.</option>
-                            <option selected value="1">Active</option>
-                            <option value="2">On-hold</option>
-                            <option value="3">Rejected</option>
-                            @elseif ($lead->status==2)
-                            <option disabled value=null>Set current status of the property.</option>
-                            <option value="1">Active</option>
-                            <option selected value="2">On-hold</option>
-                            <option value="3">Rejected</option>
-                            @else
-                            <option disabled value=null>Set current status of the property.</option>
-                            <option value="1">Active</option>
-                            <option value="2">On-hold</option>
-                            <option selected value="3">Rejected</option>
-                            @endif
+                        <label for="status">Status</label>
+                        <select name="status" id="status" class="form-control" id="status" required>
+                            <option value="" selected disabled>Select a status</option>
+                            @foreach ($status as $stat)
+                            <option value="{{$stat->id}}" @if ($stat->id==$lead->status) selected @endif>{{$stat->status}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">

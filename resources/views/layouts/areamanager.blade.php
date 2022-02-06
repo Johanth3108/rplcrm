@@ -122,13 +122,18 @@
             </a>
             <div class="collapse" id="forms">
               <ul class="nav sub-menu">
-                
+                @if ($areamanpage->employees==true)
                 <li class="nav-item">
                   <a href="{{route('areamanager.employees')}}" class="nav-link">Employees</a>
                 </li>
+                @endif
+                
+                @if ($areamanpage->add_user==true)
                 <li class="nav-item">
                   <a href="{{route('areamanager.adduser')}}" class="nav-link">Add User</a>
                 </li>
+                @endif
+                
               </ul>
             </div>
           </li>
@@ -162,12 +167,18 @@
             </a>
             <div class="collapse" id="properties">
               <ul class="nav sub-menu">
+                @if ($areamanpage->gen_prop==true)
                 <li class="nav-item">
                   <a href="{{route('areamanager.properties')}}" class="nav-link">Generated properties</a>
                 </li>
+                @endif
+                
+                @if ($areamanpage->add_prop==true)
                 <li class="nav-item">
 					        <a href="{{route('areamanager.addprop')}}" class="nav-link">Add properties</a>
                 </li>
+                @endif
+                
                 <li class="nav-item">
                   <a href="{{route('areamanager.proptype')}}" class="nav-link">Add property type</a>
                 </li>
@@ -183,24 +194,33 @@
             </a>
             <div class="collapse" id="tables">
               <ul class="nav sub-menu">
+                @if ($areamanpage->gen_leads==true)
                 <li class="nav-item">
                   <a href="{{route('areamanager.leads')}}" class="nav-link">Generated leads</a>
                 </li>
+                @endif
+                
+                @if ($areamanpage->add_lead)
                 <li class="nav-item">
                   <a href="{{route('areamanager.addlead')}}" class="nav-link">Add Lead</a>
                 </li>
+                @endif
+                
               </ul>
             </div>
           </li>
 
+          @if ($areamanpage->clients==true)
           <li class="nav-item">
             <a href="{{route('areamanager.clients')}}" class="nav-link">
               <i class="link-icon" data-feather="anchor"></i>
               <span class="link-title">Clients</span>
             </a>
           </li>
+          @endif
+          
 
-
+          @if ($areamanpage->apex==true)
           <li class="nav-item">
             <a class="nav-link"  data-toggle="collapse" href="#charts" role="button" aria-expanded="false" aria-controls="charts">
               <i class="link-icon" data-feather="pie-chart"></i>
@@ -210,19 +230,32 @@
             <div class="collapse" id="charts">
               <ul class="nav sub-menu">
                 <li class="nav-item">
-                  <a href="{{route('areamanager.apex')}}" class="nav-link">Apex</a>
+                  <a href="{{route('areamanager.apex')}}" class="nav-link">Leads per month</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('areamanager.leadproperty')}}" class="nav-link">Leads per property</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('areamanager.leadmanual')}}" class="nav-link">Manual assigned leads</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('areamanager.leadauto')}}" class="nav-link">Automatic assigned leads</a>
                 </li>
               </ul>
             </div>
           </li>
+          @endif
+          
 
-
+          @if ($areamanpage->calendar==true)
           <li class="nav-item">
             <a href="{{route('areamanager.calender')}}" class="nav-link">
               <i class="link-icon" data-feather="calendar"></i>
               <span class="link-title">Calendar</span>
             </a>
           </li>
+          @endif
+          
 
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#sms" role="button" aria-expanded="false" aria-controls="sms">
@@ -232,12 +265,18 @@
             </a>
             <div class="collapse" id="sms">
               <ul class="nav sub-menu">
+                @if ($areamanpage->message)
                 <li class="nav-item">
                   <a href="#" class="nav-link">Message</a>
                 </li>
+                @endif
+                
+                @if ($areamanpage->whatsapp==true)
                 <li class="nav-item">
                   <a href="#" class="nav-link">Whatsapp</a>
                 </li>
+                @endif
+                
               </ul>
             </div>
           </li>
@@ -399,6 +438,9 @@
 	<script src="{{asset('assets/vendors/jquery.flot/jquery.flot.resize.js')}}"></script>
 	<script src="{{asset('assets/vendors/apexcharts/apexcharts.min.js')}}"></script>
 	<script src="{{asset('assets/js/apexcharts.js')}}"></script>
+
+  @yield('script')
+
 
 	<script src="{{asset('assets/vendors/progressbar.js/progressbar.min.js')}}"></script>
   

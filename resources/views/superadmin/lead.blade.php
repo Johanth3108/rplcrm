@@ -1,5 +1,9 @@
 @extends('layouts.superadmin')
 
+@section('head')
+<link rel="stylesheet" href="{{asset('assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css')}}">
+@endsection
+
 @section('content')
 
 <div class="d-flex justify-content-between align-items-center flex-wrap">
@@ -39,13 +43,7 @@
 	</button>
 </div>
 @endif
-<div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-    <div>
-      <h4 class="mb-3 mb-md-0"></h4>
-      <h4 class="mb-3 mb-md-0"></h4>
-    </div>
-    
-</div>
+
 <div class="row">
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">

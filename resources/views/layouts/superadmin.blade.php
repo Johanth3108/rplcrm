@@ -200,6 +200,54 @@
           </li>
 
           <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#report" role="button" aria-expanded="false" aria-controls="report">
+              <i class="link-icon" data-feather="layout"></i>
+              <span class="link-title">Report</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+            </a>
+            <div class="collapse" id="report">
+              <ul class="nav sub-menu">
+                <li class="nav-item">
+                  <a href="{{route('admin.apex')}}" class="nav-link">Leads per month</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.lead.property')}}" class="nav-link">Leads per property</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.lead.manual')}}" class="nav-link">Manual assigned leads</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.lead.auto')}}" class="nav-link">Automatic assigned leads</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          {{-- <li class="nav-item">
+            <a class="nav-link"  data-toggle="collapse" href="#report" role="button" aria-expanded="false" aria-controls="report">
+              <i class="link-icon" data-feather="pie-chart"></i>
+              <span class="link-title">Report</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+            </a>
+            <div class="collapse" id="reports">
+              <ul class="nav sub-menu">
+                <li class="nav-item">
+                  <a href="{{route('admin.apex')}}" class="nav-link">Leads per month</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.lead.property')}}" class="nav-link">Leads per property</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.lead.manual')}}" class="nav-link">Manual assigned leads</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.lead.auto')}}" class="nav-link">Automatic assigned leads</a>
+                </li>
+              </ul>
+            </div>
+          </li> --}}
+
+          <li class="nav-item">
             <a href="{{route('admin.clients')}}" class="nav-link">
               <i class="link-icon" data-feather="anchor"></i>
               <span class="link-title">Clients</span>
@@ -207,29 +255,7 @@
           </li>
 
 
-          <li class="nav-item">
-            <a class="nav-link"  data-toggle="collapse" href="#charts" role="button" aria-expanded="false" aria-controls="charts">
-              <i class="link-icon" data-feather="pie-chart"></i>
-              <span class="link-title">Report</span>
-              <i class="link-arrow" data-feather="chevron-down"></i>
-            </a>
-            <div class="collapse" id="charts">
-              <ul class="nav sub-menu">
-                <li class="nav-item">
-                  <a href="{{route('admin.apex')}}" class="nav-link">Leads per month</a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('admin.leadproperty')}}" class="nav-link">Leads per property</a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('admin.leadmanual')}}" class="nav-link">Manual assigned leads</a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{route('admin.leadauto')}}" class="nav-link">Automatic assigned leads</a>
-                </li>
-              </ul>
-            </div>
-          </li>
+          
 
 
           <li class="nav-item">

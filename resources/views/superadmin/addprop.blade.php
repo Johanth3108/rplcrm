@@ -159,13 +159,33 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">Property broucher</label>
-                        <input type="file" name="sheet" id="myDropify" class="border" data-height="400"  data-show-errors="true" data-allowed-file-extensions="pdf" required/>
+                    <div class="row">
+                        <div class="col-md-6 stretch-card grid-margin grid-margin-md-0">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Property broucher</h6>
+                                    <input type="file" name="sheet" id="sheet" class="border" data-height="200"  data-show-errors="true" data-allowed-file-extensions="pdf" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            // Note that the name "myDropzone" is the camelized
+                            // id of the form.
+                            Dropzone.options.myDropzone = {
+                              // Configuration options go here
+                            };
+                          </script>
+                        <div class="col-md-6 stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Property Images</h6>
+                                    <input type="file" name="image" id="image" class="border" data-height="200"  data-show-errors="true" data-allowed-file-extensions="jpeg png jpg" required multiple/>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-
-
+                    
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                 </form>
             </div>
@@ -176,9 +196,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
 @section('script')
-    <script src="{{asset('assets/vendors/dropify/dist/dropify.min.js')}}"></script>
-    <script src="{{asset('assets/js/dropify.js')}}"></script>
+<script src="{{asset('assets/vendors/dropify/dist/dropify.min.js')}}"></script>
+<script src="{{asset('assets/js/dropify.js')}}"></script>
 <script src="{{asset('multiselect/multiselect-dropdown.js')}}"></script>
+
+<script>
+    $('#sheet').dropify();
+    $('#image').dropify();
+</script>
 @endsection
 
 <script>

@@ -8,7 +8,7 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="{{route('admin.home')}}">SAGI CRM</a></li>
       <li class="breadcrumb-item"><a href="#">Permissions</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Permissions for salesmanager</li>
+      <li class="breadcrumb-item active" aria-current="page">Permissions for areamanager</li>
     </ol>
 </nav>
 @if ($message = Session::get('message'))
@@ -51,6 +51,7 @@
                         </div>
                         
                         <div class="col-md-2">
+                            
                             <h5>User</h5>
                             <div class="form-check">
                                 <label class="form-check-label">
@@ -63,7 +64,13 @@
                                     <input value="1" type="checkbox" name="add_user" class="form-check-input" @if ($areamanpage->add_user==1) checked @endif>
                                     Add user
                                 </label>
-                            </div><br>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input value="1" type="checkbox" name="usr_perm" class="form-check-input" @if ($areamanpage->usr_perm==1) checked @endif>
+                                    User permission
+                                </label>
+                            </div>
                         </div>
                         
                         <div class="col-md-2">
@@ -108,10 +115,17 @@
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
+                                    <input value="1" type="checkbox" name="add_proptype" class="form-check-input" @if ($areamanpage->add_proptype==1) checked @endif>
+                                    Add property type
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
                                     <input value="1" type="checkbox" name="clients" class="form-check-input" @if ($areamanpage->clients==1) checked @endif>
                                     Clients
                                 </label>
                             </div>
+                            
                         </div>
                         
                     </div>

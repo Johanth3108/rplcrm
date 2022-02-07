@@ -57,9 +57,9 @@ Route::get('superadmin/calenderajax', [SuperadminController::class, 'calenderaja
 // Route::get('superadmin/compose', [SuperadminController::class, 'compose'])->name('admin.compose')->middleware('superadmin');
 // Route::get('superadmin/apex', [SuperadminController::class, 'apex'])->name('admin.apex')->middleware('superadmin');
 Route::get('superadmin/leads/month', [SuperadminController::class, 'apex'])->name('admin.apex')->middleware('superadmin');
-Route::get('superadmin/leads/property', [SuperadminController::class, 'leadproperty'])->name('admin.leadproperty')->middleware('superadmin');
-Route::get('superadmin/leads/manual', [SuperadminController::class, 'leadmanual'])->name('admin.leadmanual')->middleware('superadmin');
-Route::get('superadmin/leads/auto', [SuperadminController::class, 'leadauto'])->name('admin.leadauto')->middleware('superadmin');
+Route::get('superadmin/leads/property', [SuperadminController::class, 'leadproperty'])->name('admin.lead.property')->middleware('superadmin');
+Route::get('superadmin/leads/manual', [SuperadminController::class, 'leadmanual'])->name('admin.lead.manual')->middleware('superadmin');
+Route::get('superadmin/leads/auto', [SuperadminController::class, 'leadauto'])->name('admin.lead.auto')->middleware('superadmin');
 Route::get('superadmin/addlead', [SuperadminController::class, 'addlead'])->name('admin.addlead')->middleware('superadmin');
 Route::post('superadmin/savelead', [SuperadminController::class, 'savelead'])->name('admin.savelead')->middleware('superadmin');
 Route::get('superadmin/managelead/{id}', [SuperadminController::class, 'managelead'])->name('admin.managelead')->middleware('superadmin');

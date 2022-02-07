@@ -410,6 +410,7 @@ class SuperadminController extends Controller
     public function deletelead($id)
     {
         lead::where('id', $id)->delete();
+        // assign_lead::where('client_name', $lead->client_name)->where('assigned_man', $lead->assigned_man)->delete();
         return redirect()->route('admin.leads')->with('message', 'Deleted a lead successfully.');
     }
 
@@ -640,12 +641,14 @@ class SuperadminController extends Controller
             'calendar' => $request->calendar,
             'employees' => $request->employees,
             'add_user' => $request->add_user,
+            'usr_perm' => $request->usr_perm,
             'apex' => $request->apex,
             'clients' => $request->clients,
             'gen_leads' => $request->gen_leads,
             'add_lead' => $request->add_lead,
             'gen_prop' => $request->gen_prop,
-            'add_prop' => $request->add_prop
+            'add_prop' => $request->add_prop,
+            'add_proptype' => $request->add_proptype
         ]);
         return redirect()->back()->with('message', 'Areamanager portal updated successfully.');
     }

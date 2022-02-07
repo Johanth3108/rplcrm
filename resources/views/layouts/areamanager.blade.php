@@ -113,8 +113,8 @@
               <span class="link-title">Dashboard</span>
             </a>
           </li>
-
-          <li class="nav-item">
+          @if ($areamanpage->employees || $areamanpage->add_user)
+           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#forms" role="button" aria-expanded="false" aria-controls="forms">
               <i class="link-icon" data-feather="user"></i>
               <span class="link-title">User</span>
@@ -136,8 +136,10 @@
                 
               </ul>
             </div>
-          </li>
+          </li> 
+          @endif
 
+          @if ($areamanpage->usr_perm==1)
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#permissions" role="button" aria-expanded="false" aria-controls="permissions">
               <i class="link-icon" data-feather="activity"></i>
@@ -158,7 +160,10 @@
               </ul>
             </div>
           </li>
+          @endif
 
+          
+          @if ($areamanpage->gen_prop==true || $areamanpage->add_prop==true || $areamanpage->gen_prop==true)
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#properties" role="button" aria-expanded="false" aria-controls="properties">
               <i class="link-icon" data-feather="layout"></i>
@@ -179,13 +184,19 @@
                 </li>
                 @endif
                 
+                @if ($areamanpage->add_proptype==true)
                 <li class="nav-item">
                   <a href="{{route('areamanager.proptype')}}" class="nav-link">Add property type</a>
                 </li>
+                @endif
+                
               </ul>
             </div>
-          </li>
+          </li>  
+          @endif
+          
 
+          @if ($areamanpage->gen_leads || $areamanpage->add_lead)
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#tables" role="button" aria-expanded="false" aria-controls="tables">
               <i class="link-icon" data-feather="briefcase"></i>
@@ -208,7 +219,9 @@
                 
               </ul>
             </div>
-          </li>
+          </li>  
+          @endif
+          
 
           @if ($areamanpage->clients==true)
           <li class="nav-item">
@@ -257,6 +270,7 @@
           @endif
           
 
+          @if ($areamanpage->message || $areamanpage->whatsapp)
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#sms" role="button" aria-expanded="false" aria-controls="sms">
               <i class="link-icon" data-feather="file-text"></i>
@@ -279,7 +293,9 @@
                 
               </ul>
             </div>
-          </li>
+          </li>  
+          @endif
+          
 
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#message" role="button" aria-expanded="false" aria-controls="message">

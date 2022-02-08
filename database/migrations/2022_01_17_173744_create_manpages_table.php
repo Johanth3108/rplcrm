@@ -24,6 +24,7 @@ class CreateManpagesTable extends Migration
             $table->boolean('clients')->nullable(); //
             $table->boolean('gen_leads')->nullable();
             $table->boolean('add_lead')->nullable();
+            $table->boolean('ass_lead')->nullable();
             $table->boolean('gen_prop')->nullable();
             $table->boolean('add_prop')->nullable();
             $table->boolean('add_proptype')->nullable(); //

@@ -67,12 +67,12 @@
 						</li>
 						@endif
 
-						{{-- @if ($manpage->add_user==true)
+						@if ($manpage->add_user==true)
 						<li class="nav-item">
-							<a href="#" class="nav-link">Add employee</a>
+							<a href="{{route('salesmanager.adduser')}}" class="nav-link">Add employee</a>
 						</li>
-						@endif --}}
-					 
+						@endif
+					
 					</ul>
 				  </div>
 				</li>
@@ -90,15 +90,15 @@
 					  <ul class="nav sub-menu">
 						@if ($manpage->gen_prop==true)
 						<li class="nav-item">
-						<a href="{{route('salesmanager.properties')}}" class="nav-link">Properties</a>
+							<a href="{{route('salesmanager.properties')}}" class="nav-link">Properties</a>
 						</li>
 						@endif
 						
-						{{-- @if ($manpage->add_prop==true)
+						@if ($manpage->add_prop==true)
 						<li class="nav-item">
-							<a href="#" class="nav-link">Add properties</a>
+							<a href="{{route('salesmanager.addprop')}}" class="nav-link">Add properties</a>
 						</li>
-						@endif --}}
+						@endif
 						
 					  </ul>
 					</div>
@@ -124,9 +124,12 @@
 							<a href="{{route('salesmanager.addleads')}}" class="nav-link">Add Lead</a>
 					  	</li>
 						@endif
+						@if ($manpage->ass_lead)
 						<li class="nav-item">
 							<a href="{{route('salesmanager.assigned')}}" class="nav-link">Assigned Leads</a>
-						</li>
+						</li>	
+						@endif
+						
 					  
 					</ul>
 				  </div>
@@ -155,12 +158,16 @@
 				  </div>
 				</li>
 				@endif
+
+				@if ($manpage->clients)
 				<li class="nav-item">
 					<a href="{{route('salesmanager.clients')}}" class="nav-link">
 					  <i class="link-icon" data-feather="anchor"></i>
 					  <span class="link-title">Clients</span>
 					</a>
-				</li>
+				</li>	
+				@endif
+				
 
 				@if ($manpage->calendar==true)
 				<li class="nav-item">

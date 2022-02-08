@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\newuser;
 use App\Models\assign;
 use App\Models\assign_lead;
 use App\Models\event;
@@ -18,6 +19,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use PhpOption\None;
 
 class SalesmanagerController extends Controller
@@ -307,6 +310,54 @@ class SalesmanagerController extends Controller
         return view('salesmanager.emplist', compact('emps'));
     }
 
+    public function adduser()
+    {
+        return view('salesmanager.adduser');
+    }
+
+    public function addemp(Request $request)
+    {
+        $user = new User();
+        $user->name = $request->empname;
+        $user->email = $request->empemail;
+        $user->contact_number = $request->empph;
+        $user->department = $request->dept;
+        $user->district = $request->district;
+        $user->state = $request->state;
+
+        if ($request->usrtype==0) {
+            $user->superadmin = true;
+        }
+        elseif($request->usrtype==4){
+            $user->areamanager = true;
+        }
+        elseif ($request->usrtype == 1) {
+            $user->salesmanager = true;
+        }
+        elseif ($request->usrtype == 2) {
+            $user->salesexecutive = true;
+        }
+        else {
+            $user->telecaller = true;
+        }
+
+        $user->password = bcrypt($request->emppass);
+        $user->save();
+
+        $details = [
+            'subject' => 'Welcome to SAGI Pvt. Ltd.',
+            'title' => 'SAGICRM',
+            'body' => 'This is for testing email using smtp',
+            'usrname' => $request->empname,
+            'email' => $request->empemail,
+            'password' => $request->emppass,
+            'url' => URL::to('/').'/login'
+        ];
+       
+        Mail::to($request->empemail)->send(new newuser($details));
+        return back()->with('success', 'Successfully added a employee');
+    }
+
     public function leadsview($id)
     {
         $lead= lead::where('id', $id)->get()->first();
@@ -371,6 +422,41 @@ class SalesmanagerController extends Controller
     {
         $props = properties::all();
         return view('salesmanager.properties', compact('props'));
+    }
+
+    public function addprop()
+    {
+        $prop_types = proptype::all();
+        $props = properties::all();
+        $users = User::all();
+        $status = status::where('stat', true)->get();
+        return view('salesmanager.addprop', compact('prop_types', 'props', 'users', 'status'));
+    }
+
+    public function saveprop(Request $request)
+    {
+        // dd(($request->exe));
+        $prop = new properties();
+        $prop->propname = $request->propname;
+        $prop->address = $request->address;
+        $prop->district = $request->district;
+        $prop->state = $request->state;
+        $prop->prop_type = $request->prop_type;
+        $prop->owner = $request->owner;
+        $prop->status = $request->status;
+        $prop->areamanager = $request->areaman;
+        $prop->salesmanager = $request->salesman;
+        $prop->salesexecutive = $request->exe;
+        $prop->save();
+        
+        $assign = new assign();
+        $assign->property_name = $request->propname;
+        $assign->areamanager = $request->areaman;
+        $assign->salesmanager = $request->salesman;
+        $assign->salesexecutive = $request->exe;
+        $assign->save();
+
+        return redirect()->route('salesmanager.properties')->with('message', 'Added a property successfully.');
     }
 
     public function assigned()

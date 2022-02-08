@@ -90,6 +90,12 @@
                                     Add leads
                                 </label>
                             </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input value="1" type="checkbox" name="ass_lead" class="form-check-input" @if ($manpage->ass_lead==1) checked @endif>
+                                    Assigned leads
+                                </label>
+                            </div>
                         </div>
                         
                         <div class="col-md-2">
@@ -104,6 +110,12 @@
                                 <label class="form-check-label">
                                     <input value="1" type="checkbox" name="add_prop" class="form-check-input" @if ($manpage->add_prop==1) checked @endif>
                                     Add properties
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input value="1" type="checkbox" name="clients" class="form-check-input" @if ($manpage->clients==1) checked @endif>
+                                    Clients
                                 </label>
                             </div>
                         </div>

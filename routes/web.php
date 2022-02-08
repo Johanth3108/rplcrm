@@ -167,11 +167,15 @@ Route::post('salesmanager/leads/view/save/{id}', [SalesmanagerController::class,
 Route::get('salesmanager/addleads', [SalesmanagerController::class, 'addleads'])->name('salesmanager.addleads')->middleware('salesmanager');
 Route::post('salesmanager/addleads/save', [SalesmanagerController::class, 'addleadsave'])->name('salesmanager.addleads.save')->middleware('salesmanager');
 Route::get('salesmanager/employer', [SalesmanagerController::class, 'employer'])->name('salesmanager.employer')->middleware('salesmanager');
+Route::get('salesmanager/adduser', [SalesmanagerController::class, 'adduser'])->name('salesmanager.adduser')->middleware('salesmanager');
+Route::post('salesmanager/addemp', [SalesmanagerController::class, 'addemp'])->name('salesmanager.addemp')->middleware('salesmanager');
 Route::get('salesmanager/pmessage', [SalesmanagerController::class, 'pmessage'])->name('salesmanager.pmessage')->middleware('salesmanager');
 Route::get('salesmanager/pmessage/reply/{id}', [SalesmanagerController::class, 'pmessagereply'])->name('salesmanager.pmessage.reply')->middleware('salesmanager');
 Route::post('salesmanager/pmessagesend', [SalesmanagerController::class, 'pmessagesend'])->name('salesmanager.pmessagesend')->middleware('salesmanager');
 Route::get('salesmanager/inbox', [SalesmanagerController::class, 'inbox'])->name('salesmanager.inbox')->middleware('salesmanager');
 Route::get('salesmanager/properties', [SalesmanagerController::class, 'properties'])->name('salesmanager.properties')->middleware('salesmanager');
+Route::get('salesmanager/addprop', [SalesmanagerController::class, 'addprop'])->name('salesmanager.addprop')->middleware('salesmanager');
+Route::post('salesmanager/addprop/save', [SalesmanagerController::class, 'saveprop'])->name('salesmanager.saveprop')->middleware('salesmanager');
 Route::get('salesmanager/view-report/{id}', [SalesmanagerController::class, 'report'])->name('salesmanager.report')->middleware('salesmanager');
 Route::get('salesmanager/leads/month', [SalesmanagerController::class, 'apex'])->name('salesmanager.apex')->middleware('salesmanager');
 // Route::get('salesmanager/leads/property', [SalesmanagerController::class, 'leadproperty'])->name('salesmanager.leadperprop')->middleware('salesmanager');

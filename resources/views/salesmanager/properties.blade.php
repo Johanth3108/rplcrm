@@ -12,31 +12,31 @@
 	</button>
 </div>
 @endif
-
+<div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+  <div>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{route('salesmanager.home')}}">SAGI CRM</a></li>
+        <li class="breadcrumb-item"><a href="#">Staff</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Properties</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="d-flex align-items-center flex-wrap text-nowrap">
+    <div class="input-group date datepicker dashboard-date mr-2 mb-2 mb-md-0 d-md-none d-xl-flex" id="dashboardDate">
+      <span class="input-group-addon bg-transparent"><i data-feather="calendar" class=" text-primary"></i></span>
+      <input type="text" class="form-control">
+    </div>
+    <a type="button" href="{{route('admin.property.download')}}" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+      <i class="btn-icon-prepend" data-feather="download-cloud"></i>
+      Download Report
+    </a>
+  </div>
+  
+</div>
 
 <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
-    <div>
-      <h4 class="mb-3 mb-md-0"></h4>
-      <h4 class="mb-3 mb-md-0"></h4>
-    </div>
-    <div class="d-flex align-items-center flex-wrap text-nowrap">
-      <div class="input-group date datepicker dashboard-date mr-2 mb-2 mb-md-0 d-md-none d-xl-flex" id="dashboardDate">
-        <span class="input-group-addon bg-transparent"><i data-feather="calendar" class=" text-primary"></i></span>
-        <input type="text" class="form-control">
-      </div>
-      {{-- <button type="button" class="btn btn-outline-info btn-icon-text mr-2 d-none d-md-block">
-        <i class="btn-icon-prepend" data-feather="download"></i>
-        Import
-      </button>
-      <button type="button" class="btn btn-outline-primary btn-icon-text mr-2 mb-2 mb-md-0">
-        <i class="btn-icon-prepend" data-feather="printer"></i>
-        Print
-      </button> --}}
-      <a type="button" href="{{route('admin.property.download')}}" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
-        <i class="btn-icon-prepend" data-feather="download-cloud"></i>
-        Download Report
-      </a>
-    </div>
+    
 </div>
 
 

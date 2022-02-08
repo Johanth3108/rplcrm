@@ -613,8 +613,10 @@ class AreamanagerController extends Controller
             'apex' => $request->apex,
             'gen_leads' => $request->gen_leads,
             'add_lead' => $request->add_lead,
+            'ass_lead' => $request->ass_lead,
             'gen_prop' => $request->gen_prop,
-            'add_prop' => $request->add_prop
+            'add_prop' => $request->add_prop,
+            'clients' => $request->clients
         ]);
         return redirect()->back()->with('message', 'Salesmanager portal updated successfully.');
     }

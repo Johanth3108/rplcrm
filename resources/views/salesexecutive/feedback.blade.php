@@ -40,6 +40,29 @@
                   <h5 class="text-muted tx-13">{{$lead->client_name}} / {{$lead->client_phn}} / {{$lead->client_em}}</h5>
                 </div>
               </div>
+              <div class="d-flex align-items-center">
+                <div class="form-group">
+                  <div>
+                    <select name="status" id="status" class="form-control" id="status" onchange="update_status()">
+                      <option value="" selected disabled>Select a status</option>
+                      @foreach ($status as $stat)
+                      <option value="{{$stat->id}}" @if ($stat->id==$lead->status) selected @endif>{{$stat->status}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="mt-2">
+                    <select name="lead_transfer" id="lead_transfer" class="form-control" onchange="lead_transfer()">
+                      <option value="" selected disabled>Transfer lead to</option>
+                      @foreach ($executives as $executive)
+                      <option value="{{$executive->id}}" >{{$executive->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  {{-- <div>
+                    <a href="#" class="btn btn-primary mt-1 position-relative bottom-0 end-0 submit">update</a>
+                  </div> --}}
+                </div>
+              </div>  
               
             </div>
           </div>
@@ -73,8 +96,11 @@
                 <div class="input-group">
                     <input type="text" name="fb_name" value="{{Auth::user()->name}}" hidden>
                 </div>
+                <input type="text" id="stat" name="stat" value="{{$lead->status}}" hidden>
+                <input type="text" id="transfer" name="transfer" value="" hidden>
                 <div class="input-group">
-                    <input type="text" name="message" class="form-control rounded-pill mr-2" id="chatForm" placeholder="Type a message" required>
+                    <input type="text" name="message" id="msg" class="form-control rounded-pill mr-2" id="chatForm" placeholder="Type a message" required>
+                    <input type="date" id="myDate" value="" onchange="date()">
                     <button type="submit"  class="btn btn-primary btn-icon rounded-circle">
                         <i data-feather="send"></i>
                     </button>
@@ -85,5 +111,20 @@
       </div>
     </div>
   </div>
+  <script>
+    function update_status() {
+      document.getElementById('stat').value = document.getElementById('status').value;
+    }
+    function date() {
+      let dateyear = document.getElementById('myDate').value;
+      let arr = dateyear.split('-');
+      let dateFormat = arr[2] + "-" + arr[1] + "-" + arr[0];
+      document.getElementById("msg").value += dateFormat
+    }
+    function lead_transfer() {
+      let transfer = document.getElementById('lead_transfer').value;
+      document.getElementById('transfer').value = transfer;
+    }
+  </script>
   {{-- <script src="{{asset('assets/js/chat.js')}}"></script> --}}
 @endsection

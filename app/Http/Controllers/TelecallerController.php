@@ -9,6 +9,7 @@ use App\Models\feedback;
 use App\Models\lead;
 use App\Models\message;
 use App\Models\properties;
+use App\Models\status;
 use App\Models\telepage;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -135,7 +136,8 @@ class TelecallerController extends Controller
     {
         $feedbacks = feedback::where('lead_id', $id)->get();
         $lead = lead::where('id', $id)->first();
-        return view('telecaller.feedback', compact('feedbacks', 'lead'));
+        $status = status::all();
+        return view('telecaller.feedback', compact('feedbacks', 'lead', 'status'));
     }
 
     public function feedbacksend(Request $request)
@@ -145,6 +147,7 @@ class TelecallerController extends Controller
         $feedback->fb_name = $request->fb_name;
         $feedback->message = $request->message;
         $feedback->save();
+        lead::where('id', $request->lead_id)->update(["status"=>$request->stat]);
         return redirect()->back()->with('message', 'Feedback submitted successfully');
     }
 

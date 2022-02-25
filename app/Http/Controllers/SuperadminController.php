@@ -48,8 +48,6 @@ class SuperadminController extends Controller
             view()->share('noti', $noti);
             return $next($request);
         });
-        
-        
     }
     public function index()
     {
@@ -327,7 +325,6 @@ class SuperadminController extends Controller
         User::where('id', $request->salesman)->update([
             'notification' => DB::raw('notification+1')
         ]);
-
 
         $message= new message();
         $message->sender_id = Auth::user()->id;
@@ -730,16 +727,18 @@ class SuperadminController extends Controller
     {
         $feedbacks = feedback::where('lead_id', $id)->get();
         $lead = lead::where('id', $id)->first();
-        return view('superadmin.feedback', compact('feedbacks', 'lead'));
+        $status = status::all();
+        return view('superadmin.feedback', compact('feedbacks', 'lead', 'status'));
     }
     public function feedbacksend(Request $request)
     {
-        // dd($request);
+        // dd($request->status);
         $feedback = new feedback();
         $feedback->lead_id = $request->lead_id;
         $feedback->fb_name = $request->fb_name;
         $feedback->message = $request->message;
         $feedback->save();
+        lead::where('id', $request->lead_id)->update(["status"=>$request->stat]);
         return redirect()->back()->with('message', 'Feedback submitted successfully');
     }
 
@@ -922,5 +921,10 @@ class SuperadminController extends Controller
     {
         $path = storage_path('app/public/sample/sampleproperties.csv');
         return response()->download($path);
+    }
+
+    public function test()
+    {
+        dd('test');
     }
 }

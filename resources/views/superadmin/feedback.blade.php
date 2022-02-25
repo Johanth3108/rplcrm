@@ -37,10 +37,27 @@
                 <div>
                   <h4>{{$lead->client_name}}</h4>
                   <h5>{{$lead->property_name}}</h5>
-                  <h5 class="text-muted tx-13">{{$lead->client_name}} / {{$lead->client_phn}} / {{$lead->client_em}}</h5>
+                  <h5 class="text-muted tx-13">{{$lead->client_name}} // {{$lead->client_phn}} // {{$lead->client_em}}</h5>
                 </div>
               </div>
-              
+              <div class="d-flex align-items-center">
+                <form action="#" method="post">
+                  <div class="form-group">
+                    <div>
+                      <select name="status" id="status" class="form-control" id="status" onchange="update_status()" required>
+                        <option value="" selected disabled>Select a status</option>
+                        @foreach ($status as $stat)
+                        <option value="{{$stat->id}}" @if ($stat->id==$lead->status) selected @endif>{{$stat->status}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    {{-- <div>
+                      <a href="#" class="btn btn-primary mt-1 position-relative bottom-0 end-0 submit">update</a>
+                    </div> --}}
+                  </div>  
+                </form>
+                
+              </div>
             </div>
           </div>
           <div class="chat-body">
@@ -73,10 +90,12 @@
                 <div class="input-group">
                     <input type="text" name="fb_name" value="{{Auth::user()->name}}" hidden>
                 </div>
+                <input type="text" id="stat" name="stat" value="{{$lead->status}}" hidden>
                 <div class="input-group">
-                    <input type="text" name="message" class="form-control rounded-pill mr-2" id="chatForm" placeholder="Type a message" required>
+                    <input type="text" name="message" id="msg" class="form-control rounded-pill mr-2" id="chatForm" placeholder="Type a message" required>
+                    <input type="date" id="myDate" value="" onchange="date()">
                     <button type="submit"  class="btn btn-primary btn-icon rounded-circle">
-                        <i data-feather="send"></i>
+                      <i data-feather="send"></i>
                     </button>
                 </div>
             </form>
@@ -85,5 +104,17 @@
       </div>
     </div>
   </div>
+  <script>
+    function update_status() {
+      document.getElementById('stat').value = document.getElementById('status').value;
+    }
+
+    function date() {
+      let dateyear = document.getElementById('myDate').value;
+      let arr = dateyear.split('-');
+      let dateFormat = arr[2] + "-" + arr[1] + "-" + arr[0];
+      document.getElementById("msg").value += dateFormat
+    }
+  </script>
   {{-- <script src="{{asset('assets/js/chat.js')}}"></script> --}}
 @endsection

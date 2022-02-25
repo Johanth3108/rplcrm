@@ -52,13 +52,13 @@
                   <table id="dataTableExample" class="table">
                       <thead>
                           <tr>
-                          <th>#id</th>
                           <th>Property name</th>
                           <th>Address</th>
-                          <th>State</th>
-                          <th>District</th>
+                          <th>Location</th>
                           <th>Property type</th>
                           <th>Status</th>
+                          <th>Images</th>
+                          <th>Broucher</th>
                           <th>Owner</th>
                           <th>Action</th>
                           </tr>
@@ -67,13 +67,13 @@
 
                         @foreach ($props as $prop)
                         <tr>
-                            <td>{{$prop->id}}</td>
                             <td>{{$prop->propname}}</td>
-                            <td>{{$prop->address}}</td>
-                            <td>{{$prop->state}}</td>
-                            <td>{{$prop->district}}</td>
+                            <td>{{Str::limit($prop->address, 20, '...')}}</td>
+                            <td>{{$prop->district.", ".$prop->state}}</td>
                             <td>{{$prop->prop_type}}</td>
                             <td>{{App\Models\status::where('id', $prop->status)->first()->status}}</td>
+                            <td><i data-feather="check" class="text-success"></i></td>
+                            <td><i data-feather="x" class="text-danger"></i></td>
                             <td class="text-info">{{$prop->owner}}</td>
                             <td><a href="{{route('admin.manageprop', $prop->id)}}" class="btn btn-info">Manage</a></td>
                         </tr>

@@ -673,7 +673,8 @@ class AreamanagerController extends Controller
     {
         $feedbacks = feedback::where('lead_id', $id)->get();
         $lead = lead::where('id', $id)->first();
-        return view('areamanager.feedback', compact('feedbacks', 'lead'));
+        $status = status::all();
+        return view('areamanager.feedback', compact('feedbacks', 'lead', 'status'));
     }
     public function feedbacksend(Request $request)
     {
@@ -683,6 +684,7 @@ class AreamanagerController extends Controller
         $feedback->fb_name = $request->fb_name;
         $feedback->message = $request->message;
         $feedback->save();
+        lead::where('id', $request->lead_id)->update(["status"=>$request->stat]);
         return redirect()->back()->with('message', 'Feedback submitted successfully');
     }
 

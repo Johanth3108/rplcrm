@@ -260,14 +260,14 @@
           @endif
           
 
-          @if ($areamanpage->calendar==true)
+          {{-- @if ($areamanpage->calendar==true)
           <li class="nav-item">
             <a href="{{route('areamanager.calender')}}" class="nav-link">
               <i class="link-icon" data-feather="calendar"></i>
               <span class="link-title">Calendar</span>
             </a>
           </li>
-          @endif
+          @endif --}}
           
 
           @if ($areamanpage->message || $areamanpage->whatsapp)

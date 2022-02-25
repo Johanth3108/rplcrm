@@ -19,6 +19,7 @@ return array(
     'App\\Exports\\LeadsExport' => $baseDir . '/app/Exports/LeadsExport.php',
     'App\\Exports\\PropertiesExport' => $baseDir . '/app/Exports/PropertiesExport.php',
     'App\\Exports\\UsersExport' => $baseDir . '/app/Exports/UsersExport.php',
+    'App\\Http\\Controllers\\API' => $baseDir . '/app/Http/Controllers/API.php',
     'App\\Http\\Controllers\\AreamanagerController' => $baseDir . '/app/Http/Controllers/AreamanagerController.php',
     'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',

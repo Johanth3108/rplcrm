@@ -225,7 +225,7 @@ class SalesexecutiveController extends Controller
 
     public function assigned()
     {
-        $leads = lead::where('assigned_exe', Auth::user()->id)->get();
+        $leads = assign_lead::where('assigned_exe', Auth::user()->id)->get();
         // lead::where('property_name')
         return view('salesexecutive.assigned', compact('leads'));
     }
@@ -234,16 +234,28 @@ class SalesexecutiveController extends Controller
     {
         $feedbacks = feedback::where('lead_id', $id)->get();
         $lead = lead::where('id', $id)->first();
-        return view('salesexecutive.feedback', compact('feedbacks', 'lead'));
+        $status = status::all();
+        $executives = User::where('salesexecutive', true)->get();
+        return view('salesexecutive.feedback', compact('feedbacks', 'lead', 'status', 'executives'));
     }
 
     public function feedbacksend(Request $request)
     {
+        if($request->transfer){
+            $lead = lead::where('id', $request->lead_id)->first();
+            $assign_lead = assign_lead::where('client_name', $lead->client_name)->first();
+            $assign_lead->update(["assigned_exe" => $request->transfer]);
+            // lead::where('id', $request->lead_id)->first()->assigned_exe;
+        }
         $feedback = new feedback();
         $feedback->lead_id = $request->lead_id;
         $feedback->fb_name = $request->fb_name;
         $feedback->message = $request->message;
         $feedback->save();
+        if ($request->stat) {
+            lead::where('id', $request->lead_id)->update(["status"=>$request->stat]);
+        }
+        
         return redirect()->back()->with('message', 'Feedback submitted successfully');
     }
     public function clients()

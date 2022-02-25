@@ -628,6 +628,7 @@ class ComposerStaticInita9ce56ec1c35ccfec5e068d23068eb35
         'App\\Exports\\LeadsExport' => __DIR__ . '/../..' . '/app/Exports/LeadsExport.php',
         'App\\Exports\\PropertiesExport' => __DIR__ . '/../..' . '/app/Exports/PropertiesExport.php',
         'App\\Exports\\UsersExport' => __DIR__ . '/../..' . '/app/Exports/UsersExport.php',
+        'App\\Http\\Controllers\\API' => __DIR__ . '/../..' . '/app/Http/Controllers/API.php',
         'App\\Http\\Controllers\\AreamanagerController' => __DIR__ . '/../..' . '/app/Http/Controllers/AreamanagerController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmPasswordController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',

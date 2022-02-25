@@ -169,14 +169,14 @@
 				@endif
 				
 
-				@if ($manpage->calendar==true)
+				{{-- @if ($manpage->calendar==true)
 				<li class="nav-item">
 				  <a href="{{route('salesmanager.calender')}}" class="nav-link">
 					<i class="link-icon" data-feather="calendar"></i>
 					<span class="link-title">Calendar</span>
 				  </a>
 				</li>
-				@endif
+				@endif --}}
 
 				@if ($manpage->message==true || $manpage->whatsapp==true)
 					<li class="nav-item">

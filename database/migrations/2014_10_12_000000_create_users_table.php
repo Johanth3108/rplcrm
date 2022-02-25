@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
@@ -13,6 +14,8 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        $timestamps = false;
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -30,7 +33,8 @@ class CreateUsersTable extends Migration
             $table->integer('notification')->default(0);
             $table->string('password');
             $table->rememberToken();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });
     }
 

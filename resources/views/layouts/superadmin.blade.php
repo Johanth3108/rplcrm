@@ -258,12 +258,12 @@
           
 
 
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a href="{{route('admin.calender')}}" class="nav-link">
               <i class="link-icon" data-feather="calendar"></i>
               <span class="link-title">Calendar</span>
             </a>
-          </li>
+          </li> --}}
 
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#sms" role="button" aria-expanded="false" aria-controls="sms">

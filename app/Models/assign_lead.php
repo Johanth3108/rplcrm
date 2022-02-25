@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class assign_lead extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'assigned_exe'
+    ];
 }

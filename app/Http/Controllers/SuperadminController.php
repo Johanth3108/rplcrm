@@ -1038,33 +1038,33 @@ class SuperadminController extends Controller
 
     public function sendSMS(Request $request)
     {
-        // Account details
+        // dd($request);
+
         $apiKey = urlencode('NTc3NjQzNzY2NDMyNTc3MTQ4NmQ3MjYxNzE3MTcwNjM=');
-        $username = "info@sagirealty.com";
-        $hash = "481441e1397b934d93426ccb6bbee1ce489ad2d7a5b7bfb9df1e213b34a78f29";
-
-        // Config variables. Consult http://api.textlocal.in/docs for more info.
-        $test = "0";
-
-        // Data for text message. This is the text message data.
-        $sender = "287656"; // This is who the message appears to be from.
-        $numbers = "919884879805"; // A single number or a comma-seperated list of numbers
-        $message = "Own your Luxury Home @ South Kolkata All Modern Amenities Under Construction/Ready to Move Flats Starting @30Lacs onward Grab OFFERS! Call9903566116 Sagi Realty";
-        // 612 chars or less
-        // A single number or a comma-seperated list of numbers
-        $message = urlencode($message);
-        $data = "username=".$username."&hash=".$hash."&message=".$message."&sender=".$sender."&numbers=".$numbers."&test=".$test;
-        $ch = curl_init('http://api.textlocal.in/send/?');
+        
+        // Message details
+        $numbers = array($request->list_clients);
+        $sender = urlencode('287656');
+        $message = rawurlencode($request->template);
+    
+        $numbers = implode(',', $numbers);
+    
+        // Prepare data for POST request
+        $data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
+    
+        // Send the POST request with cURL
+        $ch = curl_init('https://api.textlocal.in/send/');
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $result = curl_exec($ch); // This is the result from the API
+        $response = curl_exec($ch);
         curl_close($ch);
-        print_r($result);
-
-
-
-
+        
+        // Process your response here
+        echo $response;
+        $balance = json_decode($response, true);
+        // return redirect()->back()->with('message', $response);
+        return redirect()->back()->with('message', "Messages sent successfully, Balance text credits: ".$balance['balance']);
     }
 
     public function test()

@@ -4,6 +4,24 @@
 @endsection
 
 @section('content')
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{route('admin.home')}}">SAGI CRM</a></li>
+    <li class="breadcrumb-item"><a href="#">Clients</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Broadcast</li>
+  </ol>
+</nav>
+
+@if ($message = Session::get('message'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+	<strong>{{$message}} </strong>
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+@endif
+
+
   <!-- Tabs navs -->
 <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
     <li class="nav-item" role="presentation">
@@ -47,21 +65,25 @@
                             @csrf
                             <div class="form-group">
                                 <label>Select clients</label>
-                                <select class="js-example-basic-multiple w-100" id="multiple" multiple="multiple">
+                                <select class="js-example-basic-multiple w-100" name="clients" id="multiple" multiple="multiple" 
+                                multiselect-search="true" multiselect-select-all="true" onchange="client()" required>
                                     @foreach ($clients as $client)
-                                        <option value="{{App\Models\lead::where('client_name', $client->client_name)->first()->id}}">{{$client->client_name." ".App\Models\lead::where('client_name', $client->client_name)->first()->client_phn}}</option>    
+                                        <option value="{{App\Models\lead::where('client_name', $client->client_name)->first()->client_phn}}">{{$client->client_name." ".App\Models\lead::where('client_name', $client->client_name)->first()->client_phn}}</option>    
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>Select template</label>
-                                <select class="w-100" name="template">
+                                <select class="w-100" onChange="myNewFunction(this);" required>
+                                  <option value="" selected disabled>Select a template</option>
                                     @foreach ($ress as $res)
                                         <option value="{{$res['id']}}">{{$res['title'].", MESSAGE-> ".$res['body']}}</option>    
                                         {{-- <option value=""></option>     --}}
                                     @endforeach
                                 </select>
                             </div>
+                            <input type="text" name="template" id="template" hidden>
+                            <input type="text" name="list_clients" id="list_clients" hidden>
                             {{-- <div class="form-group">
                                 <label for="exampleFormControlTextarea1">Message</label>
                                 <textarea class="form-control" id="exampleFormControlTextarea1" name="message" rows="10"></textarea>
@@ -89,5 +111,21 @@
   src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.2/mdb.min.js"
 ></script>
 <script src="{{asset('multiselect/multiselect-dropdown.js')}}"></script>
+<script>
+  function myNewFunction(element) {
+    var text = element.options[element.selectedIndex].text;
+    text = text.split('> ')[1];
+    document.getElementById('template').value  = text;
+    console.log(text);
+  }
+</script>
+<script>
+  $("#multiple").change(function (e) {
+    e.preventDefault();
+    console.log(Array.from(this.selectedOptions).map(x=>x.value??x.text));
+    let clnt = document.getElementById('list_clients');
+    clnt.value = Array.from(this.selectedOptions).map(x=>x.value??x.text);
+  })
+</script>
 
 @endsection

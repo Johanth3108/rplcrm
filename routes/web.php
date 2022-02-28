@@ -171,6 +171,14 @@ Route::post('areamanager/telepage/save', [AreamanagerController::class, 'telepag
 Route::get('areamanager/feedback/{id}', [AreamanagerController::class, 'feedback'])->name('areamanager.feedback');
 Route::post('areamanager/feedback/send', [AreamanagerController::class, 'feedbacksend'])->name('areamanager.feedback.send');
 Route::get('areamanager/clients', [AreamanagerController::class, 'clients'])->name('areamanager.clients');
+Route::get('areamanager/broadcast', [AreamanagerController::class, 'broadcast'])->name('areamanager.broadcast')->middleware('areamanager');
+Route::get('areamanager/email', [AreamanagerController::class, 'email'])->name('areamanager.email')->middleware('areamanager');
+Route::get('areamanager/email/template', [AreamanagerController::class, 'template'])->name('areamanager.email.template')->middleware('areamanager');
+Route::get('areamanager/email/template/ajax/{id}', [AreamanagerController::class, 'templateajax'])->name('areamanager.template.ajax')->middleware('areamanager');
+Route::post('areamanager/email/template/save', [AreamanagerController::class, 'templatesave'])->name('areamanager.email.template.save')->middleware('areamanager');
+Route::post('areamanager/email/template/send', [AreamanagerController::class, 'templatesend'])->name('areamanager.email.template.send')->middleware('areamanager');
+Route::post('areamanager/message/send', [AreamanagerController::class, 'sendSMS'])->name('areamanager.message.send')->middleware('areamanager');
+
 
 
 // salesmanager
@@ -207,6 +215,13 @@ Route::get('salesmanager/leads/property', [SalesmanagerController::class, 'leadp
 Route::get('salesmanager/leads/manual', [SalesmanagerController::class, 'leadmanual'])->name('salesmanager.leadmanual')->middleware('salesmanager');
 Route::get('salesmanager/leads/auto', [SalesmanagerController::class, 'leadauto'])->name('salesmanager.leadauto')->middleware('salesmanager');
 Route::get('salesmanager/clients', [SalesmanagerController::class, 'clients'])->name('salesmanager.clients')->middleware('salesmanager');
+Route::get('salesmanager/broadcast', [SalesmanagerController::class, 'broadcast'])->name('salesmanager.broadcast')->middleware('salesmanager');
+Route::get('salesmanager/email', [SalesmanagerController::class, 'email'])->name('salesmanager.email')->middleware('salesmanager');
+Route::get('salesmanager/email/template', [SalesmanagerController::class, 'template'])->name('salesmanager.email.template')->middleware('salesmanager');
+Route::get('salesmanager/email/template/ajax/{id}', [SalesmanagerController::class, 'templateajax'])->name('salesmanager.template.ajax')->middleware('salesmanager');
+Route::post('salesmanager/email/template/save', [SalesmanagerController::class, 'templatesave'])->name('salesmanager.email.template.save')->middleware('salesmanager');
+Route::post('salesmanager/email/template/send', [SalesmanagerController::class, 'templatesend'])->name('salesmanager.email.template.send')->middleware('salesmanager');
+Route::post('salesmanager/message/send', [SalesmanagerController::class, 'sendSMS'])->name('salesmanager.message.send')->middleware('salesmanager');
 
 
 
@@ -235,6 +250,13 @@ Route::get('salesexecutive/leads/auto', [SalesexecutiveController::class, 'leada
 Route::get('salesexecutive/clients', [SalesexecutiveController::class, 'clients'])->name('salesexecutive.clients')->middleware('salesexecutive');
 Route::get('salesexecutive/telecallers', [SalesexecutiveController::class, 'telecallers'])->name('salesexecutive.telecallers')->middleware('salesexecutive');
 Route::get('salesexecutive/view-report/{id}', [SalesexecutiveController::class, 'report'])->name('salesexecutive.report')->middleware('salesexecutive');
+Route::get('salesexecutive/broadcast', [SalesexecutiveController::class, 'broadcast'])->name('salesexecutive.broadcast')->middleware('salesexecutive');
+Route::get('salesexecutive/email', [SalesexecutiveController::class, 'email'])->name('salesexecutive.email')->middleware('salesexecutive');
+Route::get('salesexecutive/email/template', [SalesexecutiveController::class, 'template'])->name('salesexecutive.email.template')->middleware('salesexecutive');
+Route::get('salesexecutive/email/template/ajax/{id}', [SalesexecutiveController::class, 'templateajax'])->name('salesexecutive.template.ajax')->middleware('salesexecutive');
+Route::post('salesexecutive/email/template/save', [SalesexecutiveController::class, 'templatesave'])->name('salesexecutive.email.template.save')->middleware('salesexecutive');
+Route::post('salesexecutive/email/template/send', [SalesexecutiveController::class, 'templatesend'])->name('salesexecutive.email.template.send')->middleware('salesexecutive');
+Route::post('salesexecutive/message/send', [SalesexecutiveController::class, 'sendSMS'])->name('salesexecutive.message.send')->middleware('salesexecutive');
 
 
 

@@ -136,7 +136,7 @@ var options = {
       height: '500',
       parentHeightOffset: 0
     },
-    colors: ["#FFFF2E"],
+    colors: ["#9a6500"],
     grid: {
       borderColor: "rgba(77, 138, 240, .1)",
       padding: {

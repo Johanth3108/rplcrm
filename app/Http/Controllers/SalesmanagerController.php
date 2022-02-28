@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\dynamicMail;
 use App\Mail\newuser;
 use App\Models\assign;
 use App\Models\assign_lead;
+use App\Models\emailTemplate;
 use App\Models\event;
 use App\Models\feedback;
 use App\Models\lead;
@@ -59,7 +61,7 @@ class SalesmanagerController extends Controller
                     if (status::where('id', $i)->first()) {
                         $stat = status::where('id', $i)->first()->status;
                         array_push($status, status::where('id', $i)->first()->status);
-                        array_push($per_status_lead, lead::where('status', $i)->get()->count());  
+                        array_push($per_status_lead, lead::where('status', $i)->where('assigned_man', Auth::user()->id)->get()->count());  
                     }
                 }
                 catch(Exception $e) {
@@ -69,7 +71,7 @@ class SalesmanagerController extends Controller
         $lead_status = assign_lead::whereDate('created_at', Carbon::today())->where('assigned_exe', Auth::user()->id)->get()->count();
         $status = implode("','",$status);
         $per_status_lead = implode("','",$per_status_lead);
-        $leads = implode(",",$leads);
+        $leads = implode("','",$leads);
         return view('salesmanager.index', compact('leads', 'lead_status', 'status', 'per_status_lead'));
 
         // return view('salesmanager.leadprop', compact('property', 'per_prop'));
@@ -516,5 +518,101 @@ class SalesmanagerController extends Controller
     {
         $clients = lead::select('client_name')->distinct()->get();
         return view('salesmanager.clients', compact('clients'));
+    }
+
+    public function broadcast()
+    {
+        $clients = lead::select('client_name')->distinct()->get();
+
+        $apiKey = urlencode('NTc3NjQzNzY2NDMyNTc3MTQ4NmQ3MjYxNzE3MTcwNjM=');
+        // Prepare data for POST request
+        $data = array('apikey' => $apiKey);
+    
+        // Send the POST request with cURL
+        $ch = curl_init('https://api.textlocal.in/get_templates/');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        // echo gettype($response);
+        $res = json_decode($response, true);
+        $ress = $res['templates'];
+        // dd($ress);
+        return view('salesmanager.broadcast', compact('clients', 'ress'));
+    }
+
+    public function email()
+    {
+        $clients = lead::select('client_name')->distinct()->get();
+        $temps = emailTemplate::all();
+        return view('salesmanager.email', compact('clients', 'temps'));
+    }
+
+    public function template()
+    {
+        $clients = lead::select('client_name')->distinct()->get();
+        return view('salesmanager.emailmanage', compact('clients'));
+    }
+
+    public function templatesave(Request $request)
+    {
+        $template = new emailTemplate();
+        $template->title = $request->title;
+        $template->body = $request->message;
+        $template->save();
+        return redirect()->route('salesmanager.email.template')->with('message', 'email template created sucessfully.');
+    }
+
+    public function templateajax($id)
+    {
+        $template = emailTemplate::where('id', $id)->first()->body;
+        return response()->json(['template'=>$template]);
+    }
+
+    public function templatesend(Request $request)
+    {
+        // dd($request);
+        $clients = (explode(",", $request->list_clients));
+        foreach ($clients as $client) {
+            $details = [
+            'subject' => 'SAGIREALTY.CO',
+            'message' => $request->message,
+            'client_name' => lead::where('id', $client)->first()->client_name
+        ];
+        Mail::to(lead::where('id', $client)->first()->client_em)->send(new dynamicMail($details));
+        }
+        return redirect()->back()->with('message', "Mails sent successfully.");
+    }
+
+    public function sendSMS(Request $request)
+    {
+        // dd($request);
+
+        $apiKey = urlencode('NTc3NjQzNzY2NDMyNTc3MTQ4NmQ3MjYxNzE3MTcwNjM=');
+        
+        // Message details
+        $numbers = array($request->list_clients);
+        $sender = urlencode('287656');
+        $message = rawurlencode($request->template);
+    
+        $numbers = implode(',', $numbers);
+    
+        // Prepare data for POST request
+        $data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
+    
+        // Send the POST request with cURL
+        $ch = curl_init('https://api.textlocal.in/send/');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        
+        // Process your response here
+        echo $response;
+        $balance = json_decode($response, true);
+        // return redirect()->back()->with('message', $response);
+        return redirect()->back()->with('message', "Messages sent successfully, Balance text credits: ".$balance['balance']);
     }
 }

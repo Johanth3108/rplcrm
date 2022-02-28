@@ -91,12 +91,12 @@
           </div>
           <div class="chat-footer d-flex">
             <div>
-              <button type="button" class="btn border btn-icon rounded-circle mr-2" data-toggle="tooltip" title="Whatsapp">
+              <button type="button" onclick="window.location='{{ route('areamanager.broadcast') }}'" class="btn border btn-icon rounded-circle mr-2" data-toggle="tooltip" title="SMS">
                 <i data-feather="file-minus" class="text-muted"></i>
               </button>
             </div>
             <div class="d-none d-md-block">
-              <button type="button" class="btn border btn-icon rounded-circle mr-2" data-toggle="tooltip" title="Send a mail">
+              <button type="button" onclick="window.location='{{ route('areamanager.email') }}'" class="btn border btn-icon rounded-circle mr-2" data-toggle="tooltip" title="Send a mail">
                 <i data-feather="mail" class="text-muted"></i>
               </button>
             </div>

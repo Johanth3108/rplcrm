@@ -195,7 +195,13 @@
 					<a href="{{route('salesexecutive.clients')}}" class="nav-link">View Clients</a>
 				  </li>
 				  <li class="nav-item">
-					<a href="#" class="nav-link">Broadcast</a>
+					<a href="{{route('salesexecutive.broadcast')}}" class="nav-link">Broadcast</a>
+				  </li>
+				  <li class="nav-item">
+					<a href="{{route('salesexecutive.email')}}" class="nav-link">Email</a>
+				  </li>
+				  <li class="nav-item">
+					<a href="{{route('salesexecutive.email.template')}}" class="nav-link">Email templates</a>
 				  </li>
 				  </ul>
 
@@ -214,11 +220,11 @@
 					</li>
 					@endif
 					
-					@if ($exepage->whatsapp==true)
+					{{-- @if ($exepage->whatsapp==true)
 					<li class="nav-item">
 					<a href="{{ route('salesexecutive.whatsapp') }}" class="nav-link">Whatsapp</a>
 					</li>
-					@endif
+					@endif --}}
 					
 				</ul>
 				</div>

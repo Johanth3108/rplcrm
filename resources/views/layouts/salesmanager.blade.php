@@ -172,8 +172,14 @@
 						  <a href="{{route('salesmanager.clients')}}" class="nav-link">View Clients</a>
 						</li>
 						<li class="nav-item">
-						  <a href="#" class="nav-link">Broadcast</a>
-						</li>
+							<a href="{{route('salesmanager.broadcast')}}" class="nav-link">Broadcast</a>
+						  </li>
+						  <li class="nav-item">
+							<a href="{{route('salesmanager.email')}}" class="nav-link">Email</a>
+						  </li>
+						  <li class="nav-item">
+							<a href="{{route('salesmanager.email.template')}}" class="nav-link">Email templates</a>
+						  </li>
 					  </ul>
 					</div>
 				  </li>
@@ -204,11 +210,11 @@
 								</li>
 							@endif
 							
-							@if ($manpage->whatsapp==true)
+							{{-- @if ($manpage->whatsapp==true)
 								<li class="nav-item">
 									<a href="{{ route('salesmanager.whatsapp') }}" class="nav-link">Whatsapp</a>
 								</li>
-							@endif
+							@endif --}}
 							
 							</ul>
 						</div>

@@ -236,7 +236,13 @@
                 <a href="{{route('areamanager.clients')}}" class="nav-link">View Clients</a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">Broadcast</a>
+                <a href="{{route('areamanager.broadcast')}}" class="nav-link">Broadcast</a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('areamanager.email')}}" class="nav-link">Email</a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('areamanager.email.template')}}" class="nav-link">Email templates</a>
               </li>
               </ul>
             </div>
@@ -296,11 +302,11 @@
                 </li>
                 @endif
                 
-                @if ($areamanpage->whatsapp==true)
+                {{-- @if ($areamanpage->whatsapp==true)
                 <li class="nav-item">
                   <a href="#" class="nav-link">Whatsapp</a>
                 </li>
-                @endif
+                @endif --}}
                 
               </ul>
             </div>

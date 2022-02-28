@@ -27,7 +27,7 @@
         <div class="card">
             <div class="card-body">
                 <h6 class="card-title">Add a property.</h6>
-                <form class="forms-sample" action="{{route('admin.saveprop')}}" method="POST">
+                <form class="forms-sample" action="{{route('admin.saveprop')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputUsername1">Property Name</label>
@@ -164,7 +164,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h6 class="card-title">Property broucher</h6>
-                                    <input type="file" name="sheet" id="sheet" class="border" data-height="200"  data-show-errors="true" data-allowed-file-extensions="pdf" required/>
+                                    <input type="file" name="sheet" id="sheet" class="border" data-height="200"  data-show-errors="true" data-allowed-file-extensions="pdf"/>
                                 </div>
                             </div>
                         </div>
@@ -179,7 +179,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h6 class="card-title">Property Images</h6>
-                                    <input type="file" name="image" id="image" class="border" data-height="200"  data-show-errors="true" data-allowed-file-extensions="jpeg png jpg" required multiple/>
+                                    <input type="file" name="image" id="image" class="border" data-height="200" data-show-errors="true" data-allowed-file-extensions="jpeg png jpg" multiple/>
                                 </div>
                             </div>
                         </div>

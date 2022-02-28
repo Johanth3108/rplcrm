@@ -161,11 +161,22 @@
 
 				@if ($manpage->clients)
 				<li class="nav-item">
-					<a href="{{route('salesmanager.clients')}}" class="nav-link">
+					<a class="nav-link" data-toggle="collapse" href="#clients" role="button" aria-expanded="false" aria-controls="clients">
 					  <i class="link-icon" data-feather="anchor"></i>
 					  <span class="link-title">Clients</span>
+					  <i class="link-arrow" data-feather="chevron-down"></i>
 					</a>
-				</li>	
+					<div class="collapse" id="clients">
+					  <ul class="nav sub-menu">
+						<li class="nav-item">
+						  <a href="{{route('salesmanager.clients')}}" class="nav-link">View Clients</a>
+						</li>
+						<li class="nav-item">
+						  <a href="#" class="nav-link">Broadcast</a>
+						</li>
+					  </ul>
+					</div>
+				  </li>
 				@endif
 				
 
@@ -353,6 +364,8 @@
 		 --}}
 		</div>
 	</div>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 	<script src="{{asset('assets/vendors/core/core.js')}}"></script>
 	<script src="{{asset('assets/vendors/feather-icons/feather.min.js')}}"></script>

@@ -21,6 +21,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    // dd(Auth::user());
+    // if (Auth::user()->superadmin==true) {
+    //     return redirect()->route('admin.home');
+    // }
+    // elseif(Auth::user()->areamanager==true){
+    //     return redirect()->route('areamanager.home');
+    // }
+    // elseif(Auth::user()->salesmanager==true){
+    //     return redirect()->route('salesmanager.home');
+    // }
+    // elseif(Auth::user()->salesexecutive==true){
+    //     return redirect()->route('salesexecutive.home');
+    // }
+    // elseif(Auth::user()->telecaller==true){
+    //     return redirect()->route('telecaller.home');
+    // }
     return view('welcome');
 });
 
@@ -101,6 +117,14 @@ Route::get('superadmin/manage-stat', [SuperadminController::class, 'status'])->n
 Route::post('superadmin/add-stat', [SuperadminController::class, 'addstat'])->name('admin.status.add')->middleware('superadmin');
 Route::get('superadmin/update-stat/{id}', [SuperadminController::class, 'updatestat'])->name('admin.status.update')->middleware('superadmin');
 Route::get('superadmin/delete-stat/{id}', [SuperadminController::class, 'delstat'])->name('admin.status.delete')->middleware('superadmin');
+Route::get('superadmin/broadcast', [SuperadminController::class, 'broadcast'])->name('admin.broadcast')->middleware('superadmin');
+Route::get('superadmin/email', [SuperadminController::class, 'email'])->name('admin.email')->middleware('superadmin');
+Route::get('superadmin/email/template', [SuperadminController::class, 'template'])->name('admin.email.template')->middleware('superadmin');
+Route::get('superadmin/email/template/ajax/{id}', [SuperadminController::class, 'templateajax'])->name('admin.template.ajax')->middleware('superadmin');
+Route::post('superadmin/email/template/save', [SuperadminController::class, 'templatesave'])->name('admin.email.template.save')->middleware('superadmin');
+Route::post('superadmin/email/template/send', [SuperadminController::class, 'templatesend'])->name('admin.email.template.send')->middleware('superadmin');
+Route::post('superadmin/message/send', [SuperadminController::class, 'sendSMS'])->name('admin.message.send')->middleware('superadmin');
+
 
 
 // areamanager
@@ -226,6 +250,6 @@ Route::post('telecaller/message/send', [TelecallerController::class, 'messagesen
 Route::get('telecaller/inbox', [TelecallerController::class, 'inbox'])->name('telecaller.inbox')->middleware('telecaller');
 Route::get('telecaller/feedback/{id}', [TelecallerController::class, 'feedback'])->name('telecaller.feedback')->middleware('telecaller');
 Route::post('telecaller/feedback/send', [TelecallerController::class, 'feedbacksend'])->name('telecaller.feedback.send')->middleware('telecaller');
-Route::get('telecaller/leads/tele', [TelecallerController::class, 'leadtele'])->name('telecaller.leadtele')->middleware('telecaller');
+Route::get('telecaller/leads/tele', [TelecallerController::class, 'leadtele'])->name('telecaller.leadtele.view')->middleware('telecaller');
 
 

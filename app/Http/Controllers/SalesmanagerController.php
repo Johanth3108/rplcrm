@@ -15,6 +15,8 @@ use App\Models\proptype;
 use App\Models\status;
 use App\Models\User;
 use ArrayObject;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -42,14 +44,35 @@ class SalesmanagerController extends Controller
     public function index()
     {
         // $leads = lead::where('state', Auth::user()->state)->get();
-        $execnt = User::where('salesexecutive', true)->count();
+        // $execnt = User::where('salesexecutive', true)->count();
         $leads = [];
+        $status = [];
+        $per_status_lead = [];
         for ($i=1; $i <= 12 ; $i++) { 
             array_push($leads, DB::table('leads')->whereMonth('created_at', $i)->get()->count());
         }
-        
+        $stat_cnt =  status::orderBy('id', 'DESC')->first()->id;
+        for ($i=1; $i <= $stat_cnt; $i++) {
+            
+                try{
+                    // dd(status::where('id', 3)->first()->status);
+                    if (status::where('id', $i)->first()) {
+                        $stat = status::where('id', $i)->first()->status;
+                        array_push($status, status::where('id', $i)->first()->status);
+                        array_push($per_status_lead, lead::where('status', $i)->get()->count());  
+                    }
+                }
+                catch(Exception $e) {
+                    continue;
+                }
+        }
+        $lead_status = assign_lead::whereDate('created_at', Carbon::today())->where('assigned_exe', Auth::user()->id)->get()->count();
+        $status = implode("','",$status);
+        $per_status_lead = implode("','",$per_status_lead);
         $leads = implode(",",$leads);
-        return view('salesmanager.index', compact('leads', 'execnt'));
+        return view('salesmanager.index', compact('leads', 'lead_status', 'status', 'per_status_lead'));
+
+        // return view('salesmanager.leadprop', compact('property', 'per_prop'));
     }
 
     public function profile()
@@ -196,7 +219,7 @@ class SalesmanagerController extends Controller
     }
     public function leads()
     {
-        $leads = lead::where('state', Auth::user()->state)->get();
+        $leads = lead::where('assigned_man', Auth::user()->id)->get();
         return view('salesmanager.leads', compact('leads'));
     }
 
@@ -478,7 +501,13 @@ class SalesmanagerController extends Controller
         $feedback = new feedback();
         $feedback->lead_id = $request->lead_id;
         $feedback->fb_name = $request->fb_name;
-        $feedback->message = $request->message;
+        if($request->stat){
+            $feedback->message = "Status of lead updated.";
+        }
+        else{
+            $feedback->message = $request->message;
+        }
+        
         $feedback->save();
         lead::where('id', $request->lead_id)->update(["status"=>$request->stat]);
         return redirect()->back()->with('message', 'Feedback submitted successfully');

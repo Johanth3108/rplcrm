@@ -1,5 +1,31 @@
 @extends('layouts.telecaller')
 
+@section('head')
+<style>
+  #myDate { 
+    border: none;
+    margin-right: 5px;
+    margin-top: -4px;
+    background: transparent;
+    width: 50px;
+    margin-left: 0px;
+  }
+  #myDate::-webkit-datetime-edit-ampm-field,
+  ::-webkit-datetime-edit-day-field,
+  ::-webkit-datetime-edit-hour-field,
+  ::-webkit-datetime-edit-millisecond-field,
+  ::-webkit-datetime-edit-minute-field,
+  ::-webkit-datetime-edit-month-field,
+  ::-webkit-datetime-edit-second-field,
+  ::-webkit-datetime-edit-week-field,
+  ::-webkit-datetime-edit-year-field,
+  ::-webkit-datetime-edit-text {
+    display: none;
+    padding: 0%;
+  }
+</style>
+@endsection
+
 @section('content')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -40,22 +66,7 @@
                   <h5 class="text-muted tx-13">{{$lead->client_name}} / {{$lead->client_phn}} / {{$lead->client_em}}</h5>
                 </div>
               </div>
-              <div class="d-flex align-items-center">
-                <div class="form-group">
-                  <div>
-                    <select name="status" id="status" class="form-control" id="status" onchange="update_status()" required>
-                      <option value="" selected disabled>Select a status</option>
-                      @foreach ($status as $stat)
-                      <option value="{{$stat->id}}" @if ($stat->id==$lead->status) selected @endif>{{$stat->status}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-                  {{-- <div>
-                    <a href="#" class="btn btn-primary mt-1 position-relative bottom-0 end-0 submit">update</a>
-                  </div> --}}
-                </div>  
               
-            </div>
               
             </div>
           </div>
@@ -79,6 +90,21 @@
             </ul>
           </div>
           <div class="chat-footer d-flex">
+            <div>
+              <button type="button" class="btn border btn-icon rounded-circle mr-2" data-toggle="tooltip" title="Whatsapp">
+                <i data-feather="file-minus" class="text-muted"></i>
+              </button>
+            </div>
+            <div class="d-none d-md-block">
+              <button type="button" class="btn border btn-icon rounded-circle mr-2" data-toggle="tooltip" title="Send a mail">
+                <i data-feather="mail" class="text-muted"></i>
+              </button>
+            </div>
+            <div class="d-none d-md-block">
+              <button type="button" id="lead" class="btn border btn-icon rounded-circle mr-2" data-toggle="tooltip" title="Lead status">
+                <i data-feather="trending-up" class="text-muted"></i>
+              </button>
+            </div>
             
             <form class="search-form flex-grow mr-2" id="form" method="POST" action="{{route('telecaller.feedback.send')}}"}}>
                 @csrf
@@ -114,5 +140,35 @@
       document.getElementById("msg").value += dateFormat
     }
   </script>
-  {{-- <script src="{{asset('assets/js/chat.js')}}"></script> --}}
+  <script>
+    $('#lead').on('click',function (e) {
+      e.preventDefault();
+      var self = $(this);
+      console.log(self.data('title'));
+      Swal.fire({
+      title: 'Update status of a lead',
+      input: 'select',
+      inputOptions: {
+        @foreach ($status as $stat)
+        '{{$stat->id}}': '{{$stat->status}}',
+        @endforeach
+      },
+      inputPlaceholder: 'select a status',
+      showCancelButton: true,
+      inputValidator: (value) => {
+        document.getElementById('stat').value = value;
+      }
+      }).then((result) => {
+          if (result.isConfirmed) {
+              Swal.fire(
+                  'Updated!',
+                  'Lead status has been updated.',
+                  'success'
+              )
+              document.getElementById('form').submit();
+          }
+      })
+
+  })
+  </script>
 @endsection

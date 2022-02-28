@@ -27,6 +27,8 @@ use App\Models\feedback;
 use App\Models\manpage;
 use App\Models\status;
 use App\Models\telepage;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
@@ -53,12 +55,32 @@ class AreamanagerController extends Controller
         $leadscn = assign::all()->count();
         $follow_up = assign_lead::where('status', 2)->get()->count();
         $leads = [];
+        $status = [];
+        $per_status_lead = [];
         for ($i=1; $i <= 12 ; $i++) { 
             array_push($leads, DB::table('leads')->whereMonth('created_at', $i)->get()->count());
         }
+        $stat_cnt =  status::orderBy('id', 'DESC')->first()->id;
+        for ($i=1; $i <= $stat_cnt; $i++) {
+            
+            try{
+                // dd(status::where('id', 3)->first()->status);
+                if (status::where('id', $i)->first()) {
+                    $stat = status::where('id', $i)->first()->status;
+                    array_push($status, status::where('id', $i)->first()->status);
+                    array_push($per_status_lead, lead::where('status', $i)->get()->count());  
+                }
+            }
+            catch(Exception $e) {
+                continue;
+            }
+        }
+        $lead_status = assign_lead::whereDate('created_at', Carbon::today())->where('assigned_exe', Auth::user()->id)->get()->count();
+        $status = implode("','",$status);
+        $per_status_lead = implode("','",$per_status_lead);
         
         $leads = implode(",",$leads);
-        return view('areamanager.index', compact('leads', 'empcn', 'leadscn', 'follow_up'));
+        return view('areamanager.index', compact('leads', 'empcn', 'leadscn', 'follow_up', 'status', 'per_status_lead'));
     }
 
     public function profileupdate(Request $request, $id)
@@ -678,11 +700,16 @@ class AreamanagerController extends Controller
     }
     public function feedbacksend(Request $request)
     {
-        // dd($request);
         $feedback = new feedback();
         $feedback->lead_id = $request->lead_id;
         $feedback->fb_name = $request->fb_name;
-        $feedback->message = $request->message;
+        if($request->stat){
+            $feedback->message = "Status of lead updated.";
+        }
+        else{
+            $feedback->message = $request->message;
+        }
+        
         $feedback->save();
         lead::where('id', $request->lead_id)->update(["status"=>$request->stat]);
         return redirect()->back()->with('message', 'Feedback submitted successfully');

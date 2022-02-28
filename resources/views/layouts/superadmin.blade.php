@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    
     <script src="{{ asset('js/app.js') }}" defer></script>
 	<link rel="stylesheet" href="{{asset('assets/vendors/core/core.css')}}">
 	<link rel="stylesheet" href="{{asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
@@ -248,16 +249,36 @@
           </li> --}}
 
           <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#clients" role="button" aria-expanded="false" aria-controls="clients">
+              <i class="link-icon" data-feather="anchor"></i>
+              <span class="link-title">Clients</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+            </a>
+            <div class="collapse" id="clients">
+              <ul class="nav sub-menu">
+                <li class="nav-item">
+                  <a href="{{route('admin.clients')}}" class="nav-link">View Clients</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.broadcast')}}" class="nav-link">Broadcast</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.email')}}" class="nav-link">Email</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.email.template')}}" class="nav-link">Email templates</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          {{-- <li class="nav-item">
             <a href="{{route('admin.clients')}}" class="nav-link">
               <i class="link-icon" data-feather="anchor"></i>
               <span class="link-title">Clients</span>
             </a>
-          </li>
-
-
-          
-
-
+          </li> --}}
+     
           {{-- <li class="nav-item">
             <a href="{{route('admin.calender')}}" class="nav-link">
               <i class="link-icon" data-feather="calendar"></i>
@@ -276,12 +297,12 @@
                 <li class="nav-item">
                   <a href="#" class="nav-link">Message</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                   <a href="#" class="nav-link">Whatsapp</a>
                 </li>
                 <li class="nav-item">
                   <a href="#" class="nav-link">Bulk Email</a>
-                </li>
+                </li> --}}
               </ul>
             </div>
           </li>

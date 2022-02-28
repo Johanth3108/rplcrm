@@ -100,6 +100,7 @@ class ComposerStaticInita9ce56ec1c35ccfec5e068d23068eb35
         array (
             'Ramsey\\Uuid\\' => 12,
             'Ramsey\\Collection\\' => 18,
+            'Rahulreghunath\\Textlocal\\' => 25,
         ),
         'P' => 
         array (
@@ -124,6 +125,7 @@ class ComposerStaticInita9ce56ec1c35ccfec5e068d23068eb35
         'N' => 
         array (
             'NunoMaduro\\Collision\\' => 21,
+            'NotificationChannels\\Textlocal\\' => 31,
         ),
         'M' => 
         array (
@@ -353,6 +355,10 @@ class ComposerStaticInita9ce56ec1c35ccfec5e068d23068eb35
         array (
             0 => __DIR__ . '/..' . '/ramsey/collection/src',
         ),
+        'Rahulreghunath\\Textlocal\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/rahulreghunath/textlocal/src',
+        ),
         'Psy\\' => 
         array (
             0 => __DIR__ . '/..' . '/psy/psysh/src',
@@ -413,6 +419,10 @@ class ComposerStaticInita9ce56ec1c35ccfec5e068d23068eb35
         'NunoMaduro\\Collision\\' => 
         array (
             0 => __DIR__ . '/..' . '/nunomaduro/collision/src',
+        ),
+        'NotificationChannels\\Textlocal\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/chitranu/textlocal-laravel-notification-channel/src',
         ),
         'MyCLabs\\Enum\\' => 
         array (
@@ -658,6 +668,7 @@ class ComposerStaticInita9ce56ec1c35ccfec5e068d23068eb35
         'App\\Http\\Middleware\\salesmanager' => __DIR__ . '/../..' . '/app/Http/Middleware/salesmanager.php',
         'App\\Http\\Middleware\\superadmin' => __DIR__ . '/../..' . '/app/Http/Middleware/superadmin.php',
         'App\\Http\\Middleware\\telecaller' => __DIR__ . '/../..' . '/app/Http/Middleware/telecaller.php',
+        'App\\Mail\\dynamicMail' => __DIR__ . '/../..' . '/app/Mail/dynamicMail.php',
         'App\\Mail\\leadassign' => __DIR__ . '/../..' . '/app/Mail/leadassign.php',
         'App\\Mail\\newuser' => __DIR__ . '/../..' . '/app/Mail/newuser.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
@@ -665,6 +676,7 @@ class ComposerStaticInita9ce56ec1c35ccfec5e068d23068eb35
         'App\\Models\\areamanpage' => __DIR__ . '/../..' . '/app/Models/areamanpage.php',
         'App\\Models\\assign' => __DIR__ . '/../..' . '/app/Models/assign.php',
         'App\\Models\\assign_lead' => __DIR__ . '/../..' . '/app/Models/assign_lead.php',
+        'App\\Models\\emailTemplate' => __DIR__ . '/../..' . '/app/Models/emailTemplate.php',
         'App\\Models\\event' => __DIR__ . '/../..' . '/app/Models/event.php',
         'App\\Models\\exepage' => __DIR__ . '/../..' . '/app/Models/exepage.php',
         'App\\Models\\feedback' => __DIR__ . '/../..' . '/app/Models/feedback.php',
@@ -19289,6 +19301,11 @@ class ComposerStaticInita9ce56ec1c35ccfec5e068d23068eb35
         'Nette\\Utils\\UnknownImageFileException' => __DIR__ . '/..' . '/nette/utils/src/Utils/exceptions.php',
         'Nette\\Utils\\Validators' => __DIR__ . '/..' . '/nette/utils/src/Utils/Validators.php',
         'Normalizer' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
+        'NotificationChannels\\Textlocal\\Exceptions\\CouldNotSendNotification' => __DIR__ . '/..' . '/chitranu/textlocal-laravel-notification-channel/src/Exceptions/CouldNotSendNotification.php',
+        'NotificationChannels\\Textlocal\\Textlocal' => __DIR__ . '/..' . '/chitranu/textlocal-laravel-notification-channel/src/Textlocal.php',
+        'NotificationChannels\\Textlocal\\TextlocalChannel' => __DIR__ . '/..' . '/chitranu/textlocal-laravel-notification-channel/src/TextlocalChannel.php',
+        'NotificationChannels\\Textlocal\\TextlocalMessage' => __DIR__ . '/..' . '/chitranu/textlocal-laravel-notification-channel/src/TextlocalMessage.php',
+        'NotificationChannels\\Textlocal\\TextlocalServiceProvider' => __DIR__ . '/..' . '/chitranu/textlocal-laravel-notification-channel/src/TextlocalServiceProvider.php',
         'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Laravel/CollisionServiceProvider.php',
         'NunoMaduro\\Collision\\Adapters\\Laravel\\Commands\\TestCommand' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Laravel/Commands/TestCommand.php',
         'NunoMaduro\\Collision\\Adapters\\Laravel\\ExceptionHandler' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php',
@@ -20723,6 +20740,9 @@ class ComposerStaticInita9ce56ec1c35ccfec5e068d23068eb35
         'Psy\\VersionUpdater\\GitHubChecker' => __DIR__ . '/..' . '/psy/psysh/src/VersionUpdater/GitHubChecker.php',
         'Psy\\VersionUpdater\\IntervalChecker' => __DIR__ . '/..' . '/psy/psysh/src/VersionUpdater/IntervalChecker.php',
         'Psy\\VersionUpdater\\NoopChecker' => __DIR__ . '/..' . '/psy/psysh/src/VersionUpdater/NoopChecker.php',
+        'Rahulreghunath\\Textlocal\\ServiceProvider' => __DIR__ . '/..' . '/rahulreghunath/textlocal/src/ServiceProvider.php',
+        'Rahulreghunath\\Textlocal\\TextLocalOriginal' => __DIR__ . '/..' . '/rahulreghunath/textlocal/src/TextLocalOriginal.php',
+        'Rahulreghunath\\Textlocal\\Textlocal' => __DIR__ . '/..' . '/rahulreghunath/textlocal/src/Textlocal.php',
         'Ramsey\\Collection\\AbstractArray' => __DIR__ . '/..' . '/ramsey/collection/src/AbstractArray.php',
         'Ramsey\\Collection\\AbstractCollection' => __DIR__ . '/..' . '/ramsey/collection/src/AbstractCollection.php',
         'Ramsey\\Collection\\AbstractSet' => __DIR__ . '/..' . '/ramsey/collection/src/AbstractSet.php',

@@ -145,7 +145,13 @@ class TelecallerController extends Controller
         $feedback = new feedback();
         $feedback->lead_id = $request->lead_id;
         $feedback->fb_name = $request->fb_name;
-        $feedback->message = $request->message;
+        if($request->stat){
+            $feedback->message = "Status of lead updated.";
+        }
+        else{
+            $feedback->message = $request->message;
+        }
+        
         $feedback->save();
         lead::where('id', $request->lead_id)->update(["status"=>$request->stat]);
         return redirect()->back()->with('message', 'Feedback submitted successfully');

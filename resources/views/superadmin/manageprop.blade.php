@@ -1,6 +1,7 @@
 @extends('layouts.superadmin')
 
 @section('head')
+<link rel="stylesheet" href="{{asset('assets/vendors/dropify/dist/dropify.min.css')}}">
 @endsection
 
 @section('content')
@@ -25,7 +26,7 @@
         <div class="card">
             <div class="card-body">
                 <h6 class="card-title">Manage a property.</h6>
-                <form class="forms-sample" action="{{route('admin.updateprop', $prop->id)}}" method="POST" id="form">
+                <form class="forms-sample" action="{{route('admin.updateprop', $prop->id)}}" method="POST" id="form" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputUsername1">Property Name</label>
@@ -139,7 +140,7 @@
                         <input type="text" name="exe" id="exe" value="{{$prop->salesexecutive}}" hidden>
                     </div>
 
-                    <script src="{{asset('multiselect/multiselect-dropdown.js')}}"></script>
+                    {{-- <script src="{{asset('multiselect/multiselect-dropdown.js')}}"></script> --}}
                     <script>
                         function change() {
                             document.getElementById("exe").value = Array.from(document.getElementById("salesexe").options).filter(option => option.selected).map(option => option.value);
@@ -161,8 +162,50 @@
                             
                         </select>
                     </div>
-                    <button type="submit" id="submit" class="btn btn-primary mr-2">Submit</button>
-                    <a href="{{route('admin.deleteprop', $prop->id)}}" id="delete" class="btn btn-danger mr-2">Delete</a>
+
+                    
+                    <div class="row">
+                        @if ($prop->image)
+                            <div class="col-12 col-md-4 col-xl-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Property Images</h5>
+                                        <img src="{{asset('img/image/'.$prop->image)}}" class="img-fluid" alt="Property image">
+                                    </div>
+                                </div>
+                            </div>  
+                        @else
+                            <div class="col-md-6 stretch-card grid-margin grid-margin-md-0">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Property Images</h6>
+                                    <input type="file" name="image" id="image" class="border" data-height="200" data-show-errors="true" data-allowed-file-extensions="jpeg png jpg" multiple/>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
+
+                        @if ($prop->broucher==null)
+                        <div class="col-md-6 stretch-card grid-margin grid-margin-md-0">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="card-title">Property broucher</h6>
+                                    <input type="file" name="sheet" id="sheet" class="border" data-height="200"  data-show-errors="true" data-allowed-file-extensions="pdf"/>
+                                </div>
+                            </div>
+                        </div>    
+                        @endif
+                        
+                    </div>
+                    
+                    <button type="submit" id="submit" class="btn btn-primary mr-2 mt-2">Submit</button>
+
+                    @if ($prop->broucher!=null)
+                    <a href="#" id="broucher" class="btn btn-primary mr-2 mt-2">Download broucher</a>    
+                    @endif
+                    
+                    <a href="{{route('admin.deleteprop', $prop->id)}}" id="delete" class="btn btn-danger mr-2 mt-2">Delete</a>
                 </form>
             </div>
         </div>
@@ -196,9 +239,16 @@
 
     })
 </script>
+<script src="{{asset('assets/vendors/dropify/dist/dropify.min.js')}}"></script>
+<script src="{{asset('assets/js/dropify.js')}}"></script>
+<script src="{{asset('multiselect/multiselect-dropdown.js')}}"></script>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script>
+    $('#sheet').dropify();
+    $('#image').dropify();
+</script>
+{{-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> --}}
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> --}}
 
 <script>
 var AndraPradesh = ["Anantapur","Chittoor","East Godavari","Guntur","Kadapa","Krishna","Kurnool","Prakasam","Nellore","Srikakulam","Visakhapatnam","Vizianagaram","West Godavari"];

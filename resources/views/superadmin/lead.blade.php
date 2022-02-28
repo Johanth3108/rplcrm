@@ -92,7 +92,11 @@
                                   none
                                 @endif </td>
                                 
+                                @if(App\Models\status::where('id', $lead->status)->first())
                                 <td>{{App\Models\status::where('id', $lead->status)->first()->status}}</td>
+                                @else
+                                <td>Invalid status.</td>
+                                @endif
                                 
                                 <td>
                                   <div class="dropdown">

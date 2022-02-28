@@ -176,13 +176,28 @@
 					</a>
 				</li>
 		  	@endif --}}
-
+{{-- 
 			  <li class="nav-item">
 				<a href="{{route('salesexecutive.clients')}}" class="nav-link">
 				  <i class="link-icon" data-feather="anchor"></i>
 				  <span class="link-title">Clients</span>
 				</a>
-			  </li>
+			  </li> --}}
+			  <li class="nav-item">
+				<a class="nav-link" data-toggle="collapse" href="#clients" role="button" aria-expanded="false" aria-controls="clients">
+				  <i class="link-icon" data-feather="anchor"></i>
+				  <span class="link-title">Clients</span>
+				  <i class="link-arrow" data-feather="chevron-down"></i>
+				</a>
+				<div class="collapse" id="clients">
+				  <ul class="nav sub-menu">
+				  <li class="nav-item">
+					<a href="{{route('salesexecutive.clients')}}" class="nav-link">View Clients</a>
+				  </li>
+				  <li class="nav-item">
+					<a href="#" class="nav-link">Broadcast</a>
+				  </li>
+				  </ul>
 
 			  @if ($exepage->message==true || $exepage->whatsapp==true)
 			<li class="nav-item">
@@ -359,6 +374,8 @@
 		 --}}
 		</div>
 	</div>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 	<script src="{{asset('assets/vendors/core/core.js')}}"></script>
 	<script src="{{asset('assets/vendors/feather-icons/feather.min.js')}}"></script>
 	<script src="{{asset('assets/js/template.js')}}"></script>

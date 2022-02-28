@@ -225,11 +225,22 @@
 
           @if ($areamanpage->clients==true)
           <li class="nav-item">
-            <a href="{{route('areamanager.clients')}}" class="nav-link">
+            <a class="nav-link" data-toggle="collapse" href="#clients" role="button" aria-expanded="false" aria-controls="clients">
               <i class="link-icon" data-feather="anchor"></i>
               <span class="link-title">Clients</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
             </a>
-          </li>
+            <div class="collapse" id="clients">
+              <ul class="nav sub-menu">
+              <li class="nav-item">
+                <a href="{{route('areamanager.clients')}}" class="nav-link">View Clients</a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">Broadcast</a>
+              </li>
+              </ul>
+            </div>
+            </li>
           @endif
           
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b6e391a7c206a2e3fff66b4554b08a8",
+    "content-hash": "579a13e9c6ecfaefd9da3554a8c6e0ee",
     "packages": [
         {
             "name": "acaronlex/laravel-calendar",
@@ -172,6 +172,62 @@
                 }
             ],
             "time": "2021-08-15T20:50:18+00:00"
+        },
+        {
+            "name": "chitranu/textlocal-laravel-notification-channel",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/chitranu/textlocal-laravel-notification-channel.git",
+                "reference": "49f93ff165172be6249edc4adf2fc0df6fcba675"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/chitranu/textlocal-laravel-notification-channel/zipball/49f93ff165172be6249edc4adf2fc0df6fcba675",
+                "reference": "49f93ff165172be6249edc4adf2fc0df6fcba675",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/notifications": "~5.5 || ~6.0 || ~7.0 || ~8.0",
+                "illuminate/support": "~5.5 || ~6.0 || ~7.0 || ~8.0",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "NotificationChannels\\Textlocal\\TextlocalServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "NotificationChannels\\Textlocal\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Swapnil Bhavsar",
+                    "email": "hey@swapnil.dev",
+                    "homepage": "https://swapnil.dev",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Textlocal SMS Notification channel for Laravel",
+            "homepage": "https://github.com/chitranu/textlocal-laravel-notification-channel",
+            "support": {
+                "issues": "https://github.com/chitranu/textlocal-laravel-notification-channel/issues",
+                "source": "https://github.com/chitranu/textlocal-laravel-notification-channel/tree/1.0.0"
+            },
+            "time": "2020-09-27T18:34:16+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -3714,6 +3770,59 @@
                 "source": "https://github.com/bobthecow/psysh/tree/v0.11.1"
             },
             "time": "2022-01-03T13:58:38+00:00"
+        },
+        {
+            "name": "rahulreghunath/textlocal",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rahulreghunath/Textlocal.git",
+                "reference": "c54d2ff3912b5cd18eddc8aba8249a1bbf31d4de"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rahulreghunath/Textlocal/zipball/c54d2ff3912b5cd18eddc8aba8249a1bbf31d4de",
+                "reference": "c54d2ff3912b5cd18eddc8aba8249a1bbf31d4de",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Rahulreghunath\\Textlocal\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Rahulreghunath\\Textlocal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rahul Reghunath",
+                    "email": "reghunath11@gmail.com",
+                    "role": "developer"
+                }
+            ],
+            "description": "Textlocal sms gateway wrapper for Laravel",
+            "keywords": [
+                "laravel",
+                "sms gateway",
+                "textlocal"
+            ],
+            "support": {
+                "issues": "https://github.com/rahulreghunath/Textlocal/issues",
+                "source": "https://github.com/rahulreghunath/Textlocal/tree/master"
+            },
+            "time": "2020-08-20T06:12:39+00:00"
         },
         {
             "name": "ralouphie/getallheaders",

@@ -21,12 +21,34 @@
                 </div>
             </div>
         </div>
-        
     </div>
+    <script>
+      function resolveAfter2Seconds() {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve('resolved');
+          }, 500);
+        });
+      }
 
-    <div class="row">
+      async function asyncCall() {
+        console.log('calling');
+        const result = await resolveAfter2Seconds();
+        console.log(result);
+          document.getElementById('dashboard').classList.remove('active');
+          document.getElementById('message').classList.remove('active');
+          document.getElementById('inbox').classList.remove('active');
+          document.getElementById('send').classList.remove('active');
         
-    </div>
+        // expected output: "resolved"
+      }
+      let i = 1;
+      if (i==1) {
+        asyncCall();
+        i++;
+      }
+      
+    </script>
 <script>
     $(function() {
     'use strict';
@@ -61,5 +83,4 @@ var options = {
 
 });
 </script>
-    
 @endsection

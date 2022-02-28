@@ -12,6 +12,8 @@ use App\Models\message;
 use App\Models\properties;
 use App\Models\status;
 use App\Models\User;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -39,9 +41,33 @@ class SalesexecutiveController extends Controller
         for ($i=1; $i <= 12 ; $i++) { 
             array_push($leads, DB::table('leads')->whereMonth('created_at', $i)->get()->count());
         }
+
+        $lead_status = assign_lead::whereDate('created_at', Carbon::today())->where('assigned_exe', Auth::user()->id)->get()->count();
+        // dd($lead_status);
         
         $leads = implode(",",$leads);
-        return view('salesexecutive.index', compact('leads'));
+        
+        $per_prop = [];
+        $per_status_lead = [];
+        $stat_cnt =  status::orderBy('id', 'DESC')->first()->id;
+        for ($i=1; $i <= $stat_cnt; $i++) {
+            
+                try{
+                    // dd(status::where('id', 3)->first()->status);
+                    if (status::where('id', $i)->first()) {
+                        $stat = status::where('id', $i)->first()->status;
+                        array_push($per_prop, status::where('id', $i)->first()->status);
+                        array_push($per_status_lead, lead::where('status', $i)->get()->count());  
+                    }
+                }
+                catch(Exception $e) {
+                    continue;
+                }
+        }
+        $lead_status = assign_lead::whereDate('created_at', Carbon::today())->where('assigned_exe', Auth::user()->id)->get()->count();
+        $per_prop = implode("','",$per_prop);
+        $per_status_lead = implode("','",$per_status_lead);
+        return view('salesexecutive.index', compact('leads', 'lead_status', 'per_prop', 'per_status_lead'));
     }
     public function profile()
     {
@@ -225,7 +251,7 @@ class SalesexecutiveController extends Controller
 
     public function assigned()
     {
-        $leads = assign_lead::where('assigned_exe', Auth::user()->id)->get();
+        $leads = lead::where('assigned_exe', Auth::user()->id)->get();
         // lead::where('property_name')
         return view('salesexecutive.assigned', compact('leads'));
     }
@@ -250,12 +276,26 @@ class SalesexecutiveController extends Controller
         $feedback = new feedback();
         $feedback->lead_id = $request->lead_id;
         $feedback->fb_name = $request->fb_name;
-        $feedback->message = $request->message;
+        if ($request->transfer) {
+            $feedback->message = "Lead has been transferred.";
+        }
+        elseif($request->stat){
+            $feedback->message = "Lead status has been updated.";
+        }
+        else{
+            $feedback->message = $request->message;
+        }
+        
         $feedback->save();
         if ($request->stat) {
             lead::where('id', $request->lead_id)->update(["status"=>$request->stat]);
         }
-        
+        if($request->transfer){
+            return redirect()->back()->with('message', 'Lead transferred successfully');
+        }
+        if($request->stat){
+            return redirect()->back()->with('message', 'Lead status updated successfully');
+        }
         return redirect()->back()->with('message', 'Feedback submitted successfully');
     }
     public function clients()

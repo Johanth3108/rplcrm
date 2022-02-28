@@ -72,8 +72,18 @@
                             <td>{{$prop->district.", ".$prop->state}}</td>
                             <td>{{$prop->prop_type}}</td>
                             <td>{{App\Models\status::where('id', $prop->status)->first()->status}}</td>
+
+                            @if ($prop->image)
                             <td><i data-feather="check" class="text-success"></i></td>
+                            @else
                             <td><i data-feather="x" class="text-danger"></i></td>
+                            @endif
+
+                            @if ($prop->broucher)
+                            <td><i data-feather="check" class="text-success"></i></td>
+                            @else
+                            <td><i data-feather="x" class="text-danger"></i></td>
+                            @endif
                             <td class="text-info">{{$prop->owner}}</td>
                             <td><a href="{{route('admin.manageprop', $prop->id)}}" class="btn btn-info">Manage</a></td>
                         </tr>

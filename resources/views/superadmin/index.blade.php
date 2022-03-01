@@ -8,7 +8,7 @@
 <div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
     <div>
       <h4 class="mb-3 mb-md-0">Welcome to Dashboard {{Auth::user()->name}}</h4>
-      <h4 class="mb-3 mb-md-0">This is a Superadmin portal 111.</h4>
+      <h4 class="mb-3 mb-md-0">This is a Superadmin portal.</h4>
     </div>
     <div class="d-flex align-items-center flex-wrap text-nowrap">
       <div class="input-group date datepicker dashboard-date mr-2 mb-2 mb-md-0 d-md-none d-xl-flex" id="dashboardDate">
@@ -50,9 +50,9 @@
                   </a>
                 </div>
               </div>
-              <div class="col-6 col-md-12 col-xl-7">
+              {{-- <div class="col-6 col-md-12 col-xl-7">
                 <div id="apexChart1" class="mt-md-3 mt-xl-0"></div>
-              </div>
+              </div> --}}
             </div>
           </div>
         </div>
@@ -73,9 +73,9 @@
                   </a>
                 </div>
               </div>
-              <div class="col-6 col-md-12 col-xl-7">
+              {{-- <div class="col-6 col-md-12 col-xl-7">
                 <div id="apexChart2" class="mt-md-3 mt-xl-0"></div>
-              </div>
+              </div> --}}
             </div>
           </div>
         </div>
@@ -111,47 +111,37 @@
 
 
 <div class="row">
-  <div class="col-lg-8 col-xl-8 grid-margin stretch-card">
+  <div class="col-lg-12 col-xl-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
         
         <div class="row">
           <div class="col-xl-12 grid-margin stretch-card">
+            <div class="col-md-6 grid-margin stretch-card">
               <div class="card">
+                <div class="card-body">
+                  <h6 class="card-title">Status per lead.</h6>
+                  <div id="perlead"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card">
                   <div class="card-body">
                       <h6 class="card-title">Leads generated every month.</h6>
                       <div id="leads"></div>
                   </div>
               </div>
+              </div>
+            </div>
+              
           </div>
         </div>
       </div> 
     </div>
   </div>
-  <div class="col-lg-4 col-xl-4 grid-margin grid-margin-xl-1 stretch-card">
-    <div class="card">
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h6 class="card-title mb-2">Inbox</h6>
-        </div>
-        <div class="d-flex flex-column">
-          @foreach ($messsages as $message)
-            <a href="#" class="d-flex align-items-center border-bottom pb-3">
-              <div class="w-100">
-                <div class="d-flex justify-content-between">
-                  <h6 class="text-body mb-2">{{$message->sender_name}}</h6>
-                  <p class="text-muted tx-12">{{$message->created_at}}</p>
-                </div>
-                <p class="text-muted tx-13">{{$message->message}}</p>
-              </div>
-            </a>
-          @endforeach
-          
-          
-        </div>
-      </div>
-    </div>
-  </div>
+  
 </div>
   
   {{-- <div class="col-lg-5 col-xl-4 grid-margin stretch-card">
@@ -203,7 +193,7 @@
     height: '500',
     parentHeightOffset: 0
   },
-  colors: ["#5CFF5C"],
+  colors: ["#00a326"],
   grid: {
     borderColor: "rgba(0, 255, 240, .1)",
     padding: {
@@ -223,6 +213,34 @@
 var apexBarChart = new ApexCharts(document.querySelector("#leads"), options);
 
 apexBarChart.render();
+
+var options = {
+    chart: {
+      type: 'bar',
+      height: '500',
+      parentHeightOffset: 0
+    },
+    colors: ["#9a6500"],    
+    grid: {
+      borderColor: "rgba(77, 138, 240, .1)",
+      padding: {
+        bottom: 0
+      }
+    },
+    series: [{
+      name: 'sales',
+      data: [{!! "'".$per_status_lead."'" !!}]
+    }],
+    xaxis: {
+      type: 'status',
+      categories: [{!! "'".$status."'" !!}]
+    }
+  }
+  
+  var apexChart = new ApexCharts(document.querySelector("#perlead"), options);
+  
+  apexChart.render();
+
 
 });
 </script>

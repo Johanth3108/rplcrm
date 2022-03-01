@@ -16,17 +16,20 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UsersImport;
 use App\Exports\UsersExport;
 use App\Http\Middleware\salesmanager;
+use App\Mail\dynamicMail;
 use App\Mail\leadassign;
 use App\Mail\newuser;
 use App\Models\areamanpage;
 use App\Models\assign;
 use App\Models\assign_lead;
+use App\Models\emailTemplate;
 use App\Models\event;
 use App\Models\exepage;
 use App\Models\feedback;
 use App\Models\manpage;
 use App\Models\status;
 use App\Models\telepage;
+use App\Models\Textlocal as ModelsTextlocal;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Response;
@@ -48,8 +51,6 @@ class SuperadminController extends Controller
             view()->share('noti', $noti);
             return $next($request);
         });
-        
-        
     }
     public function index()
     {
@@ -57,12 +58,31 @@ class SuperadminController extends Controller
         $leadscn = assign::all()->count();
         $follow_up = assign_lead::where('status', 2)->get()->count();
         $leads = [];
+        $status = [];
+        $per_status_lead = [];
         for ($i=1; $i <= 12 ; $i++) { 
             array_push($leads, DB::table('leads')->whereMonth('created_at', $i)->get()->count());
         }
-        
+        $stat_cnt =  status::orderBy('id', 'DESC')->first()->id;
+        for ($i=1; $i <= $stat_cnt; $i++) {
+            
+                try{
+                    // dd(status::where('id', 3)->first()->status);
+                    if (status::where('id', $i)->first()) {
+                        $stat = status::where('id', $i)->first()->status;
+                        array_push($status, status::where('id', $i)->first()->status);
+                        array_push($per_status_lead, lead::where('status', $i)->get()->count());  
+                    }
+                }
+                catch(Exception $e) {
+                    continue;
+                }
+        }
+        $lead_status = assign_lead::whereDate('created_at', Carbon::today())->where('assigned_exe', Auth::user()->id)->get()->count();
+        $status = implode("','",$status);
+        $per_status_lead = implode("','",$per_status_lead);
         $leads = implode(",",$leads);
-        return view('superadmin.index', compact('leads', 'empcn', 'leadscn', 'follow_up'));
+        return view('superadmin.index', compact('leads', 'empcn', 'leadscn', 'follow_up', 'status', 'per_status_lead'));
     }
 
     public function profileupdate(Request $request, $id)
@@ -328,7 +348,6 @@ class SuperadminController extends Controller
             'notification' => DB::raw('notification+1')
         ]);
 
-
         $message= new message();
         $message->sender_id = Auth::user()->id;
         $message->sender_name = Auth::user()->name;
@@ -410,6 +429,7 @@ class SuperadminController extends Controller
     public function deletelead($id)
     {
         lead::where('id', $id)->delete();
+        // assign_lead::where('client_name', $lead->client_name)->where('assigned_man', $lead->assigned_man)->delete();
         return redirect()->route('admin.leads')->with('message', 'Deleted a lead successfully.');
     }
 
@@ -503,6 +523,16 @@ class SuperadminController extends Controller
         $prop->areamanager = $request->areaman;
         $prop->salesmanager = $request->salesman;
         $prop->salesexecutive = $request->exe;
+        if($request->file('sheet')){
+            $cusbroex = time().'.'.$request->file('sheet')->extension();
+            $request->file('sheet')->move(public_path('img/broucher/'), $cusbroex);
+            $prop->broucher = $cusbroex;
+        }
+        if($request->file('image')){
+            $cusimgex = time().'.'.$request->file('image')->extension();
+            $request->file('image')->move(public_path('img/image/'), $cusimgex);
+            $prop->image = $cusimgex;
+        }
         $prop->save();
         
         $assign = new assign();
@@ -549,8 +579,18 @@ class SuperadminController extends Controller
             'status' => $request->status,
             'areamanager' => $request->areaman,
             'salesmanager' => $request->salesman,
-            'salesexecutive' => $request->exe
+            'salesexecutive' => $request->exe,
         ]);
+        if($request->file('sheet')){
+            $cusbroex = time().'.'.$request->file('sheet')->extension();
+            $request->file('sheet')->move(public_path('img/broucher/'), $cusbroex);
+            properties::where('id', $id)->update(['broucher' => $cusbroex]);
+        }
+        if($request->file('image')){
+            $cusimgex = time().'.'.$request->file('image')->extension();
+            $request->file('image')->move(public_path('img/image/'), $cusimgex);
+            properties::where('id', $id)->update(['image' => $cusimgex]);
+        }
         // $assign = properties::where('id', $id)->first();
         // $assign_exes = (explode(",", $assign->salesexecutive));
         // $new_assign_exes = (explode(",", $request->exe));
@@ -640,12 +680,14 @@ class SuperadminController extends Controller
             'calendar' => $request->calendar,
             'employees' => $request->employees,
             'add_user' => $request->add_user,
+            'usr_perm' => $request->usr_perm,
             'apex' => $request->apex,
             'clients' => $request->clients,
             'gen_leads' => $request->gen_leads,
             'add_lead' => $request->add_lead,
             'gen_prop' => $request->gen_prop,
-            'add_prop' => $request->add_prop
+            'add_prop' => $request->add_prop,
+            'add_proptype' => $request->add_proptype
         ]);
         return redirect()->back()->with('message', 'Areamanager portal updated successfully.');
     }
@@ -667,8 +709,10 @@ class SuperadminController extends Controller
             'apex' => $request->apex,
             'gen_leads' => $request->gen_leads,
             'add_lead' => $request->add_lead,
+            'ass_lead' => $request->ass_lead,
             'gen_prop' => $request->gen_prop,
-            'add_prop' => $request->add_prop
+            'add_prop' => $request->add_prop,
+            'clients' => $request->clients
         ]);
         return redirect()->back()->with('message', 'Salesmanager portal updated successfully.');
     }
@@ -725,16 +769,24 @@ class SuperadminController extends Controller
     {
         $feedbacks = feedback::where('lead_id', $id)->get();
         $lead = lead::where('id', $id)->first();
-        return view('superadmin.feedback', compact('feedbacks', 'lead'));
+        $status = status::all();
+        return view('superadmin.feedback', compact('feedbacks', 'lead', 'status'));
     }
     public function feedbacksend(Request $request)
     {
-        // dd($request);
+        // dd($request->stat);
         $feedback = new feedback();
         $feedback->lead_id = $request->lead_id;
         $feedback->fb_name = $request->fb_name;
-        $feedback->message = $request->message;
+        if($request->stat){
+            $feedback->message = "Status of lead updated.";
+        }
+        else{
+            $feedback->message = $request->message;
+        }
+        
         $feedback->save();
+        lead::where('id', $request->lead_id)->update(["status"=>$request->stat]);
         return redirect()->back()->with('message', 'Feedback submitted successfully');
     }
 
@@ -917,5 +969,106 @@ class SuperadminController extends Controller
     {
         $path = storage_path('app/public/sample/sampleproperties.csv');
         return response()->download($path);
+    }
+
+    public function broadcast()
+    {
+        $clients = lead::select('client_name')->distinct()->get();
+
+        $apiKey = urlencode('NTc3NjQzNzY2NDMyNTc3MTQ4NmQ3MjYxNzE3MTcwNjM=');
+        // Prepare data for POST request
+        $data = array('apikey' => $apiKey);
+    
+        // Send the POST request with cURL
+        $ch = curl_init('https://api.textlocal.in/get_templates/');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        // echo gettype($response);
+        $res = json_decode($response, true);
+        $ress = $res['templates'];
+        // dd($ress);
+        return view('superadmin.broadcast', compact('clients', 'ress'));
+    }
+
+    public function email()
+    {
+        $clients = lead::select('client_name')->distinct()->get();
+        $temps = emailTemplate::all();
+        return view('superadmin.email', compact('clients', 'temps'));
+    }
+
+    public function template()
+    {
+        $clients = lead::select('client_name')->distinct()->get();
+        return view('superadmin.emailmanage', compact('clients'));
+    }
+
+    public function templatesave(Request $request)
+    {
+        $template = new emailTemplate();
+        $template->title = $request->title;
+        $template->body = $request->message;
+        $template->save();
+        return redirect()->route('admin.email.template')->with('message', 'email template created sucessfully.');
+    }
+
+    public function templateajax($id)
+    {
+        $template = emailTemplate::where('id', $id)->first()->body;
+        return response()->json(['template'=>$template]);
+    }
+
+    public function templatesend(Request $request)
+    {
+        // dd($request);
+        $clients = (explode(",", $request->list_clients));
+        foreach ($clients as $client) {
+            $details = [
+            'subject' => 'SAGIREALTY.CO',
+            'message' => $request->message,
+            'client_name' => lead::where('id', $client)->first()->client_name
+        ];
+        Mail::to(lead::where('id', $client)->first()->client_em)->send(new dynamicMail($details));
+        }
+        return redirect()->back()->with('message', "Mails sent successfully.");
+    }
+
+    public function sendSMS(Request $request)
+    {
+        // dd($request);
+
+        $apiKey = urlencode('NTc3NjQzNzY2NDMyNTc3MTQ4NmQ3MjYxNzE3MTcwNjM=');
+        
+        // Message details
+        $numbers = array($request->list_clients);
+        $sender = urlencode('287656');
+        $message = rawurlencode($request->template);
+    
+        $numbers = implode(',', $numbers);
+    
+        // Prepare data for POST request
+        $data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
+    
+        // Send the POST request with cURL
+        $ch = curl_init('https://api.textlocal.in/send/');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        
+        // Process your response here
+        echo $response;
+        $balance = json_decode($response, true);
+        // return redirect()->back()->with('message', $response);
+        return redirect()->back()->with('message', "Messages sent successfully, Balance text credits: ".$balance['balance']);
+    }
+
+    public function test()
+    {
+        dd('test');
     }
 }

@@ -1,5 +1,31 @@
 @extends('layouts.telecaller')
 
+@section('head')
+<style>
+  #myDate { 
+    border: none;
+    margin-right: 5px;
+    margin-top: -4px;
+    background: transparent;
+    width: 50px;
+    margin-left: 0px;
+  }
+  #myDate::-webkit-datetime-edit-ampm-field,
+  ::-webkit-datetime-edit-day-field,
+  ::-webkit-datetime-edit-hour-field,
+  ::-webkit-datetime-edit-millisecond-field,
+  ::-webkit-datetime-edit-minute-field,
+  ::-webkit-datetime-edit-month-field,
+  ::-webkit-datetime-edit-second-field,
+  ::-webkit-datetime-edit-week-field,
+  ::-webkit-datetime-edit-year-field,
+  ::-webkit-datetime-edit-text {
+    display: none;
+    padding: 0%;
+  }
+</style>
+@endsection
+
 @section('content')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -41,6 +67,7 @@
                 </div>
               </div>
               
+              
             </div>
           </div>
           <div class="chat-body">
@@ -63,6 +90,21 @@
             </ul>
           </div>
           <div class="chat-footer d-flex">
+            <div>
+              <button type="button" class="btn border btn-icon rounded-circle mr-2" data-toggle="tooltip" title="Whatsapp">
+                <i data-feather="file-minus" class="text-muted"></i>
+              </button>
+            </div>
+            <div class="d-none d-md-block">
+              <button type="button" class="btn border btn-icon rounded-circle mr-2" data-toggle="tooltip" title="Send a mail">
+                <i data-feather="mail" class="text-muted"></i>
+              </button>
+            </div>
+            <div class="d-none d-md-block">
+              <button type="button" id="lead" class="btn border btn-icon rounded-circle mr-2" data-toggle="tooltip" title="Lead status">
+                <i data-feather="trending-up" class="text-muted"></i>
+              </button>
+            </div>
             
             <form class="search-form flex-grow mr-2" id="form" method="POST" action="{{route('telecaller.feedback.send')}}"}}>
                 @csrf
@@ -73,8 +115,10 @@
                 <div class="input-group">
                     <input type="text" name="fb_name" value="{{Auth::user()->name}}" hidden>
                 </div>
+                <input type="text" id="stat" name="stat" value="{{$lead->status}}" hidden>
                 <div class="input-group">
-                    <input type="text" name="message" class="form-control rounded-pill mr-2" id="chatForm" placeholder="Type a message" required>
+                    <input type="text" name="message" id="msg" class="form-control rounded-pill mr-2" id="chatForm" placeholder="Type a message" required>
+                    <input type="date" id="myDate" value="" onchange="date()">
                     <button type="submit"  class="btn btn-primary btn-icon rounded-circle">
                         <i data-feather="send"></i>
                     </button>
@@ -85,5 +129,46 @@
       </div>
     </div>
   </div>
-  {{-- <script src="{{asset('assets/js/chat.js')}}"></script> --}}
+  <script>
+    function update_status() {
+      document.getElementById('stat').value = document.getElementById('status').value;
+    }
+    function date() {
+      let dateyear = document.getElementById('myDate').value;
+      let arr = dateyear.split('-');
+      let dateFormat = arr[2] + "-" + arr[1] + "-" + arr[0];
+      document.getElementById("msg").value += dateFormat
+    }
+  </script>
+  <script>
+    $('#lead').on('click',function (e) {
+      e.preventDefault();
+      var self = $(this);
+      console.log(self.data('title'));
+      Swal.fire({
+      title: 'Update status of a lead',
+      input: 'select',
+      inputOptions: {
+        @foreach ($status as $stat)
+        '{{$stat->id}}': '{{$stat->status}}',
+        @endforeach
+      },
+      inputPlaceholder: 'select a status',
+      showCancelButton: true,
+      inputValidator: (value) => {
+        document.getElementById('stat').value = value;
+      }
+      }).then((result) => {
+          if (result.isConfirmed) {
+              Swal.fire(
+                  'Updated!',
+                  'Lead status has been updated.',
+                  'success'
+              )
+              document.getElementById('form').submit();
+          }
+      })
+
+  })
+  </script>
 @endsection

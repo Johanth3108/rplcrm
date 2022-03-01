@@ -55,8 +55,7 @@
                             <th>Owner name</th>
                             <th>Contact number</th>
                             <th>Property name</th>
-                            <th>State</th>
-                            <th>District</th>
+                            <th>Location</th>
                             <th>Property type</th>
                             <th>Lead from</th>
                             <th>Assigned Salesmanager</th>
@@ -72,8 +71,7 @@
                               <td>test owner</td>
                               <td>123456789</td>
                               <td>{{$lead->property_name}}</td>
-                              <td>{{$lead->state}}</td>
-                              <td>{{$lead->district}}</td>
+                              <td>{{$lead->district.", ".$lead->state}}</td>
                               <td>{{$lead->prop_type}}</td>
 
                               @if ($lead->lead_from)
@@ -87,7 +85,17 @@
                               <td>{{App\Models\status::where('id', $lead->status)->first()->status}}</td>
 
 
-                              <td class="text-success"><a href="{{route('salesmanager.leads.view', $lead->id)}}" class="btn btn-info">View</a></td>
+                              <td>
+                                <div class="dropdown">
+                                  <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Manage
+                                  </button>
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="{{route('salesmanager.leads.view', $lead->id)}}">Edit</a>
+                                    <a href="{{route('salesmanager.feedback', $lead->id)}}" class="dropdown-item">Feedbacks</a>
+                                  </div>
+                                </div>
+                              </td>
                             </tr>
                             @endforeach
                         </tbody>

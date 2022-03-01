@@ -24,6 +24,21 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->superadmin==true) {
+            return redirect()->route('admin.home');
+        }
+        elseif(Auth::user()->areamanager==true){
+            return redirect()->route('areamanager.home');
+        }
+        elseif(Auth::user()->salesmanager==true){
+            return redirect()->route('salesmanager.home');
+        }
+        elseif(Auth::user()->salesexecutive==true){
+            return redirect()->route('salesexecutive.home');
+        }
+        elseif(Auth::user()->telecaller==true){
+            return redirect()->route('telecaller.home');
+        }
         if (Auth::user()->salesmanager==1){
             // dd('test');
             return view('salesmanager.index');

@@ -16,17 +16,21 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UsersImport;
 use App\Exports\UsersExport;
 use App\Http\Middleware\salesmanager;
+use App\Mail\dynamicMail;
 use App\Mail\leadassign;
 use App\Mail\newuser;
 use App\Models\areamanpage;
 use App\Models\assign;
 use App\Models\assign_lead;
+use App\Models\emailTemplate;
 use App\Models\event;
 use App\Models\exepage;
 use App\Models\feedback;
 use App\Models\manpage;
 use App\Models\status;
 use App\Models\telepage;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
@@ -53,12 +57,32 @@ class AreamanagerController extends Controller
         $leadscn = assign::all()->count();
         $follow_up = assign_lead::where('status', 2)->get()->count();
         $leads = [];
+        $status = [];
+        $per_status_lead = [];
         for ($i=1; $i <= 12 ; $i++) { 
             array_push($leads, DB::table('leads')->whereMonth('created_at', $i)->get()->count());
         }
+        $stat_cnt =  status::orderBy('id', 'DESC')->first()->id;
+        for ($i=1; $i <= $stat_cnt; $i++) {
+            
+            try{
+                // dd(status::where('id', 3)->first()->status);
+                if (status::where('id', $i)->first()) {
+                    $stat = status::where('id', $i)->first()->status;
+                    array_push($status, status::where('id', $i)->first()->status);
+                    array_push($per_status_lead, lead::where('status', $i)->where('assigned_areaman', Auth::user()->id)->get()->count());  
+                }
+            }
+            catch(Exception $e) {
+                continue;
+            }
+        }
+        $lead_status = assign_lead::whereDate('created_at', Carbon::today())->where('assigned_exe', Auth::user()->id)->get()->count();
+        $status = implode("','",$status);
+        $per_status_lead = implode("','",$per_status_lead);
         
         $leads = implode(",",$leads);
-        return view('areamanager.index', compact('leads', 'empcn', 'leadscn', 'follow_up'));
+        return view('areamanager.index', compact('leads', 'empcn', 'leadscn', 'follow_up', 'status', 'per_status_lead'));
     }
 
     public function profileupdate(Request $request, $id)
@@ -613,8 +637,10 @@ class AreamanagerController extends Controller
             'apex' => $request->apex,
             'gen_leads' => $request->gen_leads,
             'add_lead' => $request->add_lead,
+            'ass_lead' => $request->ass_lead,
             'gen_prop' => $request->gen_prop,
-            'add_prop' => $request->add_prop
+            'add_prop' => $request->add_prop,
+            'clients' => $request->clients
         ]);
         return redirect()->back()->with('message', 'Salesmanager portal updated successfully.');
     }
@@ -671,21 +697,124 @@ class AreamanagerController extends Controller
     {
         $feedbacks = feedback::where('lead_id', $id)->get();
         $lead = lead::where('id', $id)->first();
-        return view('areamanager.feedback', compact('feedbacks', 'lead'));
+        $status = status::all();
+        return view('areamanager.feedback', compact('feedbacks', 'lead', 'status'));
     }
     public function feedbacksend(Request $request)
     {
-        // dd($request);
         $feedback = new feedback();
         $feedback->lead_id = $request->lead_id;
         $feedback->fb_name = $request->fb_name;
-        $feedback->message = $request->message;
+        if($request->stat){
+            $feedback->message = "Status of lead updated.";
+        }
+        else{
+            $feedback->message = $request->message;
+        }
+        
         $feedback->save();
+        lead::where('id', $request->lead_id)->update(["status"=>$request->stat]);
         return redirect()->back()->with('message', 'Feedback submitted successfully');
     }
 
     public function clients(){
         $clients = lead::select('client_name')->distinct()->get();
         return view('areamanager.clients', compact('clients'));
+    }
+
+    public function broadcast()
+    {
+        $clients = lead::select('client_name')->distinct()->get();
+
+        $apiKey = urlencode('NTc3NjQzNzY2NDMyNTc3MTQ4NmQ3MjYxNzE3MTcwNjM=');
+        // Prepare data for POST request
+        $data = array('apikey' => $apiKey);
+    
+        // Send the POST request with cURL
+        $ch = curl_init('https://api.textlocal.in/get_templates/');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        // echo gettype($response);
+        $res = json_decode($response, true);
+        $ress = $res['templates'];
+        // dd($ress);
+        return view('areamanager.broadcast', compact('clients', 'ress'));
+    }
+
+    public function email()
+    {
+        $clients = lead::select('client_name')->distinct()->get();
+        $temps = emailTemplate::all();
+        return view('areamanager.email', compact('clients', 'temps'));
+    }
+
+    public function template()
+    {
+        $clients = lead::select('client_name')->distinct()->get();
+        return view('areamanager.emailmanage', compact('clients'));
+    }
+
+    public function templatesave(Request $request)
+    {
+        $template = new emailTemplate();
+        $template->title = $request->title;
+        $template->body = $request->message;
+        $template->save();
+        return redirect()->route('areamanager.email.template')->with('message', 'email template created sucessfully.');
+    }
+
+    public function templateajax($id)
+    {
+        $template = emailTemplate::where('id', $id)->first()->body;
+        return response()->json(['template'=>$template]);
+    }
+
+    public function templatesend(Request $request)
+    {
+        // dd($request);
+        $clients = (explode(",", $request->list_clients));
+        foreach ($clients as $client) {
+            $details = [
+            'subject' => 'SAGIREALTY.CO',
+            'message' => $request->message,
+            'client_name' => lead::where('id', $client)->first()->client_name
+        ];
+        Mail::to(lead::where('id', $client)->first()->client_em)->send(new dynamicMail($details));
+        }
+        return redirect()->back()->with('message', "Mails sent successfully.");
+    }
+
+    public function sendSMS(Request $request)
+    {
+        // dd($request);
+
+        $apiKey = urlencode('NTc3NjQzNzY2NDMyNTc3MTQ4NmQ3MjYxNzE3MTcwNjM=');
+        
+        // Message details
+        $numbers = array($request->list_clients);
+        $sender = urlencode('287656');
+        $message = rawurlencode($request->template);
+    
+        $numbers = implode(',', $numbers);
+    
+        // Prepare data for POST request
+        $data = array('apikey' => $apiKey, 'numbers' => $numbers, "sender" => $sender, "message" => $message);
+    
+        // Send the POST request with cURL
+        $ch = curl_init('https://api.textlocal.in/send/');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        
+        // Process your response here
+        echo $response;
+        $balance = json_decode($response, true);
+        // return redirect()->back()->with('message', $response);
+        return redirect()->back()->with('message', "Messages sent successfully, Balance text credits: ".$balance['balance']);
     }
 }

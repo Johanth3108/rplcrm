@@ -1,6 +1,8 @@
 @extends('layouts.superadmin')
 
 @section('head')
+<link rel="stylesheet" href="{{asset('assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css')}}">
+
 @endsection
 
 @section('content')
@@ -50,13 +52,13 @@
                   <table id="dataTableExample" class="table">
                       <thead>
                           <tr>
-                          <th>#id</th>
                           <th>Property name</th>
                           <th>Address</th>
-                          <th>State</th>
-                          <th>District</th>
+                          <th>Location</th>
                           <th>Property type</th>
                           <th>Status</th>
+                          <th>Images</th>
+                          <th>Broucher</th>
                           <th>Owner</th>
                           <th>Action</th>
                           </tr>
@@ -65,13 +67,23 @@
 
                         @foreach ($props as $prop)
                         <tr>
-                            <td>{{$prop->id}}</td>
                             <td>{{$prop->propname}}</td>
-                            <td>{{$prop->address}}</td>
-                            <td>{{$prop->state}}</td>
-                            <td>{{$prop->district}}</td>
+                            <td>{{Str::limit($prop->address, 20, '...')}}</td>
+                            <td>{{$prop->district.", ".$prop->state}}</td>
                             <td>{{$prop->prop_type}}</td>
                             <td>{{App\Models\status::where('id', $prop->status)->first()->status}}</td>
+
+                            @if ($prop->image)
+                            <td><i data-feather="check" class="text-success"></i></td>
+                            @else
+                            <td><i data-feather="x" class="text-danger"></i></td>
+                            @endif
+
+                            @if ($prop->broucher)
+                            <td><i data-feather="check" class="text-success"></i></td>
+                            @else
+                            <td><i data-feather="x" class="text-danger"></i></td>
+                            @endif
                             <td class="text-info">{{$prop->owner}}</td>
                             <td><a href="{{route('admin.manageprop', $prop->id)}}" class="btn btn-info">Manage</a></td>
                         </tr>
@@ -85,6 +97,7 @@
       </div>
   </div>
 </div>
+
 
 
 @endsection

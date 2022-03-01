@@ -67,12 +67,12 @@
 						</li>
 						@endif
 
-						{{-- @if ($manpage->add_user==true)
+						@if ($manpage->add_user==true)
 						<li class="nav-item">
-							<a href="#" class="nav-link">Add employee</a>
+							<a href="{{route('salesmanager.adduser')}}" class="nav-link">Add employee</a>
 						</li>
-						@endif --}}
-					 
+						@endif
+					
 					</ul>
 				  </div>
 				</li>
@@ -90,15 +90,15 @@
 					  <ul class="nav sub-menu">
 						@if ($manpage->gen_prop==true)
 						<li class="nav-item">
-						<a href="{{route('salesmanager.properties')}}" class="nav-link">Properties</a>
+							<a href="{{route('salesmanager.properties')}}" class="nav-link">Properties</a>
 						</li>
 						@endif
 						
-						{{-- @if ($manpage->add_prop==true)
+						@if ($manpage->add_prop==true)
 						<li class="nav-item">
-							<a href="#" class="nav-link">Add properties</a>
+							<a href="{{route('salesmanager.addprop')}}" class="nav-link">Add properties</a>
 						</li>
-						@endif --}}
+						@endif
 						
 					  </ul>
 					</div>
@@ -124,9 +124,12 @@
 							<a href="{{route('salesmanager.addleads')}}" class="nav-link">Add Lead</a>
 					  	</li>
 						@endif
+						@if ($manpage->ass_lead)
 						<li class="nav-item">
 							<a href="{{route('salesmanager.assigned')}}" class="nav-link">Assigned Leads</a>
-						</li>
+						</li>	
+						@endif
+						
 					  
 					</ul>
 				  </div>
@@ -155,21 +158,42 @@
 				  </div>
 				</li>
 				@endif
+
+				@if ($manpage->clients)
 				<li class="nav-item">
-					<a href="{{route('salesmanager.clients')}}" class="nav-link">
+					<a class="nav-link" data-toggle="collapse" href="#clients" role="button" aria-expanded="false" aria-controls="clients">
 					  <i class="link-icon" data-feather="anchor"></i>
 					  <span class="link-title">Clients</span>
+					  <i class="link-arrow" data-feather="chevron-down"></i>
 					</a>
-				</li>
+					<div class="collapse" id="clients">
+					  <ul class="nav sub-menu">
+						<li class="nav-item">
+						  <a href="{{route('salesmanager.clients')}}" class="nav-link">View Clients</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{route('salesmanager.broadcast')}}" class="nav-link">Broadcast</a>
+						  </li>
+						  <li class="nav-item">
+							<a href="{{route('salesmanager.email')}}" class="nav-link">Email</a>
+						  </li>
+						  <li class="nav-item">
+							<a href="{{route('salesmanager.email.template')}}" class="nav-link">Email templates</a>
+						  </li>
+					  </ul>
+					</div>
+				  </li>
+				@endif
+				
 
-				@if ($manpage->calendar==true)
+				{{-- @if ($manpage->calendar==true)
 				<li class="nav-item">
 				  <a href="{{route('salesmanager.calender')}}" class="nav-link">
 					<i class="link-icon" data-feather="calendar"></i>
 					<span class="link-title">Calendar</span>
 				  </a>
 				</li>
-				@endif
+				@endif --}}
 
 				@if ($manpage->message==true || $manpage->whatsapp==true)
 					<li class="nav-item">
@@ -186,11 +210,11 @@
 								</li>
 							@endif
 							
-							@if ($manpage->whatsapp==true)
+							{{-- @if ($manpage->whatsapp==true)
 								<li class="nav-item">
 									<a href="{{ route('salesmanager.whatsapp') }}" class="nav-link">Whatsapp</a>
 								</li>
-							@endif
+							@endif --}}
 							
 							</ul>
 						</div>
@@ -346,6 +370,8 @@
 		 --}}
 		</div>
 	</div>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 	<script src="{{asset('assets/vendors/core/core.js')}}"></script>
 	<script src="{{asset('assets/vendors/feather-icons/feather.min.js')}}"></script>

@@ -20,12 +20,14 @@ class CreateAreamanpagesTable extends Migration
             $table->boolean('calendar')->nullable();
             $table->boolean('employees')->nullable();
             $table->boolean('add_user')->nullable();
+            $table->boolean('usr_perm')->nullable();
             $table->boolean('apex')->nullable();
             $table->boolean('clients')->nullable();
             $table->boolean('gen_leads')->nullable();
             $table->boolean('add_lead')->nullable();
             $table->boolean('gen_prop')->nullable();
             $table->boolean('add_prop')->nullable();
+            $table->boolean('add_proptype')->nullable();
             $table->timestamps();
         });
     }

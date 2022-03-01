@@ -50,9 +50,9 @@
                   </a>
                 </div>
               </div>
-              <div class="col-6 col-md-12 col-xl-7">
+              {{-- <div class="col-6 col-md-12 col-xl-7">
                 <div id="apexChart1" class="mt-md-3 mt-xl-0"></div>
-              </div>
+              </div> --}}
             </div>
           </div>
         </div>
@@ -73,9 +73,9 @@
                   </a>
                 </div>
               </div>
-              <div class="col-6 col-md-12 col-xl-7">
+              {{-- <div class="col-6 col-md-12 col-xl-7">
                 <div id="apexChart2" class="mt-md-3 mt-xl-0"></div>
-              </div>
+              </div> --}}
             </div>
           </div>
         </div>
@@ -94,59 +94,39 @@
   </div>
 </div> <!-- row -->
 
-
 <div class="row">
-  <div class="col-lg-7 col-xl-8 grid-margin stretch-card">
+  <div class="col-lg-12 col-xl-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
         
         <div class="row">
           <div class="col-xl-12 grid-margin stretch-card">
+            <div class="col-md-6 grid-margin stretch-card">
               <div class="card">
+                <div class="card-body">
+                  <h6 class="card-title">Status per lead.</h6>
+                  <div id="perlead"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card">
                   <div class="card-body">
                       <h6 class="card-title">Leads generated every month.</h6>
                       <div id="leads"></div>
                   </div>
               </div>
+              </div>
+            </div>
+              
           </div>
         </div>
       </div> 
     </div>
   </div>
-  <div class="col-lg-5 col-xl-4 grid-margin grid-margin-xl-1 stretch-card">
-    <div class="card">
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-baseline mb-2">
-          <h6 class="card-title mb-0">Inbox</h6>
-          <div class="dropdown mb-2">
-            <button class="btn p-0" type="button" id="dropdownMenuButton6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton6">
-              <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="eye" class="icon-sm mr-2"></i> <span class="">View</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="edit-2" class="icon-sm mr-2"></i> <span class="">Edit</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="trash" class="icon-sm mr-2"></i> <span class="">Delete</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="printer" class="icon-sm mr-2"></i> <span class="">Print</span></a>
-              <a class="dropdown-item d-flex align-items-center" href="#"><i data-feather="download" class="icon-sm mr-2"></i> <span class="">Download</span></a>
-            </div>
-          </div>
-        </div>
-        <div class="d-flex flex-column">
-          @foreach ($messsages as $message)
-            <a href="#" class="d-flex align-items-center border-bottom pb-3">
-              <div class="w-100">
-                <div class="d-flex justify-content-between">
-                  <h6 class="text-body mb-2">{{$message->sender_name}}</h6>
-                  <p class="text-muted tx-12">{{$message->created_at}}</p>
-                </div>
-                <p class="text-muted tx-13">{{$message->message}}</p>
-              </div>
-            </a>
-          @endforeach
-        </div>
-      </div>
-    </div>
-  </div>
+  
+</div>
   {{-- <div class="col-lg-5 col-xl-4 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
@@ -194,7 +174,7 @@
     height: '500',
     parentHeightOffset: 0
   },
-  colors: ["#5CFF5C"],
+  colors: ["#00a326"],
   grid: {
     borderColor: "rgba(0, 255, 240, .1)",
     padding: {
@@ -214,6 +194,33 @@
 var apexBarChart = new ApexCharts(document.querySelector("#leads"), options);
 
 apexBarChart.render();
+
+var options = {
+    chart: {
+      type: 'bar',
+      height: '500',
+      parentHeightOffset: 0
+    },
+    colors: ["#9a6500"],    
+    grid: {
+      borderColor: "rgba(77, 138, 240, .1)",
+      padding: {
+        bottom: 0
+      }
+    },
+    series: [{
+      name: 'sales',
+      data: [{!! "'".$per_status_lead."'" !!}]
+    }],
+    xaxis: {
+      type: 'status',
+      categories: [{!! "'".$status."'" !!}]
+    }
+  }
+  
+  var apexChart = new ApexCharts(document.querySelector("#perlead"), options);
+  
+  apexChart.render();
 
 });
 </script>

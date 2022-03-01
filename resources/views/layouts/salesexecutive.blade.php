@@ -168,21 +168,42 @@
 			</li>
 			@endif
 
-			@if ($exepage->calendar)
+			{{-- @if ($exepage->calendar)
 				<li class="nav-item">
 					<a href="{{route('salesexecutive.calender')}}" class="nav-link">
 					<i class="link-icon" data-feather="calendar"></i>
 					<span class="link-title">Calendar</span>
 					</a>
 				</li>
-		  	@endif
-
+		  	@endif --}}
+{{-- 
 			  <li class="nav-item">
 				<a href="{{route('salesexecutive.clients')}}" class="nav-link">
 				  <i class="link-icon" data-feather="anchor"></i>
 				  <span class="link-title">Clients</span>
 				</a>
-			  </li>
+			  </li> --}}
+			  <li class="nav-item">
+				<a class="nav-link" data-toggle="collapse" href="#clients" role="button" aria-expanded="false" aria-controls="clients">
+				  <i class="link-icon" data-feather="anchor"></i>
+				  <span class="link-title">Clients</span>
+				  <i class="link-arrow" data-feather="chevron-down"></i>
+				</a>
+				<div class="collapse" id="clients">
+				  <ul class="nav sub-menu">
+				  <li class="nav-item">
+					<a href="{{route('salesexecutive.clients')}}" class="nav-link">View Clients</a>
+				  </li>
+				  <li class="nav-item">
+					<a href="{{route('salesexecutive.broadcast')}}" class="nav-link">Broadcast</a>
+				  </li>
+				  <li class="nav-item">
+					<a href="{{route('salesexecutive.email')}}" class="nav-link">Email</a>
+				  </li>
+				  <li class="nav-item">
+					<a href="{{route('salesexecutive.email.template')}}" class="nav-link">Email templates</a>
+				  </li>
+				  </ul>
 
 			  @if ($exepage->message==true || $exepage->whatsapp==true)
 			<li class="nav-item">
@@ -199,11 +220,11 @@
 					</li>
 					@endif
 					
-					@if ($exepage->whatsapp==true)
+					{{-- @if ($exepage->whatsapp==true)
 					<li class="nav-item">
 					<a href="{{ route('salesexecutive.whatsapp') }}" class="nav-link">Whatsapp</a>
 					</li>
-					@endif
+					@endif --}}
 					
 				</ul>
 				</div>
@@ -359,6 +380,8 @@
 		 --}}
 		</div>
 	</div>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 	<script src="{{asset('assets/vendors/core/core.js')}}"></script>
 	<script src="{{asset('assets/vendors/feather-icons/feather.min.js')}}"></script>
 	<script src="{{asset('assets/js/template.js')}}"></script>

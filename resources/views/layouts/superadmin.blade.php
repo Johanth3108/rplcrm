@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    
     <script src="{{ asset('js/app.js') }}" defer></script>
 	<link rel="stylesheet" href="{{asset('assets/vendors/core/core.css')}}">
 	<link rel="stylesheet" href="{{asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}">
@@ -200,44 +201,90 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{route('admin.clients')}}" class="nav-link">
-              <i class="link-icon" data-feather="anchor"></i>
-              <span class="link-title">Clients</span>
-            </a>
-          </li>
-
-
-          <li class="nav-item">
-            <a class="nav-link"  data-toggle="collapse" href="#charts" role="button" aria-expanded="false" aria-controls="charts">
-              <i class="link-icon" data-feather="pie-chart"></i>
+            <a class="nav-link" data-toggle="collapse" href="#report" role="button" aria-expanded="false" aria-controls="report">
+              <i class="link-icon" data-feather="layout"></i>
               <span class="link-title">Report</span>
               <i class="link-arrow" data-feather="chevron-down"></i>
             </a>
-            <div class="collapse" id="charts">
+            <div class="collapse" id="report">
               <ul class="nav sub-menu">
                 <li class="nav-item">
                   <a href="{{route('admin.apex')}}" class="nav-link">Leads per month</a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{route('admin.leadproperty')}}" class="nav-link">Leads per property</a>
+                  <a href="{{route('admin.lead.property')}}" class="nav-link">Leads per property</a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{route('admin.leadmanual')}}" class="nav-link">Manual assigned leads</a>
+                  <a href="{{route('admin.lead.manual')}}" class="nav-link">Manual assigned leads</a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{route('admin.leadauto')}}" class="nav-link">Automatic assigned leads</a>
+                  <a href="{{route('admin.lead.auto')}}" class="nav-link">Automatic assigned leads</a>
                 </li>
               </ul>
             </div>
           </li>
 
+          {{-- <li class="nav-item">
+            <a class="nav-link"  data-toggle="collapse" href="#report" role="button" aria-expanded="false" aria-controls="report">
+              <i class="link-icon" data-feather="pie-chart"></i>
+              <span class="link-title">Report</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+            </a>
+            <div class="collapse" id="reports">
+              <ul class="nav sub-menu">
+                <li class="nav-item">
+                  <a href="{{route('admin.apex')}}" class="nav-link">Leads per month</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.lead.property')}}" class="nav-link">Leads per property</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.lead.manual')}}" class="nav-link">Manual assigned leads</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.lead.auto')}}" class="nav-link">Automatic assigned leads</a>
+                </li>
+              </ul>
+            </div>
+          </li> --}}
 
           <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#clients" role="button" aria-expanded="false" aria-controls="clients">
+              <i class="link-icon" data-feather="anchor"></i>
+              <span class="link-title">Clients</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+            </a>
+            <div class="collapse" id="clients">
+              <ul class="nav sub-menu">
+                <li class="nav-item">
+                  <a href="{{route('admin.clients')}}" class="nav-link">View Clients</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.broadcast')}}" class="nav-link">Broadcast</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.email')}}" class="nav-link">Email</a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('admin.email.template')}}" class="nav-link">Email templates</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          {{-- <li class="nav-item">
+            <a href="{{route('admin.clients')}}" class="nav-link">
+              <i class="link-icon" data-feather="anchor"></i>
+              <span class="link-title">Clients</span>
+            </a>
+          </li> --}}
+     
+          {{-- <li class="nav-item">
             <a href="{{route('admin.calender')}}" class="nav-link">
               <i class="link-icon" data-feather="calendar"></i>
               <span class="link-title">Calendar</span>
             </a>
-          </li>
+          </li> --}}
 
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#sms" role="button" aria-expanded="false" aria-controls="sms">
@@ -250,12 +297,12 @@
                 <li class="nav-item">
                   <a href="#" class="nav-link">Message</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                   <a href="#" class="nav-link">Whatsapp</a>
                 </li>
                 <li class="nav-item">
                   <a href="#" class="nav-link">Bulk Email</a>
-                </li>
+                </li> --}}
               </ul>
             </div>
           </li>

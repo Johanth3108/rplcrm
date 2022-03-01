@@ -100,7 +100,7 @@
 
     {{-- tab pane 2 --}}
     <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
-        WHATSAPP
+       <a href="https://web.whatsapp.com/" target="_blank" class="btn btn-primary">Login into whatsapp</a>
     </div>
   </div>
   <!-- Tabs content -->

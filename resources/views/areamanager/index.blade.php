@@ -44,8 +44,8 @@
               <div class="col-6 col-md-12 col-xl-5">
                 <h3 class="mb-2">{{$empcn}}</h3>
                 <div class="d-flex align-items-baseline">
-                  <a href="{{route('areamanager.adduser')}}" class="text-success">
-                    <span>Click to add a employee.</span>
+                  <a href="{{route('areamanager.addlead')}}" class="text-success">
+                    <span>Click to add a new lead.</span>
                     <i data-feather="arrow-up" class="icon-sm mb-1"></i>
                   </a>
                 </div>

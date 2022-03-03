@@ -266,7 +266,7 @@
                   <a href="{{route('admin.email')}}" class="nav-link">Email</a>
                 </li>
                 <li class="nav-item">
-                  <a href="{{route('admin.email.template')}}" class="nav-link">Email templates</a>
+                  <a href="{{route('admin.email.template.view')}}" class="nav-link">Email templates</a>
                 </li>
               </ul>
             </div>
@@ -286,7 +286,7 @@
             </a>
           </li> --}}
 
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#sms" role="button" aria-expanded="false" aria-controls="sms">
               <i class="link-icon" data-feather="file-text"></i>
               <span class="link-title">SMS</span>
@@ -297,15 +297,9 @@
                 <li class="nav-item">
                   <a href="#" class="nav-link">Message</a>
                 </li>
-                {{-- <li class="nav-item">
-                  <a href="#" class="nav-link">Whatsapp</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">Bulk Email</a>
-                </li> --}}
               </ul>
             </div>
-          </li>
+          </li> --}}
 
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#message" role="button" aria-expanded="false" aria-controls="message">
@@ -454,8 +448,8 @@
 	<script src="{{asset('assets/js/datepicker.js')}}"></script>
 	<script src="{{asset('assets/js/dashboard.js')}}"></script>
 
-	<script src="{{asset('assets/vendors/datatables.net/jquery.dataTables.js')}}"></script>
-	<script src="{{asset('assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js')}}"></script>
+	<script src="{{asset('assets/vendors/datatables.net/jquery.dataTables.js')}}" type="text/javascript"></script>
+	<script src="{{asset('assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js')}}" type="text/javascript"></script>
 	<script src="{{asset('assets/js/data-table.js')}}"></script>
 
 	<script src="{{asset('assets/vendors/chartjs/Chart.min.js')}}"></script>

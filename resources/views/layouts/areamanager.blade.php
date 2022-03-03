@@ -139,7 +139,7 @@
           </li> 
           @endif
 
-          @if ($areamanpage->usr_perm==1)
+          @if ($areamanpage->sales_man==1 || $areamanpage->sales_exe==1 || $areamanpage->tele==1)
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#permissions" role="button" aria-expanded="false" aria-controls="permissions">
               <i class="link-icon" data-feather="activity"></i>
@@ -148,15 +148,24 @@
             </a>
             <div class="collapse" id="permissions">
               <ul class="nav sub-menu">
+                @if ($areamanpage->sales_man==1)
                 <li class="nav-item">
                   <a href="{{route('areamanager.manpage')}}" class="nav-link">Sales manager</a>
-                </li>
+                </li>  
+                @endif
+                
+                @if ($areamanpage->sales_exe==1)
                 <li class="nav-item">
                   <a href="{{route('areamanager.exepage')}}" class="nav-link">Sales executive</a>
-                </li>
+                </li>  
+                @endif
+                
+                @if ($areamanpage->tele==1)
                 <li class="nav-item">
                   <a href="{{route('areamanager.telepage')}}" class="nav-link">Telecaller</a>
-                </li>
+                </li>  
+                @endif
+                
               </ul>
             </div>
           </li>
@@ -223,7 +232,7 @@
           @endif
           
 
-          @if ($areamanpage->clients==true)
+          @if ($areamanpage->view_clients || $areamanpage->broadcast || $areamanpage->email || $areamanpage->email_temp)
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#clients" role="button" aria-expanded="false" aria-controls="clients">
               <i class="link-icon" data-feather="anchor"></i>
@@ -232,25 +241,37 @@
             </a>
             <div class="collapse" id="clients">
               <ul class="nav sub-menu">
-              <li class="nav-item">
+              @if ($areamanpage->view_clients)
+                <li class="nav-item">
                 <a href="{{route('areamanager.clients')}}" class="nav-link">View Clients</a>
-              </li>
+              </li> 
+              @endif
+
+              @if ($areamanpage->broadcast)
               <li class="nav-item">
                 <a href="{{route('areamanager.broadcast')}}" class="nav-link">Broadcast</a>
-              </li>
+              </li>  
+              @endif
+              
+              @if ($areamanpage->email)
               <li class="nav-item">
                 <a href="{{route('areamanager.email')}}" class="nav-link">Email</a>
-              </li>
+              </li>  
+              @endif
+              
+              @if ($areamanpage->email_temp)
               <li class="nav-item">
-                <a href="{{route('areamanager.email.template')}}" class="nav-link">Email templates</a>
-              </li>
+                <a href="{{route('areamanager.email.template.view')}}" class="nav-link">Email templates</a>
+              </li>  
+              @endif
+              
               </ul>
             </div>
             </li>
           @endif
           
 
-          @if ($areamanpage->apex==true)
+          @if ($areamanpage->lpm || $areamanpage->lpp || $areamanpage->mal || $areamanpage->aal )
           <li class="nav-item">
             <a class="nav-link"  data-toggle="collapse" href="#charts" role="button" aria-expanded="false" aria-controls="charts">
               <i class="link-icon" data-feather="pie-chart"></i>
@@ -259,18 +280,27 @@
             </a>
             <div class="collapse" id="charts">
               <ul class="nav sub-menu">
+                @if ($areamanpage->lpm)
                 <li class="nav-item">
                   <a href="{{route('areamanager.apex')}}" class="nav-link">Leads per month</a>
-                </li>
+                </li>  
+                @endif
+                @if ($areamanpage->lpp)
                 <li class="nav-item">
                   <a href="{{route('areamanager.leadproperty')}}" class="nav-link">Leads per property</a>
-                </li>
+                </li>  
+                @endif
+                @if ($areamanpage->mal)
                 <li class="nav-item">
                   <a href="{{route('areamanager.leadmanual')}}" class="nav-link">Manual assigned leads</a>
-                </li>
+                </li>  
+                @endif
+                @if ($areamanpage->aal)
                 <li class="nav-item">
                   <a href="{{route('areamanager.leadauto')}}" class="nav-link">Automatic assigned leads</a>
-                </li>
+                </li>  
+                @endif
+                
               </ul>
             </div>
           </li>
@@ -287,7 +317,7 @@
           @endif --}}
           
 
-          @if ($areamanpage->message || $areamanpage->whatsapp)
+          {{-- @if ($areamanpage->message || $areamanpage->whatsapp)
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#sms" role="button" aria-expanded="false" aria-controls="sms">
               <i class="link-icon" data-feather="file-text"></i>
@@ -302,16 +332,11 @@
                 </li>
                 @endif
                 
-                {{-- @if ($areamanpage->whatsapp==true)
-                <li class="nav-item">
-                  <a href="#" class="nav-link">Whatsapp</a>
-                </li>
-                @endif --}}
                 
               </ul>
             </div>
           </li>  
-          @endif
+          @endif --}}
           
 
           <li class="nav-item">

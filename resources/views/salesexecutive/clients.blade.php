@@ -60,9 +60,10 @@
                             </tr>
                         </thead>
                         <tbody>
+                          <?php $i=0 ?>
                             @foreach ($clients as $client)
                             <tr>
-                                <td>{{App\Models\lead::where('client_name', $client->client_name)->first()->id}}</td>
+                                <td>{{++$i}}</td>
                                 <td>{{App\Models\lead::where('client_name', $client->client_name)->first()->client_name}}</td>
                                 <td>{{App\Models\lead::where('client_name', $client->client_name)->first()->client_phn}}</td>
                                 <td>{{App\Models\lead::where('client_name', $client->client_name)->first()->client_em}}</td>

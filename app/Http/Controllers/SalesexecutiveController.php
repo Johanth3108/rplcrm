@@ -71,7 +71,8 @@ class SalesexecutiveController extends Controller
         $lead_status = assign_lead::whereDate('created_at', Carbon::today())->where('assigned_exe', Auth::user()->id)->get()->count();
         $per_prop = implode("','",$per_prop);
         $per_status_lead = implode("','",$per_status_lead);
-        return view('salesexecutive.index', compact('leads', 'lead_status', 'per_prop', 'per_status_lead'));
+        $gen_leads = assign_lead::where('assigned_exe', Auth::user()->id)->get()->count();
+        return view('salesexecutive.index', compact('gen_leads' ,'leads', 'lead_status', 'per_prop', 'per_status_lead'));
     }
     public function profile()
     {
@@ -365,6 +366,34 @@ class SalesexecutiveController extends Controller
     {
         $clients = lead::select('client_name')->distinct()->get();
         return view('salesexecutive.emailmanage', compact('clients'));
+    }
+
+    public function templateview()
+    {
+        $templates = emailTemplate::all();
+        return view('salesexecutive.emailtemplate', compact('templates'));
+    }
+
+    public function templateedit($id)
+    {
+        $template = emailTemplate::where('id', $id)->first();
+        return view('salesexecutive.edittemplate', compact('template'));
+    }
+
+    public function templateupdate(Request $request, $id)
+    {
+        // dd(emailTemplate::where('id', $id)->first());
+        emailTemplate::where('id', $id)->update([
+            'title' => $request->title,
+            'body' => $request->message,
+        ]);
+        return redirect()->route('salesexecutive.email.template.view')->with('message', 'Template edited successfully.');
+    }
+
+    public function templatedelete($id)
+    {
+        emailTemplate::where('id', $id)->delete();
+        return redirect()->route('salesexecutive.email.template.view')->with('message', 'Template deleted successfully.');
     }
 
     public function templatesave(Request $request)

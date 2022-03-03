@@ -47,9 +47,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php $i=0 ?>
                                             @foreach ($status as $stat)
                                                 <tr>
-                                                    <th>{{$stat->id}}</th>
+                                                    <th>{{++$i}}</th>
                                                     <td>{{$stat->status}}</td>
                                                     <td><a href="{{route('admin.status.delete', $stat->id)}}" id="delete" class="btn btn-danger">Delete</a></td>
                                                     <td>

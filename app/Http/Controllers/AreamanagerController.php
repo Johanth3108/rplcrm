@@ -53,9 +53,14 @@ class AreamanagerController extends Controller
     }
     public function index()
     {
-        $empcn = User::all()->count();
+        $empcn = lead::whereDate('created_at', Carbon::today())->get()->count();
         $leadscn = assign::all()->count();
-        $follow_up = assign_lead::where('status', 2)->get()->count();
+        if ($follow_up = assign_lead::where('status', 11)->get()) {
+            $follow_up = assign_lead::where('status', 11)->get()->count();
+        }
+        else{
+            $follow_up = 0;
+        }
         $leads = [];
         $status = [];
         $per_status_lead = [];
@@ -755,6 +760,34 @@ class AreamanagerController extends Controller
     {
         $clients = lead::select('client_name')->distinct()->get();
         return view('areamanager.emailmanage', compact('clients'));
+    }
+
+    public function templateview()
+    {
+        $templates = emailTemplate::all();
+        return view('areamanager.emailtemplate', compact('templates'));
+    }
+
+    public function templateedit($id)
+    {
+        $template = emailTemplate::where('id', $id)->first();
+        return view('areamanager.edittemplate', compact('template'));
+    }
+
+    public function templateupdate(Request $request, $id)
+    {
+        // dd(emailTemplate::where('id', $id)->first());
+        emailTemplate::where('id', $id)->update([
+            'title' => $request->title,
+            'body' => $request->message,
+        ]);
+        return redirect()->route('areamanager.email.template.view')->with('message', 'Template edited successfully.');
+    }
+
+    public function templatedelete($id)
+    {
+        emailTemplate::where('id', $id)->delete();
+        return redirect()->route('areamanager.email.template.view')->with('message', 'Template deleted successfully.');
     }
 
     public function templatesave(Request $request)

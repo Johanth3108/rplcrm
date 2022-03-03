@@ -116,7 +116,7 @@
                         </a>
                     </li>
 
-                    @if ($telepage->assigned_leads == true)
+                    @if ($telepage->gen_leads == true)
                         <li class="nav-item">
                             <a href="{{ route('telecaller.assigned') }}" class="nav-link">
                                 <i class="link-icon" data-feather="link"></i>
@@ -125,6 +125,7 @@
                         </li>
                     @endif
 
+                    @if ($telepage->apex == true)
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="collapse" href="#charts" role="button"
                             aria-expanded="false" aria-controls="charts">
@@ -139,7 +140,9 @@
                                 </li>
                             </ul>
                         </div>
-                    </li>
+                    </li>    
+                    @endif
+                    
 
                     {{-- @if ($telepage->calendar == true)
 					<li class="nav-item">

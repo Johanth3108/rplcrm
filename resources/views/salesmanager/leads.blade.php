@@ -48,10 +48,11 @@
             <div class="card-body">
                 <h6 class="card-title">Generated leads</h6>
                 <div class="table-responsive">
-                    <table id="dataTableExample" class="table">
+                    <table id="example" class="table">
                         <thead>
                           <tr>
-                            <th>#id</th>
+                            <th hidden>#id</th>
+                            <th>S.no</th>
                             <th>Owner name</th>
                             <th>Contact number</th>
                             <th>Property name</th>
@@ -65,11 +66,19 @@
                             </tr>
                         </thead>
                         <tbody>
+                          <?php $i = 0; ?>
                             @foreach ($leads as $lead)
                             <tr>
-                              <td>{{$lead->id}}</td>
-                              <td>test owner</td>
-                              <td>123456789</td>
+                                <td hidden>{{$lead->id}}</td>
+                                @if ($lead->lead_from=='99Acres')
+                                  <td>{{'ac'.++$i}}</td>
+                                @elseif ($lead->lead_from=='Magicbricks')
+                                  <td>{{'mg'.++$i}}</td>
+                                @else
+                                  <td>{{'ma'.++$i}}</td>
+                                @endif
+                              <td>{{$lead->client_name}}</td>
+                              <td>{{$lead->client_phn}}</td>
                               <td>{{$lead->property_name}}</td>
                               <td>{{$lead->district.", ".$lead->state}}</td>
                               <td>{{$lead->prop_type}}</td>
@@ -105,10 +114,15 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('dataTableExample').DataTable();
-    } );
-</script>
     
+@endsection
+
+@section('script')
+
+<script>
+  $('#example').dataTable( {
+    "order": [[0, 'desc']]
+  } );
+</script>
+  
 @endsection

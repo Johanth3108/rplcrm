@@ -112,7 +112,7 @@
             </a>
           </li>
 
-
+		  @if ($exepage->gen_leads)
 			<li class="nav-item">
 				<a class="nav-link"  data-toggle="collapse" href="#leads" role="button" aria-expanded="false" aria-controls="leads">
 				  <i class="link-icon" data-feather="pie-chart"></i>
@@ -122,22 +122,45 @@
 				<div class="collapse" id="leads">
 				  <ul class="nav sub-menu">
 					<li class="nav-item">
-						<a href="{{route('salesexecutive.assigned')}}" class="nav-link">Assigned Leads</a>
+						<a href="{{route('salesexecutive.assigned')}}" class="nav-link">Assigned Leads //</a>
 					</li>
 					<li class="nav-item">
 						<a href="{{route('salesexecutive.leads')}}" class="nav-link">Generated leads</a>
 					</li>
 				  </ul>
 				</div>
-			</li>
-
+			</li>  
+		  @endif
+			
+			@if ($exepage->tele || $exepage->add_tele)
 			<li class="nav-item">
-				<a href="{{route('salesexecutive.telecallers')}}" class="nav-link">
-				<i class="link-icon" data-feather="phone"></i>
-				<span class="link-title">Telecallers</span>
+				<a class="nav-link"  data-toggle="collapse" href="#telecallers" role="button" aria-expanded="false" aria-controls="telecallers">
+				  <i class="link-icon" data-feather="pie-chart"></i>
+				  <span class="link-title">Telecallers</span>
+				  <i class="link-arrow" data-feather="chevron-down"></i>
 				</a>
-			</li>
+				<div class="collapse" id="telecallers">
+				  <ul class="nav sub-menu">
+					  @if ($exepage->tele)
+						<li class="nav-item">
+						<a href="{{route('salesexecutive.telecallers')}}" class="nav-link">>Telecallers</a>
+						</li>  
+					  @endif
+					
 
+					@if ($exepage->add_tele)
+					<li class="nav-item">
+						<a href="{{route('salesexecutive.assign')}}" class="nav-link">Assign telecallers</a>
+					</li>
+					@endif
+				  </ul>
+				</div>
+			</li>	
+			@endif
+			
+
+			
+			@if ($exepage->lpp || $exepage->mal || $exepage->aal)
 			<li class="nav-item">
 				<a class="nav-link"  data-toggle="collapse" href="#charts" role="button" aria-expanded="false" aria-controls="charts">
 				  <i class="link-icon" data-feather="award"></i>
@@ -146,27 +169,29 @@
 				</a>
 				<div class="collapse" id="charts">
 				  <ul class="nav sub-menu">
+					  @if ($exepage->lpp)
+						<li class="nav-item">
+						<a href="{{route('salesexecutive.leadproperty')}}" class="nav-link">Leads per property</a>
+						</li>  
+					  @endif
+					@if ($exepage->mal)
 					<li class="nav-item">
-					  <a href="{{route('salesexecutive.leadproperty')}}" class="nav-link">Leads per property</a>
-					</li>
-					<li class="nav-item">
-					  <a href="{{route('salesexecutive.leadmanual')}}" class="nav-link">Manual leads</a>
-					</li>
+						<a href="{{route('salesexecutive.leadmanual')}}" class="nav-link">Manual leads</a>
+					  </li>
+					@endif
+					@if ($exepage->aal)
 					<li class="nav-item">
 					  <a href="{{route('salesexecutive.leadauto')}}" class="nav-link">Automatic leads</a>
-					</li>
+					</li>	
+					@endif
+					
 				  </ul>
 				</div>
-			  </li>
-			
-			@if ($exepage->assign==true)
-			<li class="nav-item">
-				<a href="{{route('salesexecutive.assign')}}" class="nav-link">
-				<i class="link-icon" data-feather="phone"></i>
-				<span class="link-title">Assign telecallers</span>
-				</a>
-			</li>
+			  </li>	
 			@endif
+			
+			
+			
 
 			{{-- @if ($exepage->calendar)
 				<li class="nav-item">
@@ -183,7 +208,9 @@
 				  <span class="link-title">Clients</span>
 				</a>
 			  </li> --}}
-			  <li class="nav-item">
+
+			  @if ($exepage->view_clients || $exepage->broadcast || $exepage->email || $exepage->email_temp )
+				<li class="nav-item">
 				<a class="nav-link" data-toggle="collapse" href="#clients" role="button" aria-expanded="false" aria-controls="clients">
 				  <i class="link-icon" data-feather="anchor"></i>
 				  <span class="link-title">Clients</span>
@@ -191,45 +218,32 @@
 				</a>
 				<div class="collapse" id="clients">
 				  <ul class="nav sub-menu">
-				  <li class="nav-item">
-					<a href="{{route('salesexecutive.clients')}}" class="nav-link">View Clients</a>
-				  </li>
-				  <li class="nav-item">
-					<a href="{{route('salesexecutive.broadcast')}}" class="nav-link">Broadcast</a>
-				  </li>
-				  <li class="nav-item">
-					<a href="{{route('salesexecutive.email')}}" class="nav-link">Email</a>
-				  </li>
-				  <li class="nav-item">
-					<a href="{{route('salesexecutive.email.template')}}" class="nav-link">Email templates</a>
-				  </li>
-				  </ul>
-
-			  @if ($exepage->message==true || $exepage->whatsapp==true)
-			<li class="nav-item">
-				<a class="nav-link" data-toggle="collapse" href="#sms" role="button" aria-expanded="false" aria-controls="sms">
-				<i class="link-icon" data-feather="file-text"></i>
-				<span class="link-title">SMS</span>
-				<i class="link-arrow" data-feather="chevron-down"></i>
-				</a>
-				<div class="collapse" id="sms">
-				<ul class="nav sub-menu">
-					@if ($exepage->message==true)
+					  @if ($exepage->view_clients)
+						<li class="nav-item">
+							<a href="{{route('salesexecutive.clients')}}" class="nav-link">View Clients</a>
+						</li>  
+					  @endif
+					@if ($exepage->broadcast)
 					<li class="nav-item">
-					<a href="{{ route('salesexecutive.message') }}" class="nav-link">Message</a>
-					</li>
+						<a href="{{route('salesexecutive.broadcast')}}" class="nav-link">Broadcast</a>
+					</li>	
+					@endif
+					@if ($exepage->email)
+					<li class="nav-item">
+						<a href="{{route('salesexecutive.email')}}" class="nav-link">Email</a>
+					</li>	
+					@endif
+					@if ($exepage->email_temp)
+					<li class="nav-item">
+						<a href="{{route('salesexecutive.email.template.view')}}" class="nav-link">Email templates</a>
+					</li>	
 					@endif
 					
-					{{-- @if ($exepage->whatsapp==true)
-					<li class="nav-item">
-					<a href="{{ route('salesexecutive.whatsapp') }}" class="nav-link">Whatsapp</a>
-					</li>
-					@endif --}}
-					
-				</ul>
+				  </ul>
 				</div>
-			</li>
-		  @endif
+			  </li>  
+			  @endif
+			  
 
 		  <li class="nav-item">
 			<a class="nav-link" data-toggle="collapse" href="#message" role="button" aria-expanded="false" aria-controls="message">

@@ -43,7 +43,8 @@
                     <table id="dataTableExample" class="table">
                         <thead>
                             <tr>
-                            <th>#id</th>
+                            <th hidden>#id</th>
+                            <th>S.no</th>
                             <th>Client name</th>
                             <th>Contact number</th>
                             <th>Email</th>
@@ -56,9 +57,17 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php $i = 0; ?>
                             @foreach ($leads as $lead)
                             <tr>
-                                <td>{{$lead->id}}</td>
+                                <td hidden>{{$lead->id}}</td>
+                                @if ($lead->lead_from=='99Acres')
+                                  <td>{{'ac'.++$i}}</td>
+                                @elseif ($lead->lead_from=='Magicbricks')
+                                  <td>{{'mg'.++$i}}</td>
+                                @else
+                                  <td>{{'ma'.++$i}}</td>
+                                @endif
                                 <td>{{$lead->client_name}}</td>
                                 <td>{{$lead->client_phn}}</td>
                                 <td>{{$lead->client_em}}</td>

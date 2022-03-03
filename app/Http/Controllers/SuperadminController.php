@@ -54,7 +54,8 @@ class SuperadminController extends Controller
     }
     public function index()
     {
-        $empcn = User::all()->count();
+        // dd(lead::whereDate('created_at', Carbon::today())->get());
+        $empcn = lead::whereDate('created_at', Carbon::today())->get()->count();
         $leadscn = assign::all()->count();
         $follow_up = assign_lead::where('status', 2)->get()->count();
         $leads = [];
@@ -338,6 +339,14 @@ class SuperadminController extends Controller
         $lead->status = $request->stat;
         $lead->save();
 
+        $assign = new assign();
+        $assign->property_name = $prop->propname;
+        $assign->property_id = $prop->id;
+        $assign->areamanager = $request->areaman;
+        $assign->salesmanager = $request->salesman;
+        $assign->salesexecutive = $request->exe;
+        $assign->save();
+
         $message= new message();
         $message->sender_id = Auth::user()->id;
         $message->sender_name = Auth::user()->name;
@@ -537,6 +546,7 @@ class SuperadminController extends Controller
         
         $assign = new assign();
         $assign->property_name = $request->propname;
+        $assign->property_id = $prop->id;
         $assign->areamanager = $request->areaman;
         $assign->salesmanager = $request->salesman;
         $assign->salesexecutive = $request->exe;
@@ -591,15 +601,29 @@ class SuperadminController extends Controller
             $request->file('image')->move(public_path('img/image/'), $cusimgex);
             properties::where('id', $id)->update(['image' => $cusimgex]);
         }
-        // $assign = properties::where('id', $id)->first();
-        // $assign_exes = (explode(",", $assign->salesexecutive));
-        // $new_assign_exes = (explode(",", $request->exe));
-        // foreach($new_assign_exes as $new_assign_exe){
-        //     $assign = new assign();
-        //     $assign->property_name = $request->propname;
-        //     $assign->salesmanager = $request->salesman;
-        //     $assign->salesexecutive = $request->exe;
-        //     $assign->save();
+
+        $assign = assign::where('property_id', $id)->first();
+
+        if($assign){
+            assign::where('property_id', $id)->update([
+                'property_name' => $request->propname,
+                'property_id' => $id,
+                'areamanager' => $request->areaman,
+                'salesmanager' => $request->salesman,
+                'salesexecutive' => $request->exe,
+            ]);
+        }
+
+        
+
+        // $assign_exes = (explode(",", $request->exe));
+        // foreach($assign_exes as $assign_exe){
+        //     if()
+            // $assign = new assign();
+            // $assign->property_name = $request->propname;
+            // $assign->salesmanager = $request->salesman;
+            // $assign->salesexecutive = $request->exe;
+            // $assign->save();
         // }
 
         return redirect()->route('admin.properties')->with('message', 'Property updated successfully.');
@@ -675,19 +699,24 @@ class SuperadminController extends Controller
     public function areamanpagesave(Request $request)
     {
         areamanpage::where('id', 1)->update([
-            'message' => $request->message,
-            'whatsapp' => $request->whatsapp,
-            'calendar' => $request->calendar,
             'employees' => $request->employees,
             'add_user' => $request->add_user,
-            'usr_perm' => $request->usr_perm,
-            'apex' => $request->apex,
-            'clients' => $request->clients,
+            'sales_man' => $request->sales_man,
+            'sales_exe' => $request->sales_exe,
+            'tele' => $request->tele,
+            'gen_prop' => $request->gen_prop,
+            'add_proptype' => $request->add_proptype,
+            'add_prop' => $request->add_prop,
             'gen_leads' => $request->gen_leads,
             'add_lead' => $request->add_lead,
-            'gen_prop' => $request->gen_prop,
-            'add_prop' => $request->add_prop,
-            'add_proptype' => $request->add_proptype
+            'view_clients' => $request->view_clients,
+            'broadcast' => $request->broadcast,
+            'email' => $request->email,
+            'email_temp' => $request->email_temp,
+            'lpm' => $request->lpm,
+            'lpp' => $request->lpp,
+            'mal' => $request->mal,
+            'aal' => $request->aal
         ]);
         return redirect()->back()->with('message', 'Areamanager portal updated successfully.');
     }
@@ -701,18 +730,21 @@ class SuperadminController extends Controller
     public function manpagesave(Request $request)
     {
         manpage::where('id', 1)->update([
-            'message' => $request->message,
-            'whatsapp' => $request->whatsapp,
-            'calendar' => $request->calendar,
             'employees' => $request->employees,
             'add_user' => $request->add_user,
-            'apex' => $request->apex,
+            'gen_prop' => $request->gen_prop,
+            'add_proptype' => $request->add_proptype,
+            'add_prop' => $request->add_prop,
             'gen_leads' => $request->gen_leads,
             'add_lead' => $request->add_lead,
-            'ass_lead' => $request->ass_lead,
-            'gen_prop' => $request->gen_prop,
-            'add_prop' => $request->add_prop,
-            'clients' => $request->clients
+            'view_clients' => $request->view_clients,
+            'broadcast' => $request->broadcast,
+            'email' => $request->email,
+            'email_temp' => $request->email_temp,
+            'lpm' => $request->lpm,
+            'lpp' => $request->lpp,
+            'mal' => $request->mal,
+            'aal' => $request->aal
         ]);
         return redirect()->back()->with('message', 'Salesmanager portal updated successfully.');
     }
@@ -726,17 +758,16 @@ class SuperadminController extends Controller
     public function exepagesave(Request $request)
     {
         exepage::where('id', 1)->update([
-            'message' => $request->message,
-            'whatsapp' => $request->whatsapp,
-            'calendar' => $request->calendar,
-            'employees' => $request->employees,
-            'add_user' => $request->add_user,
-            'apex' => $request->apex,
             'gen_leads' => $request->gen_leads,
-            'add_lead' => $request->add_lead,
-            'gen_prop' => $request->gen_prop,
-            'add_prop' => $request->add_prop,
-            'assign' => $request->assign
+            'view_clients' => $request->view_clients,
+            'tele' => $request->tele,
+            'add_tele' => $request->add_tele,
+            'broadcast' => $request->broadcast,
+            'email' => $request->email,
+            'email_temp' => $request->email_temp,
+            'lpp' => $request->lpp,
+            'mal' => $request->mal,
+            'aal' => $request->aal
         ]);
         return redirect()->back()->with('message', 'Salesexecutive portal updated successfully.');
     }
@@ -750,17 +781,17 @@ class SuperadminController extends Controller
     public function telepagesave(Request $request)
     {
         telepage::where('id', 1)->update([
-            'message' => $request->message,
-            'whatsapp' => $request->whatsapp,
-            'calendar' => $request->calendar,
-            'employees' => $request->employees,
-            'add_user' => $request->add_user,
+            // 'message' => $request->message,
+            // 'whatsapp' => $request->whatsapp,
+            // 'calendar' => $request->calendar,
+            // 'employees' => $request->employees,
+            // 'add_user' => $request->add_user,
             'apex' => $request->apex,
-            'gen_leads' => $request->gen_leads,
-            'add_lead' => $request->add_lead,
-            'gen_prop' => $request->gen_prop,
-            'add_prop' => $request->add_prop,
-            'assigned_leads' => $request->assigned_leads
+            // 'gen_leads' => $request->gen_leads,
+            // 'add_lead' => $request->add_lead,
+            'gen_leads' => $request->gen_leads
+            // 'add_prop' => $request->add_prop,
+            // 'assigned_leads' => $request->assigned_leads
         ]);
         return redirect()->back()->with('message', 'Telecaller portal updated successfully.');
     }
@@ -1004,6 +1035,34 @@ class SuperadminController extends Controller
     {
         $clients = lead::select('client_name')->distinct()->get();
         return view('superadmin.emailmanage', compact('clients'));
+    }
+
+    public function templateview()
+    {
+        $templates = emailTemplate::all();
+        return view('superadmin.emailtemplate', compact('templates'));
+    }
+
+    public function templateedit($id)
+    {
+        $template = emailTemplate::where('id', $id)->first();
+        return view('superadmin.edittemplate', compact('template'));
+    }
+
+    public function templateupdate(Request $request, $id)
+    {
+        // dd(emailTemplate::where('id', $id)->first());
+        emailTemplate::where('id', $id)->update([
+            'title' => $request->title,
+            'body' => $request->message,
+        ]);
+        return redirect()->route('admin.email.template.view')->with('message', 'Template edited successfully.');
+    }
+
+    public function templatedelete($id)
+    {
+        emailTemplate::where('id', $id)->delete();
+        return redirect()->route('admin.email.template.view')->with('message', 'Template deleted successfully.');
     }
 
     public function templatesave(Request $request)

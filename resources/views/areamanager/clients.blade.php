@@ -53,16 +53,17 @@
                     <table id="dataTableExample" class="table display" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                            <th>#id</th>
+                            <th>S.no</th>
                             <th>Client name</th>
                             <th>Contact number</th>
                             <th>Email</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php $i = 0; ?>
                             @foreach ($clients as $client)
                             <tr>
-                                <td>{{App\Models\lead::where('client_name', $client->client_name)->first()->id}}</td>
+                                <td>{{++$i}}</td>
                                 <td>{{App\Models\lead::where('client_name', $client->client_name)->first()->client_name}}</td>
                                 <td>{{App\Models\lead::where('client_name', $client->client_name)->first()->client_phn}}</td>
                                 <td>{{App\Models\lead::where('client_name', $client->client_name)->first()->client_em}}</td>

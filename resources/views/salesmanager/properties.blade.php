@@ -46,9 +46,10 @@
           <div class="card-body">
               <h6 class="card-title">Owned properties.</h6>
               <div class="table-responsive">
-                  <table id="dataTableExample" class="table">
+                  <table id="example" class="table">
                       <thead>
                           <tr>
+                            <th>S.no</th>
                           <th>Property name</th>
                           <th>Address</th>
                           <th>Location</th>
@@ -61,9 +62,10 @@
                           </tr>
                       </thead>
                       <tbody>
-
+                        <?php $i = 0; ?>
                         @foreach ($props as $prop)
                         <tr>
+                          <th>{{++$i}}</th>
                             <td>{{$prop->propname}}</td>
                             <td>{{Str::limit($prop->address, 20, '...')}}</td>
                             <td>{{$prop->district.", ".$prop->state}}</td>
@@ -86,4 +88,14 @@
 </div>
 
 
+@endsection
+
+@section('script')
+
+<script>
+  $('#example').dataTable( {
+    "order": [[0, 'desc']]
+  } );
+</script>
+  
 @endsection

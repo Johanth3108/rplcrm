@@ -16,6 +16,7 @@ class CreateAssignsTable extends Migration
         Schema::create('assigns', function (Blueprint $table) {
             $table->id();
             $table->string('property_name');
+            $table->string('property_id');
             $table->integer('areamanager')->nullable();
             $table->integer('salesmanager')->nullable();
             $table->string('salesexecutive')->nullable();

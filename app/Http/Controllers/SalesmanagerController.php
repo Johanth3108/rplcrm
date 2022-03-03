@@ -72,7 +72,8 @@ class SalesmanagerController extends Controller
         $status = implode("','",$status);
         $per_status_lead = implode("','",$per_status_lead);
         $leads = implode("','",$leads);
-        return view('salesmanager.index', compact('leads', 'lead_status', 'status', 'per_status_lead'));
+        $gen_leads = assign::where('salesmanager', Auth::user()->id)->get()->count();
+        return view('salesmanager.index', compact('gen_leads' ,'leads', 'lead_status', 'status', 'per_status_lead'));
 
         // return view('salesmanager.leadprop', compact('property', 'per_prop'));
     }
@@ -553,6 +554,33 @@ class SalesmanagerController extends Controller
     {
         $clients = lead::select('client_name')->distinct()->get();
         return view('salesmanager.emailmanage', compact('clients'));
+    }
+    public function templateview()
+    {
+        $templates = emailTemplate::all();
+        return view('salesmanager.emailtemplate', compact('templates'));
+    }
+
+    public function templateedit($id)
+    {
+        $template = emailTemplate::where('id', $id)->first();
+        return view('salesmanager.edittemplate', compact('template'));
+    }
+
+    public function templateupdate(Request $request, $id)
+    {
+        // dd(emailTemplate::where('id', $id)->first());
+        emailTemplate::where('id', $id)->update([
+            'title' => $request->title,
+            'body' => $request->message,
+        ]);
+        return redirect()->route('salesmanager.email.template.view')->with('message', 'Template edited successfully.');
+    }
+
+    public function templatedelete($id)
+    {
+        emailTemplate::where('id', $id)->delete();
+        return redirect()->route('salesmanager.email.template.view')->with('message', 'Template deleted successfully.');
     }
 
     public function templatesave(Request $request)

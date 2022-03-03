@@ -124,11 +124,9 @@
 							<a href="{{route('salesmanager.addleads')}}" class="nav-link">Add Lead</a>
 					  	</li>
 						@endif
-						@if ($manpage->ass_lead)
 						<li class="nav-item">
-							<a href="{{route('salesmanager.assigned')}}" class="nav-link">Assigned Leads</a>
-						</li>	
-						@endif
+							<a href="{{route('salesmanager.assigned')}}" class="nav-link">Assigned Leads //</a>
+						</li>
 						
 					  
 					</ul>
@@ -136,7 +134,7 @@
 				</li>
 				@endif
 
-				@if ($manpage->apex==true)
+				@if ($manpage->lpp || $manpage->mal || $manpage->aal )
 				<li class="nav-item">
 				  <a class="nav-link"  data-toggle="collapse" href="#charts" role="button" aria-expanded="false" aria-controls="charts">
 					<i class="link-icon" data-feather="pie-chart"></i>
@@ -145,21 +143,28 @@
 				  </a>
 				  <div class="collapse" id="charts">
 					<ul class="nav sub-menu">
-					  <li class="nav-item">
+						@if ($manpage->lpp)
+						<li class="nav-item">
 						<a href="{{route('salesmanager.leadprop')}}" class="nav-link">Leads per property</a>
-					  </li>
-					  <li class="nav-item">
+					  </li>	
+						@endif
+					  @if ($manpage->mal)
+						<li class="nav-item">
 						<a href="{{route('salesmanager.leadmanual')}}" class="nav-link">Manual leads</a>
-					  </li>
-					  <li class="nav-item">
+					  </li>  
+					  @endif
+					  @if ($manpage->aal)
+					<li class="nav-item">
 						<a href="{{route('salesmanager.leadauto')}}" class="nav-link">Automatic leads</a>
-					  </li>
+					  </li>  
+					  @endif
+					  
 					</ul>
 				  </div>
 				</li>
 				@endif
 
-				@if ($manpage->clients)
+				@if ($manpage->view_clients || $manpage->email_temp || $manpage->email || $manpage->broadcast)
 				<li class="nav-item">
 					<a class="nav-link" data-toggle="collapse" href="#clients" role="button" aria-expanded="false" aria-controls="clients">
 					  <i class="link-icon" data-feather="anchor"></i>
@@ -168,18 +173,27 @@
 					</a>
 					<div class="collapse" id="clients">
 					  <ul class="nav sub-menu">
+						@if ($manpage->view_clients)
 						<li class="nav-item">
-						  <a href="{{route('salesmanager.clients')}}" class="nav-link">View Clients</a>
-						</li>
+						<a href="{{route('salesmanager.clients')}}" class="nav-link">View Clients</a>
+						</li>  
+						@endif
+						@if ($manpage->broadcast)
 						<li class="nav-item">
 							<a href="{{route('salesmanager.broadcast')}}" class="nav-link">Broadcast</a>
-						  </li>
-						  <li class="nav-item">
+						</li>	
+						@endif
+						@if ($manpage->email)
+						<li class="nav-item">
 							<a href="{{route('salesmanager.email')}}" class="nav-link">Email</a>
-						  </li>
-						  <li class="nav-item">
-							<a href="{{route('salesmanager.email.template')}}" class="nav-link">Email templates</a>
-						  </li>
+						</li>	
+						@endif
+						@if ($manpage->email_temp)
+						<li class="nav-item">
+							<a href="{{route('salesmanager.email.template.view')}}" class="nav-link">Email templates</a>
+						</li>	
+						@endif
+						
 					  </ul>
 					</div>
 				  </li>
@@ -195,7 +209,7 @@
 				</li>
 				@endif --}}
 
-				@if ($manpage->message==true || $manpage->whatsapp==true)
+				{{-- @if ($manpage->message==true || $manpage->whatsapp==true)
 					<li class="nav-item">
 						<a class="nav-link" data-toggle="collapse" href="#sms" role="button" aria-expanded="false" aria-controls="sms">
 							<i class="link-icon" data-feather="file-text"></i>
@@ -210,16 +224,11 @@
 								</li>
 							@endif
 							
-							{{-- @if ($manpage->whatsapp==true)
-								<li class="nav-item">
-									<a href="{{ route('salesmanager.whatsapp') }}" class="nav-link">Whatsapp</a>
-								</li>
-							@endif --}}
 							
 							</ul>
 						</div>
 					</li>
-				@endif
+				@endif --}}
 
 				<li class="nav-item">
 					<a class="nav-link" data-toggle="collapse" href="#message" role="button" aria-expanded="false" aria-controls="message">

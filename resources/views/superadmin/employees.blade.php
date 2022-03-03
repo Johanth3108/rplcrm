@@ -50,7 +50,7 @@
                     <table id="dataTableExample" class="table">
                         <thead>
                             <tr>
-                            <th>#id</th>
+                            <th>S.no</th>
                             <th>Employee name</th>
                             <th>Mail id</th>
                             <th>Contact number</th>
@@ -62,9 +62,10 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php $i = 0; ?>
                             @foreach ($emps as $emp)
                             <tr>
-                                <td>{{$emp->id}}</td>
+                                <td>{{++$i}}</td>
                                 <td>{{$emp->name}}</td>
                                 <td>{{$emp->email}}</td>
                                 <td>{{$emp->contact_number}}</td>

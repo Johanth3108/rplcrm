@@ -119,6 +119,10 @@ Route::get('superadmin/update-stat/{id}', [SuperadminController::class, 'updates
 Route::get('superadmin/delete-stat/{id}', [SuperadminController::class, 'delstat'])->name('admin.status.delete')->middleware('superadmin');
 Route::get('superadmin/broadcast', [SuperadminController::class, 'broadcast'])->name('admin.broadcast')->middleware('superadmin');
 Route::get('superadmin/email', [SuperadminController::class, 'email'])->name('admin.email')->middleware('superadmin');
+Route::get('superadmin/email/template/view', [SuperadminController::class, 'templateview'])->name('admin.email.template.view')->middleware('superadmin');
+Route::get('superadmin/email/template/edit/{id}', [SuperadminController::class, 'templateedit'])->name('admin.email.template.edit')->middleware('superadmin');
+Route::post('superadmin/email/template/update/{id}', [SuperadminController::class, 'templateupdate'])->name('admin.email.template.update')->middleware('superadmin');
+Route::get('superadmin/email/template/delete/{id}', [SuperadminController::class, 'templatedelete'])->name('admin.email.template.delete')->middleware('superadmin');
 Route::get('superadmin/email/template', [SuperadminController::class, 'template'])->name('admin.email.template')->middleware('superadmin');
 Route::get('superadmin/email/template/ajax/{id}', [SuperadminController::class, 'templateajax'])->name('admin.template.ajax')->middleware('superadmin');
 Route::post('superadmin/email/template/save', [SuperadminController::class, 'templatesave'])->name('admin.email.template.save')->middleware('superadmin');
@@ -173,6 +177,10 @@ Route::post('areamanager/feedback/send', [AreamanagerController::class, 'feedbac
 Route::get('areamanager/clients', [AreamanagerController::class, 'clients'])->name('areamanager.clients');
 Route::get('areamanager/broadcast', [AreamanagerController::class, 'broadcast'])->name('areamanager.broadcast')->middleware('areamanager');
 Route::get('areamanager/email', [AreamanagerController::class, 'email'])->name('areamanager.email')->middleware('areamanager');
+Route::get('areamanager/email/template/view', [AreamanagerController::class, 'templateview'])->name('areamanager.email.template.view')->middleware('areamanager');
+Route::get('areamanager/email/template/edit/{id}', [AreamanagerController::class, 'templateedit'])->name('areamanager.email.template.edit')->middleware('areamanager');
+Route::post('areamanager/email/template/update/{id}', [AreamanagerController::class, 'templateupdate'])->name('areamanager.email.template.update')->middleware('areamanager');
+Route::get('areamanager/email/template/delete/{id}', [AreamanagerController::class, 'templatedelete'])->name('areamanager.email.template.delete')->middleware('areamanager');
 Route::get('areamanager/email/template', [AreamanagerController::class, 'template'])->name('areamanager.email.template')->middleware('areamanager');
 Route::get('areamanager/email/template/ajax/{id}', [AreamanagerController::class, 'templateajax'])->name('areamanager.template.ajax')->middleware('areamanager');
 Route::post('areamanager/email/template/save', [AreamanagerController::class, 'templatesave'])->name('areamanager.email.template.save')->middleware('areamanager');
@@ -217,6 +225,10 @@ Route::get('salesmanager/leads/auto', [SalesmanagerController::class, 'leadauto'
 Route::get('salesmanager/clients', [SalesmanagerController::class, 'clients'])->name('salesmanager.clients')->middleware('salesmanager');
 Route::get('salesmanager/broadcast', [SalesmanagerController::class, 'broadcast'])->name('salesmanager.broadcast')->middleware('salesmanager');
 Route::get('salesmanager/email', [SalesmanagerController::class, 'email'])->name('salesmanager.email')->middleware('salesmanager');
+Route::get('salesmanager/email/template/view', [SalesmanagerController::class, 'templateview'])->name('salesmanager.email.template.view')->middleware('salesmanager');
+Route::get('salesmanager/email/template/edit/{id}', [SalesmanagerController::class, 'templateedit'])->name('salesmanager.email.template.edit')->middleware('salesmanager');
+Route::post('salesmanager/email/template/update/{id}', [SalesmanagerController::class, 'templateupdate'])->name('salesmanager.email.template.update')->middleware('salesmanager');
+Route::get('salesmanager/email/template/delete/{id}', [SalesmanagerController::class, 'templatedelete'])->name('salesmanager.email.template.delete')->middleware('salesmanager');
 Route::get('salesmanager/email/template', [SalesmanagerController::class, 'template'])->name('salesmanager.email.template')->middleware('salesmanager');
 Route::get('salesmanager/email/template/ajax/{id}', [SalesmanagerController::class, 'templateajax'])->name('salesmanager.template.ajax')->middleware('salesmanager');
 Route::post('salesmanager/email/template/save', [SalesmanagerController::class, 'templatesave'])->name('salesmanager.email.template.save')->middleware('salesmanager');
@@ -252,6 +264,10 @@ Route::get('salesexecutive/telecallers', [SalesexecutiveController::class, 'tele
 Route::get('salesexecutive/view-report/{id}', [SalesexecutiveController::class, 'report'])->name('salesexecutive.report')->middleware('salesexecutive');
 Route::get('salesexecutive/broadcast', [SalesexecutiveController::class, 'broadcast'])->name('salesexecutive.broadcast')->middleware('salesexecutive');
 Route::get('salesexecutive/email', [SalesexecutiveController::class, 'email'])->name('salesexecutive.email')->middleware('salesexecutive');
+Route::get('salesexecutive/email/template/view', [SalesexecutiveController::class, 'templateview'])->name('salesexecutive.email.template.view')->middleware('salesexecutive');
+Route::get('salesexecutive/email/template/edit/{id}', [SalesexecutiveController::class, 'templateedit'])->name('salesexecutive.email.template.edit')->middleware('salesexecutive');
+Route::post('salesexecutive/email/template/update/{id}', [SalesexecutiveController::class, 'templateupdate'])->name('salesexecutive.email.template.update')->middleware('salesexecutive');
+Route::get('salesexecutive/email/template/delete/{id}', [SalesexecutiveController::class, 'templatedelete'])->name('salesexecutive.email.template.delete')->middleware('salesexecutive');
 Route::get('salesexecutive/email/template', [SalesexecutiveController::class, 'template'])->name('salesexecutive.email.template')->middleware('salesexecutive');
 Route::get('salesexecutive/email/template/ajax/{id}', [SalesexecutiveController::class, 'templateajax'])->name('salesexecutive.template.ajax')->middleware('salesexecutive');
 Route::post('salesexecutive/email/template/save', [SalesexecutiveController::class, 'templatesave'])->name('salesexecutive.email.template.save')->middleware('salesexecutive');

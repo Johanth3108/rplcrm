@@ -52,10 +52,11 @@
                 <h6 class="card-subtitle mb-2 text-muted">These are the leads which we recieved.</h6>
 
                 <div class="table-responsive dt-responsive">
-                    <table id="dataTableExample" class="table display" cellspacing="0" width="100%">
+                    <table id="example" class="table display" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                            <th>#id</th>
+                            <th hidden>#id</th>
+                            <th>S.no</th>
                             <th>Client name</th>
                             <th>Contact number</th>
                             <th>Property name</th>
@@ -68,9 +69,19 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php $i = 0;
+                             ?>
                             @foreach ($leads as $lead)
                             <tr>
-                                <td>{{$lead->id}}</td>
+                                <td hidden>{{$lead->id}}</td>
+                                @if (strtolower($lead->lead_from)=='99acres')
+                                  <td>{{'ac'.++$i}}</td>
+                                @elseif (strtolower($lead->lead_from)=='magicbricks')
+                                  <td>{{'mg'.++$i}}</td>
+                                @elseif (strtolower($lead->lead_from)=='manual')
+                                  <td>{{'ma'.++$i}}</td>
+                                @endif
+
                                 <td>{{$lead->client_name}}</td>
                                 <td>{{$lead->client_phn}}</td>
                                 <td>{{$lead->property_name}}</td>
@@ -148,4 +159,15 @@
 
   })
 </script>
+
+@endsection
+
+@section('script')
+
+<script>
+  $('#example').dataTable( {
+    "order": [[0, 'desc']]
+  } );
+</script>
+  
 @endsection

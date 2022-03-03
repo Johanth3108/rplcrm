@@ -15,19 +15,21 @@ class CreateManpagesTable extends Migration
     {
         Schema::create('manpages', function (Blueprint $table) {
             $table->id();
-            $table->boolean('message')->nullable();
-            $table->boolean('whatsapp')->nullable();
-            $table->boolean('calendar')->nullable();
             $table->boolean('employees')->nullable();
             $table->boolean('add_user')->nullable();
-            $table->boolean('apex')->nullable();
-            $table->boolean('clients')->nullable(); //
+            $table->boolean('email')->nullable();
+            $table->boolean('email_temp')->nullable();
+            $table->boolean('broadcast')->nullable();
+            $table->boolean('view_clients')->nullable();
             $table->boolean('gen_leads')->nullable();
             $table->boolean('add_lead')->nullable();
-            $table->boolean('ass_lead')->nullable();
             $table->boolean('gen_prop')->nullable();
             $table->boolean('add_prop')->nullable();
-            $table->boolean('add_proptype')->nullable(); //
+            $table->boolean('add_proptype')->nullable();
+            $table->boolean('lpm')->nullable();
+            $table->boolean('lpp')->nullable();
+            $table->boolean('mal')->nullable();
+            $table->boolean('aal')->nullable();
             $table->timestamps();
         });
     }

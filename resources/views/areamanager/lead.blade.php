@@ -1,5 +1,9 @@
 @extends('layouts.areamanager')
 
+@section('head')
+<link rel="stylesheet" href="{{asset('assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css')}}">
+@endsection
+
 @section('content')
 
 <div class="d-flex justify-content-between align-items-center flex-wrap">

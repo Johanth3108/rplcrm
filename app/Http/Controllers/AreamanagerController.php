@@ -634,18 +634,22 @@ class AreamanagerController extends Controller
     public function manpagesave(Request $request)
     {
         manpage::where('id', 1)->update([
-            'message' => $request->message,
-            'whatsapp' => $request->whatsapp,
-            'calendar' => $request->calendar,
+            'lpm' => $request->lpm,
+            'lpp' => $request->lpp,
+            'mal' => $request->mal,
+            'aal' => $request->aal,
             'employees' => $request->employees,
             'add_user' => $request->add_user,
-            'apex' => $request->apex,
+            'email' => $request->email,
+            'email_temp' => $request->email_temp,
+            'broadcast' => $request->broadcast,
+            'view_clients' => $request->view_clients,
             'gen_leads' => $request->gen_leads,
             'add_lead' => $request->add_lead,
-            'ass_lead' => $request->ass_lead,
+            'add_proptype' => $request->add_proptype,
             'gen_prop' => $request->gen_prop,
             'add_prop' => $request->add_prop,
-            'clients' => $request->clients
+            
         ]);
         return redirect()->back()->with('message', 'Salesmanager portal updated successfully.');
     }
@@ -659,17 +663,16 @@ class AreamanagerController extends Controller
     public function exepagesave(Request $request)
     {
         exepage::where('id', 1)->update([
-            'message' => $request->message,
-            'whatsapp' => $request->whatsapp,
-            'calendar' => $request->calendar,
-            'employees' => $request->employees,
-            'add_user' => $request->add_user,
-            'apex' => $request->apex,
             'gen_leads' => $request->gen_leads,
-            'add_lead' => $request->add_lead,
-            'gen_prop' => $request->gen_prop,
-            'add_prop' => $request->add_prop,
-            'assign' => $request->assign
+            'view_clients' => $request->view_clients,
+            'tele' => $request->tele,
+            'add_tele' => $request->add_tele,
+            'broadcast' => $request->broadcast,
+            'email' => $request->email,
+            'email_temp' => $request->email_temp,
+            'lpp' => $request->lpp,
+            'mal' => $request->mal,
+            'aal' => $request->aal
         ]);
         return redirect()->back()->with('message', 'Salesexecutive portal updated successfully.');
     }
@@ -683,17 +686,17 @@ class AreamanagerController extends Controller
     public function telepagesave(Request $request)
     {
         telepage::where('id', 1)->update([
-            'message' => $request->message,
-            'whatsapp' => $request->whatsapp,
-            'calendar' => $request->calendar,
-            'employees' => $request->employees,
-            'add_user' => $request->add_user,
+            // 'message' => $request->message,
+            // 'whatsapp' => $request->whatsapp,
+            // 'calendar' => $request->calendar,
+            // 'employees' => $request->employees,
+            // 'add_user' => $request->add_user,
             'apex' => $request->apex,
-            'gen_leads' => $request->gen_leads,
-            'add_lead' => $request->add_lead,
-            'gen_prop' => $request->gen_prop,
-            'add_prop' => $request->add_prop,
-            'assigned_leads' => $request->assigned_leads
+            // 'gen_leads' => $request->gen_leads,
+            // 'add_lead' => $request->add_lead,
+            'gen_leads' => $request->gen_leads
+            // 'add_prop' => $request->add_prop,
+            // 'assigned_leads' => $request->assigned_leads
         ]);
         return redirect()->back()->with('message', 'Telecaller portal updated successfully.');
     }

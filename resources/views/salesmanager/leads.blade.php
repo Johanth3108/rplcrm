@@ -1,5 +1,9 @@
 @extends('layouts.salesmanager')
 
+@section('head')
+<link rel="stylesheet" href="{{asset('assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css')}}">
+@endsection
+
 @section('content')
 
 @if ($message = Session::get('message'))

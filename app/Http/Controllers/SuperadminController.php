@@ -730,21 +730,21 @@ class SuperadminController extends Controller
     public function manpagesave(Request $request)
     {
         manpage::where('id', 1)->update([
-            'employees' => $request->employees,
-            'add_user' => $request->add_user,
-            'gen_prop' => $request->gen_prop,
-            'add_proptype' => $request->add_proptype,
-            'add_prop' => $request->add_prop,
-            'gen_leads' => $request->gen_leads,
-            'add_lead' => $request->add_lead,
-            'view_clients' => $request->view_clients,
-            'broadcast' => $request->broadcast,
-            'email' => $request->email,
-            'email_temp' => $request->email_temp,
             'lpm' => $request->lpm,
             'lpp' => $request->lpp,
             'mal' => $request->mal,
-            'aal' => $request->aal
+            'aal' => $request->aal,
+            'employees' => $request->employees,
+            'add_user' => $request->add_user,
+            'email' => $request->email,
+            'email_temp' => $request->email_temp,
+            'broadcast' => $request->broadcast,
+            'view_clients' => $request->view_clients,
+            'gen_leads' => $request->gen_leads,
+            'add_lead' => $request->add_lead,
+            'add_proptype' => $request->add_proptype,
+            'gen_prop' => $request->gen_prop,
+            'add_prop' => $request->add_prop,
         ]);
         return redirect()->back()->with('message', 'Salesmanager portal updated successfully.');
     }

@@ -135,7 +135,7 @@
 			@if ($exepage->tele || $exepage->add_tele)
 			<li class="nav-item">
 				<a class="nav-link"  data-toggle="collapse" href="#telecallers" role="button" aria-expanded="false" aria-controls="telecallers">
-				  <i class="link-icon" data-feather="pie-chart"></i>
+				  <i class="link-icon" data-feather="phone"></i>
 				  <span class="link-title">Telecallers</span>
 				  <i class="link-arrow" data-feather="chevron-down"></i>
 				</a>
@@ -143,7 +143,7 @@
 				  <ul class="nav sub-menu">
 					  @if ($exepage->tele)
 						<li class="nav-item">
-						<a href="{{route('salesexecutive.telecallers')}}" class="nav-link">>Telecallers</a>
+						<a href="{{route('salesexecutive.telecallers')}}" class="nav-link">Telecallers</a>
 						</li>  
 					  @endif
 					

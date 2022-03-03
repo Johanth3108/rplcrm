@@ -1,5 +1,9 @@
 @extends('layouts.salesexecutive')
 
+@section('head')
+<link rel="stylesheet" href="{{asset('assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css')}}">
+@endsection
+
 @section('content')
 
 
@@ -18,7 +22,7 @@
                 <h6 class="card-subtitle mb-2 text-muted">Messages sent by others can be viewed here.</h6>
 
                 <div class="table-responsive">
-                    <table id="dataTableExample" class="table">
+                    <table id="example" class="table">
                         <thead>
                             <tr>
                             <th>#id</th>
@@ -50,4 +54,14 @@
     } );
 </script> --}}
     
+@endsection
+
+@section('script')
+
+<script>
+  $('#example').dataTable( {
+    "order": [[0, 'desc']]
+  } );
+</script>
+  
 @endsection

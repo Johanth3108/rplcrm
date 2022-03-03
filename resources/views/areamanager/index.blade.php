@@ -37,7 +37,7 @@
         <div class="card">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-baseline">
-              <h6 class="card-title mb-0">Number of employees</h6>
+              <h6 class="card-title mb-0">No. of leads generated today.</h6>
               
             </div>
             <div class="row">
